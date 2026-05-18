@@ -18,9 +18,4 @@ Scenarios and Capabilities
 In this private preview we support the following scenarios. Read more about these and explore hands-on experiences by navigating on each link.
 
 Useful Links
-https://aka.ms/MCfSovMSLearn (MS Learn)
-Sovereign Landing Zone (GitHub)
-Policy Portfolio (GitHub)
-Quickstarts (GitHub)
-https://aka.ms/sovereignty (MS Blog)
-https://microsoft.com/sovereignty (MS Website)
+[To be added]
