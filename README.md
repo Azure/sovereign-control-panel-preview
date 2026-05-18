@@ -1,2 +1,2 @@
-# sovereign-control-panel-private-preview
+# Sovereign-control-Panel-Private Preview
 Private preview onboarding documentation for Sovereign Control Panel 
