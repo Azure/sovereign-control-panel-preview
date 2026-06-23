@@ -11,30 +11,17 @@ You only need to do this once per subscription.
 
 ## Register Microsoft.Sovereign
 
-1. Sign in to the [Azure portal](https://portal.azure.com).
+| # | Step | Screenshot |
+| :-: | --- | --- |
+| 1 | **Sign in** to the [Azure portal](https://portal.azure.com). | — |
+| 2 | On the Azure portal menu, **search for and select Subscriptions**. | <img src="../assets/img-01.png" width="450" alt="Searching for Subscriptions in the Azure portal." /> |
+| 3 | **Select the subscription ID** you shared in the onboarding form. | <img src="../assets/img-02.png" width="450" alt="Selecting a subscription from the list." /> |
+| 4 | In the left menu, under **Settings**, select **Resource providers**. | <img src="../assets/img-03.png" width="450" alt="Selecting Resource providers under Settings." /> |
+| 5 | **Search for Microsoft.Sovereign**. | <img src="../assets/img-04.png" width="450" alt="Searching for the Microsoft.Sovereign resource provider." /> |
+| 6 | Select the resource provider, then select **Register**. | <img src="../assets/img-05.png" width="450" alt="Registering the Microsoft.Sovereign resource provider." /> |
 
-1. On the Azure portal menu, search for and select **Subscriptions**.
-
-   ![Searching for Subscriptions in the Azure portal.](/docs/assets/img-01.png)
-
-1. Select the subscription ID you shared in the onboarding form.
-
-   ![Selecting a subscription from the list.](/docs/assets/img-02.png)
-
-1. In the left menu, under **Settings**, select **Resource providers**.
-
-   ![Selecting Resource providers under Settings.](/docs/assets/img-03.png)
-
-1. Search for **Microsoft.Sovereign**.
-
-   ![Searching for the Microsoft.Sovereign resource provider.](/docs/assets/img-04.png)
-
-1. Select the resource provider, and then select **Register**.
-
-   ![Registering the Microsoft.Sovereign resource provider.](/docs/assets/img-05.png)
-
-   > [!TIP]
-   > To maintain least privilege in your subscription, register only the resource providers that you intend to use.
+> [!TIP]
+> To maintain least privilege in your subscription, register only the resource providers that you intend to use.
 
 Registering the resource provider lets you create Sovereign View resources in this subscription.
 

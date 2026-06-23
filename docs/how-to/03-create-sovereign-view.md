@@ -9,78 +9,46 @@ After the resource provider is registered, you can create a Sovereign View resou
 
 ## Start the create experience
 
-1. In the Azure portal's top search bar, type **Sovereign**, and then select **Sovereign Control Panel**.
-
-   ![Searching for Sovereign Control Panel in the Azure portal.](/docs/assets/img-06.png)
-
-1. On the overview page, select **Create View**.
-
-   ![Selecting Create View on the overview page.](/docs/assets/img-07.png)
+| # | Step | Screenshot |
+| :-: | --- | --- |
+| 1 | In the Azure portal's top search bar, **type Sovereign**, then select **Sovereign Control Panel**. | <img src="../assets/img-06.png" width="450" alt="Searching for Sovereign Control Panel in the Azure portal." /> |
+| 2 | On the overview page, **select Create View**. | <img src="../assets/img-07.png" width="450" alt="Selecting Create View on the overview page." /> |
 
 ## Complete the Basics tab
 
-The Create view page opens with the Subscription and Resource group prefilled.
-
-![Create view page with prefilled Subscription and Resource group.](/docs/assets/img-08.png)
-
-On the **Basics** tab, fill in the following details:
-
-- **Subscription**: Choose the subscription where you want to create the Sovereign View resource (the same subscription you registered earlier).
-- **Resource group**: Select an existing resource group, or create a new one to host the Sovereign View resource.
-- **Name**: Enter a name for the Sovereign View resource. Spaces aren't allowed.
-- **Region**: Choose an Azure region for the resource. This is where the resource metadata and processing reside.
-
-![Filling in the Basics tab details.](/docs/assets/img-09.png)
-
-Select **Next** to move to the **Scope** tab.
-
-![Selecting Next to move to the Scope tab.](/docs/assets/img-10.png)
+| # | Step | Screenshot |
+| :-: | --- | --- |
+| 1 | The **Create view** page opens with the **Subscription** and **Resource group** prefilled. | <img src="../assets/img-08.png" width="450" alt="Create view page with prefilled Subscription and Resource group." /> |
+| 2 | On the **Basics** tab, fill in the details:<br>• **Subscription** — the subscription you registered earlier.<br>• **Resource group** — an existing one, or create a new one.<br>• **Name** — a name for the resource (spaces aren't allowed).<br>• **Region** — where the resource metadata and processing reside. | <img src="../assets/img-09.png" width="450" alt="Filling in the Basics tab details." /> |
+| 3 | Select **Next** to move to the **Scope** tab. | <img src="../assets/img-10.png" width="450" alt="Selecting Next to move to the Scope tab." /> |
 
 ## Select the scope
 
-1. On the **Scope** tab, select **+ Add resources**.
-
-   ![Selecting Add resources on the Scope tab.](/docs/assets/img-11.png)
-
-1. Choose either a **Management group** (to include all subscriptions under it) or one or more specific **Subscriptions** to include in this Sovereign View. Use the UI controls to select the desired management group and/or subscriptions from the list.
-
-   ![Selecting a management group or subscriptions for the scope.](/docs/assets/img-12.jpg)
-
-1. After selecting the resources, select **Add**.
-
-   ![Selecting Add to confirm the scope resources.](/docs/assets/img-13.png)
-
-1. On the **Scope** page, select the subscriptions or management groups you want to include. To include all available items, select the checkbox next to **Name**. When your selection is complete, select **Next**.
-
-   ![Selecting subscriptions or management groups on the Scope page.](/docs/assets/img-14.png)
+| # | Step | Screenshot |
+| :-: | --- | --- |
+| 1 | On the **Scope** tab, select **+ Add resources**. | <img src="../assets/img-11.png" width="450" alt="Selecting Add resources on the Scope tab." /> |
+| 2 | Choose either a **Management group** (to include all subscriptions under it) or one or more specific **Subscriptions** to include in this Sovereign View. | <img src="../assets/img-12.jpg" width="450" alt="Selecting a management group or subscriptions for the scope." /> |
+| 3 | After selecting the resources, select **Add**. | <img src="../assets/img-13.png" width="450" alt="Selecting Add to confirm the scope resources." /> |
+| 4 | Select the items to include (or the checkbox next to **Name** for all), then select **Next**. | <img src="../assets/img-14.png" width="450" alt="Selecting subscriptions or management groups on the Scope page." /> |
 
 ## Configure the policy initiative
 
 The Sovereign View focuses on specific control sets (for example, Data Residency or Encryption at Rest) relevant to data sovereignty. In the preview, these are largely predefined and selected for you.
 
-On the **Policy initiative** tab:
-
-- **Data Residency (Geography)**: In the current preview, the default value of **Europe** is selected.
-- Review the list of policies or controls that will be evaluated (for example, *Data sovereignty control levels* or *Encryption at rest*). These represent the scope definitions the Sovereign View uses.
-
-![Configuring the policy initiative tab.](/docs/assets/img-15.png)
+| # | Step | Screenshot |
+| :-: | --- | --- |
+| 1 | On the **Policy initiative** tab, review the settings:<br>• **Data Residency (Geography)** — the default value of **Europe** is selected.<br>• Review the policies or controls that will be evaluated (for example, *Data sovereignty control levels* or *Encryption at rest*). | <img src="../assets/img-15.png" width="450" alt="Configuring the policy initiative tab." /> |
+| 2 | Select **I confirm**, then select **Next**. Validation takes a few seconds. | <img src="../assets/img-16.png" width="450" alt="Selecting the I confirm checkbox before review." /> |
 
 > [!TIP]
 > To learn more about any Azure policy, see its definition on the [Azure Policy](https://portal.azure.com) page in the portal, or the [list of built-in policy definitions](https://learn.microsoft.com/azure/governance/policy/samples/built-in-policies).
 
-Select **I confirm** to allow Azure to proceed with creating the resource and its associated identities, and then select **Next**. Validation takes a few seconds.
-
-![Selecting the I confirm checkbox before review.](/docs/assets/img-16.png)
-
 ## Review and create
 
-1. On the **Review + create** tab, verify all configuration details (scope, name, region, and so on).
-
-   ![Reviewing configuration details on the Review + create tab.](/docs/assets/img-17.png)
-
-1. Select the confirmation checkbox, and then select **Create** to deploy the Sovereign View resource.
-
-   ![Deployment completed for the Sovereign View resource.](/docs/assets/img-18.png)
+| # | Step | Screenshot |
+| :-: | --- | --- |
+| 1 | On the **Review + create** tab, verify all configuration details (scope, name, region, and so on). | <img src="../assets/img-17.png" width="450" alt="Reviewing configuration details on the Review + create tab." /> |
+| 2 | Select the confirmation checkbox, then select **Create** to deploy the Sovereign View resource. | <img src="../assets/img-18.png" width="450" alt="Deployment completed for the Sovereign View resource." /> |
 
 The deployment completes within a few seconds, and your Sovereign View resource is created.
 
