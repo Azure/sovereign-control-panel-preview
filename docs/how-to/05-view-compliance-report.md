@@ -1,6 +1,6 @@
 # View the sovereignty control report
 
-After data collection is complete, your Sovereign View resource presents a sovereignty control report in the Azure portal. This guide explains how to read the report and how to manage and delete the resource over time.
+After data collection is complete, your Sovereign View resource presents a sovereignty control report in the Azure portal. This guide explains how to read the report and manage the resource over time.
 
 ## Prerequisites
 
@@ -22,14 +22,7 @@ After data collection is complete, your Sovereign View resource presents a sover
 
 The Sovereign View resource periodically refreshes its data (for example, every 24 hours, or as policies trigger scans). You don't need to re-run anything manually — check the resource page for updated sovereign control status over time.
 
-## Delete a Sovereign View
-
-You can delete the Sovereign View resource from the Azure portal by selecting **Delete** on the resource's page, just like any other Azure resource. To delete it, you need **Contributor** or **Owner** rights on the subscription and **Resource Policy Contributor** permission on the in-scope subscriptions and management groups.
-
-<img src="../assets/img-43.png" width="700" alt="Deleting the Sovereign View resource from the Azure portal." />
-
-Deleting the resource removes its managed identity and any stored data. It doesn't affect any of your other resources or configurations — it simply deletes the Sovereign View. If you need the view again later, recreate the resource and reassign permissions.
-
 ## Next steps
 
-- [Troubleshooting and support](/docs/how-to/06-troubleshooting-and-support.md)
+- [Delete a Sovereign View](/docs/how-to/06-delete-sovereign-view.md)
+- [Troubleshooting and support](/docs/how-to/07-troubleshooting-and-support.md)
