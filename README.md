@@ -1,15 +1,15 @@
 # Sovereign Control Panel Private Preview
 
-Sovereign Control Panel (SCP) is a new Azure sovereignty posture control center that gives organizations transparency, control, and confidence as they work to meet their sovereignty and compliance requirements. It offers a single unified view — a "single pane of glass" — showing where your organization stands on data sovereignty and regulatory compliance across your Azure estate.
+Sovereign Control Panel (SCP) is a unified Azure portal experience for viewing, managing, and evaluating sovereignty posture across tenant resources. It aggregates sovereignty signals into a centralised, and intuitive console for end users, and reviewers to view and verify sovereignty requirements.
 
 This repository contains the onboarding documentation for the SCP Private Preview.
 
 > [!IMPORTANT]
-> Sovereign Control Panel is currently in an **invite-only Private Preview**. Access requires an executed agreement with Microsoft. Features, APIs, and experiences described here may change before general availability and are subject to the [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/).
+> Sovereign Control Panel is currently in an **invite-only** Private Preview. 
 
 ## What SCP does in Private Preview
 
-Private Preview focuses on the **View Experience** — the ability to create and view Sovereign Compliance "Views" across your Azure environment. In this phase, SCP is **read-only**: it does not create or modify cloud resources, making it a safe, observational tool for compliance monitoring. It emphasizes posture visibility, helping you monitor existing Azure resources ("brownfield" environments) for compliance signals without changing them.
+Private Preview focuses on the **View Experience** — the ability to create and view Sovereign control across your Azure resources. In this phase, SCP is **read-only**: it does not update or auto remediate cloud resources, making it a safe, observational tool for monitoring. It emphasizes posture visibility, helping you monitor existing Azure resources for sovereign control signals without changing them.
 
 With SCP, you can:
 
@@ -18,34 +18,35 @@ With SCP, you can:
 - Drill down from a high-level posture summary to the specific resource that is flagged, and understand why.
 - Generate audit-ready posture reports for internal stakeholders, auditors, and regulators.
 
-## Key concept: Sovereign View
+## Key concept: Sovereign view
 
-A **Sovereign View (Preview)** is a new Azure resource type used to define what you want to monitor for sovereignty compliance. Creating a Sovereign View lets you select:
+A **Sovereign view (Preview)** is a new Azure resource type used to define what you want to monitor for sovereignty control. Creating a Sovereign view lets you select:
 
 - A **scope** of Azure resources — for example, a single subscription, a group of subscriptions, or a management group hierarchy.
-- A set of **sovereign control signals** (policy-based initiatives) to assess.
+- A set of **sovereign control signals** (policy-based initiatives, data encryption) to assess.
 
 The result is a tailored compliance view for that scope, surfaced in the Azure portal.
+
+<img width="2109" height="1970" alt="Screenshot 2026-06-24 124125" src="https://github.com/user-attachments/assets/ea5ad72c-db68-43a6-9a11-e68ffcb33561" />
 
 ## Features
 
 | Feature | Description |
 | ------- | ----------- |
-| Single pane of glass | Aggregate sovereignty and compliance signals across your Azure estate into one unified posture view. |
+|Centralised Experience| Aggregate sovereignty controls and signals across your Azure estate into one unified posture view. |
 | Sovereign Views | Define reusable, scoped evaluations by subscription, management group, and selected control signals. |
-| Read-only posture monitoring | Observe brownfield environments safely — the preview makes no changes to your cloud resources. |
 | Drill-down and explainability | Move from high-level posture to the specific non-compliant resource, with reasoning on why it's flagged. |
-| Audit-ready reporting | Export posture and compliance reports suitable for internal audit and regulator review. |
-| RBAC-aware experience | Posture data is scoped to the signed-in user's Azure permissions. |
 
 ## Who should use SCP
 
-SCP is intended for governments and regulated industries that need to demonstrate alignment with local laws, policies, and regulatory frameworks while continuing to benefit from public-cloud innovation. Typical roles include:
+SCP is intended for  organizations  are on Azure  and need to demonstrate strong alignment with local laws, policy frameworks while continuing to benefit from public-cloud innovation, resiliency, and security. 
 
-- **Tenant administrators** — overall accountability for sovereignty posture.
-- **Management group and subscription owners** — governance, monitoring, and remediation.
-- **Compliance, risk, and security leaders** — executive-level posture and trend reporting.
-- **Auditors and regulators** — read-only posture access and reporting.
+Typical organizations include:
+
+- **National and federal governments** and public sector agencies.
+- **Regulated industries**such as financial services, healthcare, defense, energy, and critical infrastructure.
+- **National cloud and sovereign cloud** operators building regulated offerings on Azure.
+- Any other organization that wants to host some, or most of their workloads and resources in accordance with the **[SEAL framework](https://commission.europa.eu/document/download/09579818-64a6-4dd5-9577-446ab6219113_en)**  
 
 The current Private Preview is invite-only and targets brownfield customers with existing Azure estates.
 
@@ -53,10 +54,8 @@ The current Private Preview is invite-only and targets brownfield customers with
 
 Before you begin onboarding, make sure you have:
 
-- An Azure subscription, with the appropriate permissions on the scope you want to evaluate.
-- One or more subscriptions or a management group hierarchy that you want to bring into a Sovereign View.
-- An accepted invitation to the SCP Private Preview and any required feature flags enabled on your tenant.
-- Network connectivity to the Azure portal.
+- Azure tenant id along with the subscription id(s)  shared via onboarding form
+- Sufficient Azure RBAC access to create the view and configure the required scope as per the table below-  
 
 ## Onboarding
 
@@ -76,13 +75,12 @@ Follow these how-to modules to set up your first Sovereign View and start seeing
 
 In this Private Preview we support the following scenarios:
 
-- **Sovereignty posture monitoring** — a read-only "show me where I stand" experience across data residency, encryption, network isolation, and policy compliance.
-- **Regulated compliance and audit** — prove which controls are applied and generate audit-ready exports for regulators and internal auditors.
-- **Brownfield customer onboarding** — bring existing subscriptions and management groups and evaluate posture without re-architecting your estate.
+- **Sovereignty posture monitoring**. A "show me where I stand" view across data residency, encryption, network isolation — built from aggregated signals, not policy coverage alone.
+- **Evaluating multi-resource controls**. Get a credible verdict on controls like Customer-Managed Keys or private endpoints, where correctness depends on several resources together. 
 
 ## Support and feedback
 
-We prefer support requests, feedback, and bugs for the Private Preview features to be emailed to **XXXXXX** or raised directly with your Microsoft contacts. We also accept bugs and feedback filed through [GitHub Issues](../../issues).
+We prefer support requests, feedback, and bugs for the Private Preview features to be emailed to **Azscp@microsoft.com** or raised directly with the team via Team Channel. We also accept bugs and feedback filed through [GitHub Issues](../../issues).
 
 > [!NOTE]
 > Do not report security vulnerabilities through public GitHub issues. See [SECURITY.md](SECURITY.md) for reporting guidance.
@@ -92,5 +90,4 @@ We prefer support requests, feedback, and bugs for the Private Preview features 
 - [Documentation hub](/docs/README.md)
 - [Glossary](/docs/reference/glossary.md)
 - [What is Microsoft Sovereign Cloud?](https://learn.microsoft.com/azure/azure-sovereign-clouds/microsoft-sovereign-cloud)
-- [Sovereign Landing Zone overview](https://learn.microsoft.com/azure/azure-sovereign-clouds/public/overview-sovereign-landing-zone)
 - [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/)
