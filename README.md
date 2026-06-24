@@ -9,14 +9,14 @@ This repository contains the onboarding documentation for the SCP Private Previe
 
 ## What SCP does in Private Preview
 
-Private Preview focuses on the **View Experience** — the ability to create and view Sovereign control across your Azure resources. In this phase, SCP is **read-only**: it does not update or auto remediate cloud resources, making it a safe, observational tool for monitoring. It emphasizes posture visibility, helping you monitor existing Azure resources for sovereign control signals without changing them.
+Private Preview focuses on the **View Experience** — the ability to create and view Sovereign control across your Azure resources. In this phase, SCP is **read-only**. It does not update or auto remediate cloud resources, making it a safe, observational tool for monitoring. It emphasizes posture visibility, helping you monitor existing Azure resources for sovereign control signals without changing them.
 
 With SCP, you can:
 
 - View your sovereignty and compliance posture across subscriptions and management groups in one place.
 - Create **Sovereign Views** that scope an evaluation to the resources and control signals you care about.
 - Drill down from a high-level posture summary to the specific resource that is flagged, and understand why.
-- Generate audit-ready posture reports for internal stakeholders, auditors, and regulators.
+
 
 ## Key concept: Sovereign view
 
