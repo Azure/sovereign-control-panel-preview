@@ -5,7 +5,7 @@ Sovereign Control Panel (SCP) is a unified Azure portal experience for viewing, 
 This repository contains the onboarding documentation for the SCP Private Preview.
 
 > [!IMPORTANT]
-> Sovereign Control Panel is currently in an **invite-only** Private Preview. 
+> Sovereign Control Panel is currently in an **invite-only**  
 
 ## What SCP does in Private Preview
 
