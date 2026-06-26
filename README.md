@@ -39,14 +39,15 @@ The result is a tailored compliance view for that scope, surfaced in the Azure p
 
 ## Who should use SCP
 
-SCP is intended for  organizations  are on Azure  and need to demonstrate strong alignment with local laws, policy frameworks while continuing to benefit from public-cloud innovation, resiliency, and security. 
+SCP is intended for organizations that are on Azure  and need to demonstrate strong alignment with local laws, policy frameworks while continuing to benefit from public-cloud innovation, resiliency, and security. 
 
-Typical organizations include:
+Typical users of SCP include organizations that want to host some, or most of their workloads and resources in accordance with regulatory requirements, e.g., [SEAL framework](https://commission.europa.eu/document/download/09579818-64a6-4dd5-9577-446ab6219113_en). 
 
-- **National and federal governments** and public sector agencies.
-- **Regulated industries**such as financial services, healthcare, defense, energy, and critical infrastructure.
-- **National cloud and sovereign cloud** operators building regulated offerings on Azure.
-- Any other organization that wants to host some, or most of their workloads and resources in accordance with the **[SEAL framework](https://commission.europa.eu/document/download/09579818-64a6-4dd5-9577-446ab6219113_en)**  
+ - These can be national and federal government and public sector agencies.  
+
+ - Regulated industries such as financial, healthcare, defense, energy, and critical infrastructure services. 
+
+ - National and sovereign cloud operators 
 
 The current Private Preview is invite-only and targets brownfield customers with existing Azure estates.
 
@@ -55,7 +56,7 @@ The current Private Preview is invite-only and targets brownfield customers with
 Before you begin onboarding, make sure you have:
 
 - Azure tenant id along with the subscription id(s)  shared via onboarding form
-- Sufficient Azure RBAC access to create the view and configure the required scope as per the table below-  
+- Sufficient Azure RBAC access to create the view and configure the required scope as mentioned in [Prerequisites and roles](https://github.com/Azure/sovereign-control-panel-private-preview/blob/main/docs/how-to/01-prerequisites-and-roles.md)
 
 ## Onboarding
 
@@ -75,8 +76,9 @@ Follow these how-to modules to set up your first Sovereign View and start seeing
 
 In this Private Preview we support the following scenarios:
 
-- **Sovereignty posture monitoring**. A "show me where I stand" view across data residency, encryption, network isolation — built from aggregated signals, not policy coverage alone.
-- **Evaluating multi-resource controls**. Get a credible verdict on controls like Customer-Managed Keys or private endpoints, where correctness depends on several resources together. 
+ - **Sovereignty posture monitoring**. A "show me where I stand" view across data residency, encryption, network isolation — built from aggregated signals, not policy coverage alone. 
+
+ - **Evaluating multi-resource controls.** Get a verdict on controls like Customer-Managed Keys or private endpoints, where correctness depends on several resources together. 
 
 ## Support and feedback
 
