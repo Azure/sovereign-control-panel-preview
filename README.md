@@ -79,7 +79,7 @@ In this Private Preview we support the following scenarios:
  - **Evaluating multi-resource controls.** Get a verdict on controls like Customer-Managed Keys or private endpoints, where correctness depends on several resources together. 
 
 ## Support and feedback
-We prefer support requests, feedback, and bugs for the Private Preview features to be emailed to **[Microsoft Sovereign Control Panel](Azscp@microsoft.com)** or raised directly with your Microsoft contacts.
+We prefer support requests, feedback, and bugs for the Private Preview features to be emailed to **(Azscp@microsoft.com)** or raised directly with your Microsoft contacts.
 
 > [!NOTE]
 > Do not report security vulnerabilities through public GitHub issues. See [SECURITY.md](SECURITY.md) for reporting guidance.
