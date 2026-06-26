@@ -11,12 +11,12 @@ After data collection is complete, your Sovereign View resource presents a sover
 
 After data collection is complete, your Sovereign View resource presents a sovereignty control report in the Azure portal.
 
-<img src="../assets/img-40.jpg" width="700" alt="Sovereignty control report in the Azure portal." />
+<img src="../assets/img-40.jpg" width="900" alt="Sovereignty control report in the Azure portal." />
 
 | Area | What you see | Screenshot |
 | --- | --- | --- |
-| **Report dashboard** | Navigate to your Sovereign View resource in the Azure portal. The **Overview** tab displays a summary of results — typically the overall status of the selected scope, with a breakdown by control category (such as data residency or encryption). | <img src="../assets/img-41.jpg" width="700" alt="Report dashboard on the Overview tab." /> |
-| **Reasoning and definitions** | For each control or policy listed, you can **drill down** for more information about what it checks. Definitions are available on the Azure Policy definition page in the portal. For this preview, the definitions correspond to sovereignty best practices such as encryption and data location restrictions. | <img src="../assets/img-42.jpg" width="700" alt="Reasoning and policy definitions for a control." /> |
+| **Report dashboard** | Navigate to your Sovereign View resource in the Azure portal. The **Overview** tab displays a summary of results — typically the overall status of the selected scope, with a breakdown by control category (such as data residency or encryption). | <img src="../assets/img-41.jpg" width="900" alt="Report dashboard on the Overview tab." /> |
+| **Reasoning and definitions** | For each control or policy listed, you can **drill down** for more information about what it checks. Definitions are available on the Azure Policy definition page in the portal. For this preview, the definitions correspond to sovereignty best practices such as encryption and data location restrictions. | <img src="../assets/img-42.jpg" width="900" alt="Reasoning and policy definitions for a control." /> |
 
 ## Manage the resource
 

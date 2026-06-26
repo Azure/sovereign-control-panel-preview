@@ -11,7 +11,7 @@ This guide explains how to delete a Sovereign View resource and what happens whe
 
 You can delete the Sovereign View resource from the Azure portal by selecting **Delete** on the resource's page, just like any other Azure resource.
 
-<img src="../assets/img-43.png" width="700" alt="Deleting the Sovereign View resource from the Azure portal." />
+<img src="../assets/img-43.png" width="900" alt="Deleting the Sovereign View resource from the Azure portal." />
 
 ## What happens when you delete
 
