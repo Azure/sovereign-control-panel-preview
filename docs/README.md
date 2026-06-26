@@ -5,7 +5,7 @@ This repository includes how-to guides and reference content for onboarding to t
 Sovereign Control Panel (SCP) is a new Azure portal capability that helps organizations meet their sovereign control requirements. It provides a single, unified sovereignty control posture across data residency, encryption, and controlled network exposure. With SCP, you create a **Sovereign View** — a consolidated sovereignty posture across the Azure subscriptions or management groups you choose.
 
 > [!IMPORTANT]
-> Sovereign Control Panel is in an invite-only **Private Preview**. Features and experiences described here may change before general availability and are subject to the [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/).
+> Sovereign Control Panel is in an invite-only **Private Preview**. 
 
 ## How-to guides
 
@@ -29,4 +29,4 @@ Use these modules to complete an end-to-end onboarding: register the resource pr
 
 ## Support and feedback
 
-We prefer support requests, feedback, and bugs for the Private Preview features to be emailed to **XXXXXX** or raised directly with your Microsoft contacts. We also accept bugs and feedback filed through [GitHub Issues](../../issues).
+We prefer support requests, feedback, and bugs for the Private Preview features to be emailed to **Azscp@microsoft.com** or raised directly with your Microsoft contacts.
