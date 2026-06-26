@@ -4,26 +4,8 @@
 
 **© 2026 Microsoft Corporation. All rights reserved.**
 
-This private repository (the **"Repository"**) includes documentation, materials, and other content (collectively, the **"Repository Content"**) provided **"as is"**. Information and views expressed in the Repository Content, including URLs and references to other Internet websites, may change without notice. You bear the risk of using it.
+This private repository (“Repository”) includes documentation, materials, etc. (“Repository Content”) that are provided "as-is." Information and views expressed in the Repository Content, including URL and other Internet Web site references, may change without notice. You bear the risk of using it. The Repository Content is for informational purposes only.  Some information relates to pre-released product which may be substantially modified before it is commercially released. MICROSOFT MAKES NO WARRANTIES, EXPRESS OR IMPLIED, IN THIS REPOSITORY OR THE REPOSITORY CONTENT. 
 
-The Repository Content is provided for informational purposes only. Some information relates to pre-release products that may be substantially modified before commercial release. Microsoft makes no commitment to update the Repository Content.
-
-**MICROSOFT MAKES NO WARRANTIES, EXPRESS OR IMPLIED, WITH RESPECT TO THIS REPOSITORY OR THE REPOSITORY CONTENT.**
-
-**Intellectual property**
-
-Nothing in this Repository grants you a license to any Microsoft patents, trademarks, copyrights, or other intellectual property. The only rights you receive are those expressly set out in the [LICENSE](LICENSE) file.
-
-**Privacy**
-
-For information about how Microsoft handles your data, see the [Microsoft Privacy Statement](https://privacy.microsoft.com/en-us/privacystatement).
-
-**Preview software**
-
-Content in this Repository may describe or reference software or services that are in preview. Preview features are not covered by an SLA, are not recommended for production workloads, and may be changed or discontinued at any time without notice.
-
-**Security**
-
-**Please do not report security vulnerabilities through public GitHub issues.** See [SECURITY.md](SECURITY.md) for reporting guidance.
+The Repository and Repository Content are confidential and proprietary to Microsoft. It is disclosed and can be used only pursuant to your non-disclosure agreement with Microsoft. This Repository does not provide you with any legal rights to any intellectual property in any Microsoft product or documentation. You may copy and use the Repository Content only for your internal reference purposes. 
 
 <!-- END MICROSOFT LEGAL_NOTICE.MD BLOCK -->
