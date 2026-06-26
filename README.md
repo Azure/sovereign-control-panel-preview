@@ -27,8 +27,6 @@ A **Sovereign view (Preview)** is a new Azure resource type used to define what 
 
 The result is a tailored compliance view for that scope, surfaced in the Azure portal.
 
-<img width="2109" height="1970" alt="Screenshot 2026-06-24 124125" src="https://github.com/user-attachments/assets/ea5ad72c-db68-43a6-9a11-e68ffcb33561" />
-
 ## Features
 
 | Feature | Description |
@@ -81,8 +79,7 @@ In this Private Preview we support the following scenarios:
  - **Evaluating multi-resource controls.** Get a verdict on controls like Customer-Managed Keys or private endpoints, where correctness depends on several resources together. 
 
 ## Support and feedback
-
-We prefer support requests, feedback, and bugs for the Private Preview features to be emailed to **Azscp@microsoft.com** or raised directly with the team via Team Channel. We also accept bugs and feedback filed through [GitHub Issues](../../issues).
+We prefer support requests, feedback, and bugs for the Private Preview features to be emailed to **[Microsoft Sovereign Control Panel](Azscp@microsoft.com)** or raised directly with your Microsoft contacts.
 
 > [!NOTE]
 > Do not report security vulnerabilities through public GitHub issues. See [SECURITY.md](SECURITY.md) for reporting guidance.
