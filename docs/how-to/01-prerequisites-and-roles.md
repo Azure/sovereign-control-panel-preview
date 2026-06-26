@@ -13,15 +13,17 @@ Before you begin onboarding, make sure the following are in place:
 
 The following Azure roles are required for each onboarding action.
 
-| Action | Role(s) required |
-| ------ | ---------------- |
-| Create a Sovereign View | Contributor **and** Resource Policy Contributor, **or** Owner |
-| Assign roles to the Sovereign View identity (grant Reader + Resource Policy Contributor) | User Access Administrator, **or** Owner |
-| View the compliance report of a Sovereign View | Read permission on the Sovereign View, **or** Contributor + Resource Policy Contributor |
-| Delete a Sovereign View | Contributor **and** Resource Policy Contributor, **or** Owner |
+### ROLE & ACCESS
+
+| **Action** | **Role(s) required** |
+|---|---|
+| **Create a Sovereign view** | • Contributor access to the subscription where user wants to create view. **AND**<br>• Contributor + Resource Policy Contributor on all scoped resources\*<br><br>**OR**<br><br>• Owner permission on subscription where view is to be created and on all the scoped resources. |
+| **Assign roles to the Sovereign view identity (grant Reader + Resource Policy Contributor)** | • User Access Administrator on all scoped resources<br><br>**OR**<br><br>• Owner on all the scoped resources. |
+| **View report of a Sovereign view** *(User can view report only if assign role to view identity is completed)* | • Reader permission on the Sovereign view |
+| **Delete a Sovereign view** | • Contributor on the subscription where view is created **AND**<br>• Resource Policy Contributor on all the scoped resources<br><br>**OR**<br><br>• Owner permission on subscription where view is to be created and on all the scoped resources. |
 
 > [!NOTE]
-> A user with **Contributor + Resource Policy Contributor + User Access Administrator** can create a Sovereign View, assign its managed identity, and view the reports end to end.
+> Scoped resources - These are the subscriptions and management groups for which you would like to evaluate sovereignty posture. All resources within the selected subscriptions and management groups will be included in the sovereignty posture assessment. 
 
 ## Next steps
 
