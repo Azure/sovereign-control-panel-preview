@@ -12,7 +12,7 @@ After the resource provider is registered, you can create a Sovereign View resou
 | # | Step | Screenshot |
 | :-: | --- | --- |
 | 1 | In the Azure portal's top search bar, type **Sovereign**, then select **Sovereign Control Panel**. | <img src="../assets/img-06.png" width="900" alt="Searching for Sovereign Control Panel in the Azure portal." /> |
-| 2 | On the overview page, **select Create View**. | <img src="../assets/img-07.png" width="900" alt="Selecting Create View on the overview page." /> |
+| 2 | On the overview page, **select Create View**. | <img src="docs/assets/docs/assets/img-07.png" width="900"> |
 
 ## Complete the Basics tab
 
