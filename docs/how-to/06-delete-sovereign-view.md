@@ -15,7 +15,7 @@ You can delete the Sovereign View resource from the Azure portal by selecting **
 
 ## What happens when you delete
 
-Deleting the resource removes its managed identity and any stored data. It doesn't affect any of your other resources or configurations — it simply deletes the Sovereign View.
+Deleting the resource will removes its managed identity and any stored data. It doesn't affect any of your other resources or configurations — it simply deletes the Sovereign View.
 
 If you need the view again later, recreate the resource and reassign permissions. See [Module 3: Create a Sovereign View](/docs/how-to/03-create-sovereign-view.md) and [Module 4: Assign managed identity roles](/docs/how-to/04-assign-managed-identity-roles.md).
 
