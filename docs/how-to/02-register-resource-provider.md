@@ -14,16 +14,16 @@ You only need to do this once per subscription.
 | # | Step | Screenshot |
 | :-: | --- | --- |
 | 1 | **Sign in** to the [Azure portal](https://portal.azure.com). | — |
-| 2 | On the Azure portal menu, **search for and select Subscriptions**. | <img src="../assets/img-01.png" width="900" alt="Searching for Subscriptions in the Azure portal." /> |
-| 3 | **Select the subscription ID** you shared in the onboarding form. | <img src="../assets/img-02.png" width="900" alt="Selecting a subscription from the list." /> |
-| 4 | In the left menu, under **Settings**, select **Resource providers**. | <img src="../assets/img-03.png" width="900" alt="Selecting Resource providers under Settings." /> |
-| 5 | **Search for Microsoft.Sovereign**. | <img src="../assets/img-04.png" width="900" alt="Searching for the Microsoft.Sovereign resource provider." /> |
-| 6 | Select the resource provider, then select **Register**. | <img src="../assets/img-05.png" width="900" alt="Registering the Microsoft.Sovereign resource provider." /> |
+| 2 | On the Azure portal menu, search for and select Subscriptions. | <img src="../assets/img-01.png" width="900" alt="Searching for Subscriptions in the Azure portal." /> |
+| 3 | Select the subscription ID you (shared in the onboarding form) want to create the view. | <img src="../assets/img-02.png" width="900" alt="Selecting a subscription from the list." /> |
+| 4 | On the left menu, under **Settings**, select **Resource providers**. | <img src="../assets/img-03.png" width="900" alt="Selecting Resource providers under Settings." /> |
+| 5 | **Search for Microsoft.Sovereign** to register. | <img src="../assets/img-04.png" width="900" alt="Searching for the Microsoft.Sovereign resource provider." /> |
+| 6 | Click on the resource provider and select **Register**. | <img src="../assets/img-05.png" width="900" alt="Registering the Microsoft.Sovereign resource provider." /> |
 
 > [!TIP]
 > To maintain least privilege in your subscription, register only the resource providers that you intend to use.
 
-Registering the resource provider lets you create Sovereign View resources in this subscription.
+Registering with the resource provider allows you to create Sovereign view resources in this subscription. You only need to do this once per subscription.
 
 ## Next steps
 
