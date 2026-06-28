@@ -58,7 +58,7 @@ Before you begin onboarding, make sure you have:
 
 ## Onboarding
 
-Follow these how-to modules to set up your first Sovereign View and start seeing results. See the [documentation hub](/docs/README.md) for the full set of guides.
+Follow these how-to modules to set up your first Sovereign view. See the [documentation hub](/docs/README.md) for the full set of guides.
 
 | Module | Description |
 | ------ | ----------- |
