@@ -22,7 +22,7 @@ This usually indicates a permission issue. The portal lists only resources where
 
 **The report is empty or incomplete**
 
-This can happen when the managed identity lacks access to part of your scope. Revisit the role assignments for the identity (see [Module 4](/docs/how-to/04-assign-managed-identity-roles.md)) and make sure the **Reader** role is assigned on all specified subscriptions and management groups. If something was missed, add the role and allow time for the data to refresh.
+This can happen when the managed identity lacks access to part of your scope. Revisit the role assignments for the identity (see [Module 4](/docs/how-to/04-assign-managed-identity-roles.md)) and **Reader** and **Resource Policy Contributor**role is properly assigned on all specified subscriptions and management groups. If something was missed, add the role and allow time for data to refresh. .
 
 **Understanding "Not Applicable" or "Not in definitions" statuses**
 
@@ -30,7 +30,7 @@ These statuses indicate that a particular sovereign control found no applicable 
 
 ## Get help or give feedback
 
-To report an issue or request assistance, contact your Microsoft account representative or submit a support request through the [Azure portal](https://portal.azure.com). For product feedback, reach us at **{email id}** or through Teams. You can also file bugs and feedback through [GitHub Issues](../../issues).
+To report an issue or request assistance, contact your Microsoft account representative or email us. For product feedback, reach us at **Azscp@microsoft.com** or through Teams chat. 
 
 > [!NOTE]
 > Don't report security vulnerabilities through public GitHub issues. See [SECURITY.md](/SECURITY.md) for reporting guidance.
