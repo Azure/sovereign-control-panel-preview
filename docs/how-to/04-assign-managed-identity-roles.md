@@ -24,12 +24,14 @@ Once you get the User Access Administrator permission, follow below steps to ass
 
 | # | Step | Screenshot |
 | :-: | --- | --- |
-| 1 | In the Sovereign View, select **Properties**, then select a management group or subscription in scope, **one at a time**. | <img src="../assets/img-22.png" width="900" alt="looking through subscriptions." /> |
-| 2 |Click **Access control (IAM)**, and then click + **Add** and select > Add role assignment from the dropdown. **+ Add** > **Add role assignment**. | <img src="../assets/img-23.png" width="900" alt="Selecting a management group or subscription to assign the Reader role." />|
-| 3 | **Search for Reader**, and select it. | <img src="../assets/img-24.png" width="900" alt="Selecting Add role assignment under Access control (IAM)." />|
-| 4 | In **Assign access to**, choose **User, group, or service principal**, then search for and select the Sovereign View's managed identity (it appears as a service principal). | <img src="https://github.com/Azure/sovereign-control-panel-private-preview/blob/main/assets/IAM.png" width="900" alt="Selecting the Sovereign View managed identity as the assignee." /> |
-| 5 | Select **Review + assign** to finalize the role assignment. | <img src="../assets/img-26.jpg" width="900" alt="Selecting Review + assign to finalize the Reader assignment." /> |
-| 6 | Repeat the steps above to also assign the **Resource Policy Contributor** role to the same managed identity. | <img src="../assets/img-27.jpg" width="900" alt="Searching for and selecting the Resource Policy Contributor role." /><br><img src="../assets/img-29.jpg" width="900" alt="Adding the managed identity as the assignee for Resource Policy Contributor." /> |
+| 1 | In the Sovereign View, select **Properties**, then select a management group or subscription in scope, **one at a time**. | <img src="../assets/img-22.png" width="1200" alt="looking through subscriptions." /> |
+| 2 |Click **Access control (IAM)**, and then click + **Add** and select > Add role assignment from the dropdown. **+ Add** > **Add role assignment**. | <img src="../assets/img-23.png" width="1200" alt="Selecting a management group or subscription to assign the Reader role." />|
+| 3 | **Search for Reader**, and select it. | <img src="../assets/img-24.png" width="1200" alt="Selecting Add role assignment under Access control (IAM)." />|
+| 4 | In **Assign access to**, choose **User, group, or service principal**, then search for and select the Sovereign View's managed identity (it appears as a service principal). | <img src="https://github.com/Azure/sovereign-control-panel-private-preview/blob/main/assets/IAM.png" width="1200" alt="Selecting the Sovereign View managed identity as the assignee." /> |
+| 5 | Select **Review + assign** to finalize the role assignment. | <img src="https://github.com/Azure/sovereign-control-panel-private-preview/blob/main/docs/assets/img-26.png" width="1200" alt="Selecting Review + assign to finalize the Reader assignment." /> |
+| 6 | Repeat the steps above to also assign the **Resource Policy Contributor** role to the same managed identity. | <img src="../assets/img-27.jpg" width="1200" alt="Searching for and selecting the Resource Policy Contributor role." />
+| 7 |Post clicking the Next button, user has to add the id to the get the resource added.| <img src="../assets/img-28.jpg" width="1200" alt="Adding the managed identity as the assignee for Resource Policy Contributor." /> |
+| 8 | Select **Review + assign** to finalize the role assignment. | <img src="../assets/img-29.jpg" width="1200" alt="Selecting Review + assign to finalize the Reader assignment." />|
 
 Repeat this process for **each** subscription and management group in your Sovereign View scope. This grants the Sovereign View permission to read the configuration of resources in those scopes.
 
@@ -39,13 +41,13 @@ The [`assign-roles.ps1`](/docs/scripts/assign-roles.ps1) script grants the view'
 
 | # | Step | Screenshot |
 | :-: | --- | --- |
-| 1 | **Open the Sovereign View**. | <img src="../assets/img-30.png" width="900" alt="Opening the Sovereign View before granting roles." /> |
-| 2 | Select **PowerShell** at the top of the portal to open **Azure Cloud Shell**. | <img src="../assets/img-31.png" width="900" alt="Opening Azure Cloud Shell in PowerShell mode." /> |
-| 3 | In Cloud Shell, Open **Manage files** > **Upload**, and upload the [`assign-roles.ps1`](/docs/scripts/assign-roles.ps1) script. | <img src="../assets/img-32.png" width="900" alt="Selecting Manage files to upload the script." /><br><img src="../assets/img-34.png" width="900" alt="Uploading the assign-roles.ps1 script to Cloud Shell." /> |
-| 4 | Run the script with `./assign-roles.ps1`. It verifies your sign-in, installs the resource-graph extension (one time), and lists the available Sovereign Views. | <img src="../assets/img-35.png" width="900" alt="Running the assign-roles.ps1 script in Cloud Shell." /> |
-| 5 | **Select the target view** Enter the number of your Sovereign view. The script retrieves the view’s Managed Identity Principal ID and displays its scope — the subscriptions and management groups assigned to the view. | <img src="../assets/img-36.png" width="900" alt="Selecting the target Sovereign View in the script." /> |
-| 6 | Confirm the role assignments The script checks existing assignments and shows which of the required roles — Reader and Resource Policy Contributor — are missing for each scope item. Review the planned assignments and enter Y to proceed. . | <img src="../assets/img-37.png" width="900" alt="Confirming the planned role assignments." /> |
-| 7 | **Roles assigned ** The script assigns Reader and Resource Policy Contributor to the managed identity on each in-scope subscription and prints a summary of the results. . | <img src="../assets/img-38.png" width="900" alt="Summary of assigned roles printed by the script." /> |
+| 1 | **Open the Sovereign View**. | <img src="../assets/img-30.png" width="1200" alt="Opening the Sovereign View before granting roles." /> |
+| 2 | Select **PowerShell** at the top of the portal to open **Azure Cloud Shell**. | <img src="../assets/img-31.png" width="1200" alt="Opening Azure Cloud Shell in PowerShell mode." /> |
+| 3 | In Cloud Shell, Open **Manage files** > **Upload**, and upload the [`assign-roles.ps1`](/docs/scripts/assign-roles.ps1) script. | <img src="../assets/img-32.png" width="1200" alt="Selecting Manage files to upload the script." /><br><img src="../assets/img-34.png" width="1200" alt="Uploading the assign-roles.ps1 script to Cloud Shell." /> |
+| 4 | **Run the script** with `./assign-roles.ps1`. It verifies your sign-in, installs the resource-graph extension (one time), and lists the available Sovereign Views. | <img src="../assets/img-35.png" width="1200" alt="Running the assign-roles.ps1 script in Cloud Shell." /> |
+| 5 | **Select the target view** Enter the number of your Sovereign view. The script retrieves the view’s Managed Identity Principal ID and displays its scope — the subscriptions and management groups assigned to the view. | <img src="../assets/img-36.png" width="1200" alt="Selecting the target Sovereign View in the script." /> |
+| 6 | **Confirm the role assignments** The script checks existing assignments and shows which of the required roles — Reader and Resource Policy Contributor — are missing for each scope item. Review the planned assignments and enter Y to proceed. . | <img src="../assets/img-37.png" width="1200" alt="Confirming the planned role assignments." /> |
+| 7 | **Roles assigned** The script assigns Reader and Resource Policy Contributor to the managed identity on each in-scope subscription and prints a summary of the results. . | <img src="../assets/img-38.png" width="1200" alt="Summary of assigned roles printed by the script." /> |
 
 > [!TIP]
 > Run `./assign-roles.ps1 -DryRun` first to preview the assignments without making any changes.
