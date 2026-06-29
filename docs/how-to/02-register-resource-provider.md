@@ -6,7 +6,7 @@ You only need to do this once per subscription.
 
 ## Prerequisites
 
-- Complete [Module 1: Prerequisites and roles](/docs/how-to/01-prerequisites-and-roles.md).
+- Complete [Module 1: Roles and Permissions](https://github.com/Azure/sovereign-control-panel-private-preview/blob/main/docs/how-to/01-roles%20and%20permissions.md).
 - Use a subscription whose ID you shared in the onboarding form.
 
 ## Register Microsoft.Sovereign
