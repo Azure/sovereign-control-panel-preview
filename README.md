@@ -40,7 +40,7 @@ We prefer support requests, feedback, and bugs for the Private Preview features 
 
 ## Additional resources
 
-- [Learn More](/docs/Learn More.md)
+- [[Learn More](https://github.com/Azure/sovereign-control-panel-private-preview/blob/main/docs/Learn%20More.md)]
 - [Documentation hub](/docs/README.md)
 - [Glossary](/docs/reference/glossary.md)
 - [What is Microsoft Sovereign Cloud?](https://learn.microsoft.com/azure/azure-sovereign-clouds/microsoft-sovereign-cloud)
