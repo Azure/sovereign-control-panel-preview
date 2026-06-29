@@ -1,4 +1,4 @@
-# Prerequisites and roles
+# Roles and Permissions
 
 Use this guide to confirm you have the access and permissions needed before you onboard to the Sovereign Control Panel (SCP) Private Preview.
 
