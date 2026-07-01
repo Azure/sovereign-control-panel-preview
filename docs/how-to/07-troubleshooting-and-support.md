@@ -16,6 +16,16 @@ Sovereign View is in Private Preview. Be aware of these known constraints:
 
 Make sure the resource provider is registered (see [Module 2](/docs/how-to/02-register-resource-provider.md)) and that your account has the necessary permissions. If you can't find Sovereign Control Panel in the portal, confirm that you're enrolled in the preview program.
 
+**Sovereign View fails creation with Quota Exceeded Error**
+
+For Sovereign Views to fetch the required report data, Sovereign Control Panel needs to assign some policies in Audit mode to the Subscriptions/Management Groups which are added to the scope. Azure Policy has [a maximum limit of 200 Policy Assignments](https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/governance/includes/policy/azure-policy-limits.md) per Subscription/Management Group.
+
+Find the scopes in the failing Sovereign View which are close to or above this limit. You can use [the REST API](https://learn.microsoft.com/en-us/rest/api/policy-authorization/policy-assignments/list?view=rest-policy-authorization-2026-06-01&tabs=HTTP) to list all assignments for a Subscription/Management Group. Then
+- Either remove them from the scope
+- Delete any existing policy assignments which are not needed to create some headroom
+
+Once done, please try creating the Sovereign View again. Reach out to the SCP contact listed below if the issue persists.
+
 **Scope doesn't list all expected subscriptions or management groups**
 
 This usually indicates a permission issue. The portal lists only resources where you have **Contributor + Resource Policy Contributor** or **Owner** access. If a subscription or management group is missing, have an admin grant you access, ask them to create the view, or temporarily create the Sovereign View in a subscription you control.
