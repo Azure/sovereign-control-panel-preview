@@ -16,9 +16,7 @@ Private Preview focuses on the **View Experience** — the ability to create and
 > [!NOTE]
 > The demo video is view-only and downloading is disabled.
 
-<video controls src="https://microsoftapc-my.sharepoint.com/:v:/g/personal/surbhidey_microsoft_com/IQBHW0cQjJbQQLPslxErdjRNASzkrKM72WNM4hlSWJr7_bo?e=b7yj4c&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D">
-  Your browser does not support embedded video. Open the demo video directly.
-</video>
+[Watch the SCP demo video](https://microsoftapc-my.sharepoint.com/:v:/g/personal/surbhidey_microsoft_com/IQBHW0cQjJbQQLPslxErdjRNASzkrKM72WNM4hlSWJr7_bo?e=b7yj4c&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
 
 ## Prerequisites
 
