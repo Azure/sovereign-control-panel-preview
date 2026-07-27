@@ -11,13 +11,6 @@ This repository contains the onboarding documentation for the SCP Private Previe
 
 Private Preview focuses on the **View Experience** — the ability to create and view Sovereign control across your Azure resources. In this phase, SCP is **read-only**. It does not update or automatically remediate your resources.
 
-### Demo video
-
-> [!NOTE]
-> The demo video is view-only and downloading is disabled.
-
-[Watch the SCP demo video](https://microsoftapc-my.sharepoint.com/:v:/g/personal/surbhidey_microsoft_com/IQBHW0cQjJbQQLPslxErdjRNASzkrKM72WNM4hlSWJr7_bo?e=b7yj4c&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
-
 ## Prerequisites
 
 Before you begin onboarding, make sure you have:
