@@ -32,7 +32,7 @@ This usually indicates a permission issue. The portal lists only resources where
 
 **The report is empty or incomplete**
 
-This can happen when the managed identity lacks access to part of your scope. Revisit the role assignments for the identity (see [Module 4](/docs/how-to/04-assign-managed-identity-roles.md)) and **Reader** and **Resource Policy Contributor**role is properly assigned on all specified subscriptions and management groups. If something was missed, add the role and allow time for data to refresh. .
+This can happen when the managed identity lacks access to part of your scope. Revisit the role assignments for the identity (see [Module 4](/docs/how-to/04-assign-managed-identity-roles.md)) and **Reader** and **Resource Policy Contributor** role is properly assigned on all specified subscriptions and management groups. If something was missed, add the role and allow time for data to refresh. .
 
 **Understanding "Not Applicable" or "Not in definitions" statuses**
 
