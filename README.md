@@ -18,9 +18,9 @@ Before you begin onboarding, make sure you have:
 - Azure tenant id along with the subscription id(s) shared via [onboarding form](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR9kfDOroV5ZOpVqvGBArQP5UQVlIQ1I3UTNYOUpLNExHQ0RYQ1AwU0dMTzVaRi4u)
 - Sufficient Azure RBAC access to create the view and configure the required scope as mentioned in [roles and permission](https://github.com/Azure/sovereign-control-panel-private-preview/blob/main/docs/how-to/01-prerequisites-and-roles.md)
 
-## Onboarding
+## How to get started
 
-Follow these how-to modules to set up your first Sovereign view. See the [documentation hub](/docs/README.md) for the full set of guides.
+Follow these how-to modules to set up your first Sovereign view using Azure Portal (UI). See the [documentation hub](/docs/README.md) for the full set of guides.
 
 | Module | Description |
 | ------ | ----------- |
