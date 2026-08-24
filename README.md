@@ -21,7 +21,7 @@ Before you begin onboarding, make sure you have:
 ## How to get started
 
 <details open>
-<summary><h3>Using Azure portal (UI)</h3></summary>
+<summary><h3>Create Sovereign View using Azure portal (UI)</h3></summary>
 
 Follow these how-to modules to set up your first Sovereign view using Azure Portal (UI). See the [documentation hub](/docs/README.md) for the full set of guides.
 
