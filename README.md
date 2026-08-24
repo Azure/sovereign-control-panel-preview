@@ -40,48 +40,6 @@ Follow these how-to modules to set up your first Sovereign view using Azure Port
 <details>
 <summary><h3>Using Bicep</h3></summary>
 
-Register the `Microsoft.Sovereign` resource provider, then deploy a Sovereign View with its scope and policy initiative. Assign Reader to the view's managed identity at each selected scope.
-
-```bicep
-param viewName string
-param location string = resourceGroup().location
-param policyInitiativeId string
-
-resource view 'Microsoft.Sovereign/sovereignViews@2025-02-27-preview' = {
-  name: viewName
-  location: location
-  identity: {
-    type: 'SystemAssigned'
-  }
-  properties: {
-    scope: [
-      subscription().id
-    ]
-    policyInitiatives: [
-      policyInitiativeId
-    ]
-  }
-}
-
-var readerRoleDefinitionId = subscriptionResourceId(
-  'Microsoft.Authorization/roleDefinitions',
-  'acdd72a7-3385-48ef-bd42-f606fba81ae7'
-)
-
-resource readerAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(subscription().id, view.name, readerRoleDefinitionId)
-  properties: {
-    principalId: view.identity.principalId
-    principalType: 'ServicePrincipal'
-    roleDefinitionId: readerRoleDefinitionId
-  }
-}
-```
-
-Detailed Bicep support guidance is coming during Private Preview.
-
-</details>
-
 ## Support and feedback
 We prefer support requests, feedback, and bugs for the Private Preview features to be emailed to **(Azscp@microsoft.com)** or raised directly with your Microsoft contacts.
 
