@@ -40,6 +40,15 @@ Follow these how-to modules to set up your first Sovereign view using Azure Port
 <details>
 <summary><h3>Using Bicep</h3></summary>
 
+Use the Bicep deployment guide to create a Sovereign View with a repeatable,
+reviewable Infrastructure-as-Code workflow.
+
+| Module | Description |
+| ------ | ----------- |
+| [Deploy a Sovereign View with Bicep](/docs/how-to/03b-deploy-sovereign-view-with-bicep.md) | Configure, preview, deploy, and validate a Sovereign View across subscription and management-group scopes. |
+
+</details>
+
 ## Support and feedback
 We prefer support requests, feedback, and bugs for the Private Preview features to be emailed to **(Azscp@microsoft.com)** or raised directly with your Microsoft contacts.
 
