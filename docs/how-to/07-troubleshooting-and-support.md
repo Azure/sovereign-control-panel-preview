@@ -38,6 +38,13 @@ This can happen when the managed identity lacks access to part of your scope. Re
 
 These statuses indicate that a particular sovereign control found no applicable resources in the evaluated scope, or that the control is conditional and wasn't evaluated for your scenario. Many "Not Applicable" entries can be normal — for example, a control about Key Vault encryption shows **Not Applicable** if you have no key vaults. The report is expected to be generated and accessible within 24 hours of the evaluation. If you suspect an error, contact support.
 
+**Sovereign View statuses**
+ - **Healthy**: The Sovereign View is operationally ready and no permission action is required. 
+
+ - **Permission Missing**: Reader or Resource Policy Contributor is missing on one or more scopes. Request Owner or User Access Administrator access, or ask someone with that access to assign the required roles. Then verify that the permission status updates successfully. 
+
+ - **Unknown**: Unknown state can occur when there are API failures or the service returns 5xx or service is down. In this case, it is recommended to refresh and verify.
+
 ## Get help or give feedback
 
 To report an issue or request assistance, contact your Microsoft account representative or email us. For product feedback, reach us at **Azscp@microsoft.com** or through Teams chat. 
