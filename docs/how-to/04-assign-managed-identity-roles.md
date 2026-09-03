@@ -47,6 +47,12 @@ After the role assignments are in place, the Sovereign View begins collecting da
 
 An initial scan completes within 24 hours.
 
+## Verify permissions and operational status after creation
+
+After deployment completes, open the Sovereign View and go to properties in Overview. Confirm that dashboard generation has started and review Status info. Check this page even when every selected scope showed Role Assignment Permission = Yes, because an individual assignment can occasionally fail.
+
+<img src="../assets/img-44.png" width="1200" alt="Sovereign View Properties page showing scopes with Permission status values marked Assigned." />
+
 ## Next steps
 
 - [View the sovereignty control report](/docs/how-to/05-view-compliance-report.md)
