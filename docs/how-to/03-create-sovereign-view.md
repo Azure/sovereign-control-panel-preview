@@ -31,8 +31,8 @@ As you add scopes, SCP checks whether you have permission to assign roles on eac
 
 | # | Step | Screenshot |
 | :-: | --- | --- |
-| 1 | On the **Scope** tab, select **+ Add resources**. SCP checks your role assignment permission for every subscription and management group shown in **Add resources**. | <img src="../assets/img-11.png" width="900" alt="Selecting Add resources on the Scope tab." /> |
-| 2 |SCP checks your role assignment permission for every subscription and management group displayed in Add resources.| <img src="../assets/img-12.jpg" width="900" alt="Selecting a management group or subscriptions for the scope." /> |
+| 1 | On the **Scope** tab, select **+ Add resources**. | <img src="../assets/img-11.png" width="900" alt="Selecting Add resources on the Scope tab." /> |
+| 2 | SCP checks your role assignment permission for every subscription and management group shown in **Add resources**. | <img src="../assets/img-12.jpg" width="900" alt="Selecting a management group or subscriptions for the scope." /> |
 |2.a|**With role assignment permission (Yes)**: SCP can automatically assign Reader and Resource Policy Contributor to the Sovereign View managed identity when the view is created.|<img src="https://github.com/Azure/sovereign-control-panel-private-preview/blob/main/2.png" width="900" alt="Viweing the Role assignment permission." />| 
 |2.b| **Without role assignment permission (No):** You can still select the scope and create the Sovereign View, but SCP cannot assign the required roles automatically. Ask an Owner or User Access Administrator for the scope to assign the roles, then verify the permission status after deployment.|<img src="https://github.com/Azure/sovereign-control-panel-private-preview/blob/main/2.b.png" width="900" alt="Viweing the Role assignment permission." />|
 | 3 | After selecting the resources, select **Add** at the bottom. SCP shows the permission result for each scope in the **Role assignment** column — **Yes** means the roles are assigned automatically at creation; **No** means an **Owner** or **User Access Administrator** must assign them after the view is created. | <img src="../assets/img-13.png" width="900" alt="Selecting Add to confirm the scope resources." /> |
@@ -55,9 +55,9 @@ The Sovereign view focuses on specific dimensions or control sets (e.g., Data Re
 | # | Step | Screenshot |
 | :-: | --- | --- |
 | 1 | On the **Review + create** tab, verify all configuration details (scope, name, region, etc.). Then check the box and click Create to deploy the Sovereign view resource. | <img src="../assets/img-17.png" width="900" alt="Reviewing configuration details on the Review + create tab." /> |
-| 2 | Post clicking the **Create** button, within few seconds the deployment will be completed, and your Sovereign view resource will be generated.. | <img src="../assets/img-18.png" width="900" alt="Deployment completed for the Sovereign View resource." /> |
+| 2 | Post clicking the **Create** button, within few seconds the deployment will be completed, and your Sovereign view resource will be generated. | <img src="../assets/img-18.png" width="900" alt="Deployment completed for the Sovereign View resource." /> |
 
-The deployment completes within a few seconds, and your Sovereign View resource is created.
+The deployment completes within a few seconds, and once your Sovereign View resource is created, you can move on to the next steps to configure the Managed Identity.
 
 ## Next steps
 
