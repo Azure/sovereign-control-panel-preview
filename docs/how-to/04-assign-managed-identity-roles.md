@@ -18,7 +18,7 @@ The Sovereign View's **Properties** page shows the current access for each scope
 
 | # | Step | Screenshot |
 | :-: | --- | --- |
-| 1 | On the Sovereign View page, select **Settings** > **Properties**. Review the **Permission status** column. Scopes where the managed identity is missing access show ⚠ **Assign Permission**. | <img src="../assets/img-19.png" width="900" alt="Permission status column on the Properties page showing Assign Permission." /> |
+| 1 | On the Sovereign View page, select **Settings** > **Properties**. Review the **Permission status** column. Scopes where the managed identity is missing access show ⚠ **Assign Permission**. | <img src="https://github.com/Azure/sovereign-control-panel-private-preview/blob/4e838477851ea5836aa14f35c7e0c30eb60db3e5/19.png" width="900" alt="Permission status column on the Properties page showing Assign Permission." /> |
 | 2 | Select **Assign permissions for all**. This is the recommended first action, because it grants the required roles to every in-scope item at once. The bulk action grants both the **Reader** and **Resource Policy Contributor** roles, whereas assigning permission on an individual row grants only the **Reader** role. | <img src="../assets/img-20.png" width="900" alt="Selecting Assign permissions for all on the Properties page." /> |
 | 3 | Each item moves from **Assigning** to **Assigned**, and a **Permissions assigned** notification confirms that the roles were granted to the managed identity. | <img src="../assets/img-22.png" width="1200" alt="Scopes moving from Assigning to Assigned with the Permissions assigned notification." /> |
 
@@ -37,6 +37,12 @@ If the assignment action is disabled, use the following table to identify the ca
 | :-: | --- | --- |
 | 1 | On the Sovereign View, open **Access control (IAM)** > **Role assignments** and filter by the view name. Confirm the managed identity's role assignments: **Reader** and **Resource Policy Contributor** when the roles were granted with **Assign permissions for all**, or **Reader** only when a scope was assigned from an individual row. | <img src="../assets/img-30.png" width="1200" alt="Role assignments for the managed identity under Access control (IAM)." /> |
 
+## Verify permissions and operational status after creation
+
+After deployment completes, open the Sovereign View and go to properties in Overview. Confirm that dashboard generation has started and review Status info. Check this page even when every selected scope showed Role Assignment Permission = Yes, because an individual assignment can occasionally fail.
+
+<img src="../assets/img-44.png" width="1200" alt="Sovereign View Properties page showing scopes with Permission status values marked Assigned." />
+
 ## Report generation
 
 After the role assignments are in place, the Sovereign View begins collecting data.
@@ -46,12 +52,6 @@ After the role assignments are in place, the Sovereign View begins collecting da
 1. Review the status information for each scope, even if the role-assignment permission was previously reported as **Yes**.
 
 An initial scan completes within 24 hours.
-
-## Verify permissions and operational status after creation
-
-After deployment completes, open the Sovereign View and go to properties in Overview. Confirm that dashboard generation has started and review Status info. Check this page even when every selected scope showed Role Assignment Permission = Yes, because an individual assignment can occasionally fail.
-
-<img src="../assets/img-44.png" width="1200" alt="Sovereign View Properties page showing scopes with Permission status values marked Assigned." />
 
 ## Next steps
 
