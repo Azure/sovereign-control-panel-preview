@@ -24,12 +24,17 @@ After the resource provider is registered, you can create a Sovereign View resou
 
 ## Select the scope
 
+As you add scopes, SCP checks whether you have permission to assign roles on each subscription and management group, and shows the result in the **Role assignment** column:
+
+- **Yes** — SCP automatically assigns the **Reader** and **Resource Policy Contributor** roles to the Sovereign View's managed identity when the view is created. **Owner** or **User Access Administrator** on the scope provides this capability.
+- **No** — You can still select the scope and create the view, but SCP can't assign the roles automatically. Ask an **Owner** or **User Access Administrator** for the scope to assign the roles, then verify the permission status after deployment.
+
 | # | Step | Screenshot |
 | :-: | --- | --- |
-| 1 | On the **Scope** tab, select **+ Add resources**. | <img src="../assets/img-11.png" width="900" alt="Selecting Add resources on the Scope tab." /> |
-| 2 | You can choose a **Management Group** (to include all subscriptions under it) or/and one or more specific **Subscriptions** to be included in this Sovereign view. Use the UI controls to select the desired management group and/or subscription(s) from the list. . | <img src="../assets/img-12.jpg" width="900" alt="Selecting a management group or subscriptions for the scope." /> |
-| 3 | After selecting the resources, select **Add**. | <img src="../assets/img-13.png" width="900" alt="Selecting Add to confirm the scope resources." /> |
-| 4 | On the Scope page, you get the option to remove the subscriptions or management groups you don’t want include for scope assessment by selecting them and click remove. Once your selection is complete, click **Next** to continue. | <img src="../assets/img-14.png" width="900" alt="Selecting subscriptions or management groups on the Scope page." /> |
+| 1 | On the **Scope** tab, select **+ Add resources**. SCP checks your role assignment permission for every subscription and management group shown in **Add resources**. | <img src="../assets/img-11.png" width="900" alt="Selecting Add resources on the Scope tab." /> |
+| 2 | You can choose a **Management Group** (to include all subscriptions under it) or/and one or more specific **Subscriptions** to be included in this Sovereign view. Use the UI controls to select the desired management group and/or subscription(s) from the list. | <img src="../assets/img-12.jpg" width="900" alt="Selecting a management group or subscriptions for the scope." /> |
+| 3 | After selecting the resources, select **Add** at the bottom. SCP shows the permission result for each scope in the **Role assignment** column — **Yes** means the roles are assigned automatically at creation; **No** means an **Owner** or **User Access Administrator** must assign them after the view is created. | <img src="../assets/img-13.png" width="900" alt="Selecting Add to confirm the scope resources." /> |
+| 4 | On the **Scope** page, remove any subscriptions or management groups you don't want to include for scope assessment by selecting them and choosing **Remove**. When your selection is complete, select **Next** to continue. | <img src="../assets/img-14.png" width="900" alt="Selecting subscriptions or management groups on the Scope page." /> |
 
 ## Configure the policy initiative
 
