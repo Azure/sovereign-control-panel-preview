@@ -55,9 +55,9 @@ The Sovereign view focuses on specific dimensions or control sets (e.g., Data Re
 | # | Step | Screenshot |
 | :-: | --- | --- |
 | 1 | On the **Review + create** tab, verify all configuration details (scope, name, region, etc.). Then check the box and click Create to deploy the Sovereign view resource. | <img src="../assets/img-17.png" width="900" alt="Reviewing configuration details on the Review + create tab." /> |
-| 2 | Post clicking the **Create** button, within few seconds the deployment will be completed, and your Sovereign view resource will be generated.. | <img src="../assets/img-18.png" width="900" alt="Deployment completed for the Sovereign View resource." /> |
+| 2 | Post clicking the **Create** button, within few seconds the deployment will be completed, and your Sovereign view resource will be generated. | <img src="../assets/img-18.png" width="900" alt="Deployment completed for the Sovereign View resource." /> |
 
-The deployment completes within a few seconds, and your Sovereign View resource is created.
+The deployment completes within a few seconds, and once your Sovereign View resource is created, you can move on to the next steps to configure the Managed Identity.
 
 ## Next steps
 
