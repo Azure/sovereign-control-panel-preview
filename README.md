@@ -28,6 +28,7 @@ Follow these how-to modules to set up your first Sovereign view using Azure Port
 | Module | Description |
 | ------ | ----------- |
 | [Module 1: Roles and Permissions](https://github.com/Azure/sovereign-control-panel-private-preview/blob/main/docs/how-to/01-roles%20and%20permissions.md#roles-and-permissions) | Confirm preview eligibility, capture required tenant and subscription IDs, and make sure you hold the Azure RBAC roles needed for setup. |
+| [Module 2 alternative: Self-serve subscription registration](/docs/how-to/02a-self-serve-subscription-registration.md) | Register the SovereignView preview feature and `Microsoft.Sovereign` resource provider from the Azure portal or Azure CLI. |
 | [Module 2: Register the resource provider](/docs/how-to/02-register-resource-provider.md) | Register the `Microsoft.Sovereign` resource provider in your subscription. |
 | [Module 3: Create a Sovereign view](/docs/how-to/03-create-sovereign-view.md) | Create a Sovereign View resource and select its scope and policy initiative. |
 | [Module 4: Assign managed identity roles](/docs/how-to/04-assign-managed-identity-roles.md) | Grant the view's managed identity Reader across the in-scope subscriptions and any management groups you selected. |
