@@ -1,8 +1,11 @@
 # Register the resource provider
 
-Because Sovereign View is a new resource type in preview, you must register the `SovereignView` preview feature and its resource provider, `Microsoft.Sovereign`, in your Azure subscription before you can create a Sovereign View.
+Because Sovereign View is a new resource type in preview, its `SovereignView` feature flag and the `Microsoft.Sovereign` resource provider must be enabled before you can create a Sovereign View.
 
 You only need to do this once per subscription.
+
+> [!IMPORTANT]
+> `SovereignView` feature-flag registration is optional when you are using subscriptions already provided in the onboarding form; the service team handles registration for those subscriptions. Feature-flag registration is mandatory when you intend to use additional subscriptions that were not provided in the onboarding form. The `Microsoft.Sovereign` resource provider must still be registered in each subscription where you create a Sovereign View.
 
 ## Prerequisites
 
@@ -10,6 +13,8 @@ You only need to do this once per subscription.
 - Use a subscription whose ID you shared in the onboarding form.
 
 ## Register the SovereignView feature in the Azure portal
+
+Use these steps only when you are adding a subscription that was not provided in the onboarding form, or when the service team asks you to complete the registration.
 
 1. Open the [Azure portal](https://portal.azure.com).
 2. Search for **Subscriptions** and open the subscription where the SovereignView will be created.
@@ -36,7 +41,7 @@ Registering with the resource provider allows you to create Sovereign view resou
 
 ## Azure CLI steps
 
-If SovereignView is not visible under **Preview features**, run the following commands against the same subscription where you are creating the SovereignView in a new [Cloud Shell](https://shell.azure.com/). Select **Bash** as the shell type.
+If SovereignView is not visible under **Preview features**, or if you are registering an additional subscription, run the following commands against the same subscription where you are creating the SovereignView in a new [Cloud Shell](https://shell.azure.com/). Select **Bash** as the shell type.
 
 Set the subscription and verify its identity:
 
