@@ -14,8 +14,7 @@ Use these modules to complete an end-to-end onboarding: register the resource pr
 | Module | Description |
 | ------ | ----------- |
 | [Module 1: Prerequisites and roles](/docs/how-to/01-roles%20and%20permissions.md) | Confirm preview access and the Azure RBAC roles required for each onboarding action. |
-| [Module 2 alternative: Self-serve subscription registration](/docs/how-to/02a-self-serve-subscription-registration.md) | Register the SovereignView preview feature and `Microsoft.Sovereign` resource provider from the Azure portal or Azure CLI. |
-| [Module 2: Register the resource provider](/docs/how-to/02-register-resource-provider.md) | Register the `Microsoft.Sovereign` resource provider in your subscription. |
+| [Module 2: Register the resource provider](/docs/how-to/02-register-resource-provider.md) | Register the `SovereignView` preview feature and `Microsoft.Sovereign` resource provider from the Azure portal or Azure CLI. |
 | [Module 3: Create a Sovereign View](/docs/how-to/03-create-sovereign-view.md) | Create a Sovereign View resource and select its scope and policy initiative. |
 | [Module 3 alternative: Deploy with Bicep](/docs/how-to/03b-deploy-sovereign-view-with-bicep.md) | Use the included Bicep package for a repeatable, reviewable Sovereign View deployment. |
 | [Module 4: Assign managed identity roles](/docs/how-to/04-assign-managed-identity-roles.md) | Grant the view's managed identity Reader and Resource Policy Contributor across the in-scope subscriptions, manually or by script. |
