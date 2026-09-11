@@ -16,6 +16,10 @@ Sovereign View is in Private Preview. Be aware of these known constraints:
 
 Make sure the resource provider is registered (see [Module 2](/docs/how-to/02-register-resource-provider.md)) and that your account has the necessary permissions. If you can't find Sovereign Control Panel in the portal, confirm that you're enrolled in the preview program.
 
+### SovereignView `InvalidResourceType` error
+
+If the create request returns an `InvalidResourceType` error, follow the [Module 2 registration and troubleshooting steps](/docs/how-to/02-register-resource-provider.md#troubleshooting). They explain how to enable the `SovereignView` feature, refresh the `Microsoft.Sovereign` provider registration, and verify the requested API version.
+
 ### Sovereign View fails creation with Quota Exceeded Error
 
 For Sovereign Views to fetch the required report data, Sovereign Control Panel needs to assign some policies in Audit mode to the Subscriptions/Management Groups which are added to the scope. Azure Policy has [a maximum limit of 200 Policy Assignments](https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/governance/includes/policy/azure-policy-limits.md) per Subscription/Management Group.

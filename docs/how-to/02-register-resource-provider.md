@@ -110,6 +110,21 @@ az provider show \
 
 Confirm that the output contains `resourceType: sovereignViews` and `apiVersion: 2026-07-31-preview`, then retry the SovereignView create request.
 
+## Troubleshooting
+
+### SovereignView `InvalidResourceType` error
+
+The following error usually means that the subscription is not currently enabled for the `SovereignView` feature, feature registration is still pending, or provider registration has not refreshed after the feature was enabled:
+
+```json
+{
+  "code": "InvalidResourceType",
+  "message": "The resource type could not be found in the namespace 'Microsoft.Sovereign' for api version '2026-07-31-preview'."
+}
+```
+
+Follow the [Azure CLI steps](#azure-cli-steps) above to verify that the feature and provider are registered and that the `sovereignViews` resource type exposes API version `2026-07-31-preview`. After both registrations are complete, retry the SovereignView create request.
+
 ## Next steps
 
 - [Create a Sovereign View](/docs/how-to/03-create-sovereign-view.md)
