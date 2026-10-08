@@ -307,6 +307,8 @@
 
         <h2>Onboarding</h2>
 
+        <p>Use <strong>Create a view</strong> to assess the sovereignty posture of existing Azure resources. To deploy an environment with sovereignty controls and governance, open the <strong>Get started</strong> tab and select <strong>Learn more</strong> under <strong>Sovereign Landing Zone</strong>.</p>
+
         <p>Follow these how-to modules to set up your first Sovereign view. See the documentation hub for the full set of guides.</p>
 
         <table>
@@ -327,7 +329,7 @@
                 </tr>
                 <tr>
                     <td><strong>Module 3: Create a Sovereign view</strong></td>
-                    <td>Create a Sovereign View resource and select its scope and policy initiative.</td>
+                    <td>Create a Sovereign View resource, select its scope, and optionally enable the Encryption in transit (TLS) initiative.</td>
                 </tr>
                 <tr>
                     <td><strong>Module 4: Assign managed identity roles</strong></td>
@@ -335,7 +337,7 @@
                 </tr>
                 <tr>
                     <td><strong>Module 5: View the sovereignty control report</strong></td>
-                    <td>Read and interpret your report and manage the resource over time.</td>
+                    <td>Review dimension summaries and resource-level compliance, including Encryption in transit results.</td>
                 </tr>
                 <tr>
                     <td><strong>Module 6: Delete a Sovereign view</strong></td>
@@ -401,7 +403,7 @@
                 </tr>
                 <tr>
                     <td><strong>Module 3: Create a Sovereign View</strong></td>
-                    <td>Create a Sovereign View resource and select its scope and policy initiative.</td>
+                    <td>Create a Sovereign View resource, select its scope, and optionally enable the Encryption in transit (TLS) initiative.</td>
                 </tr>
                 <tr>
                     <td><strong>Module 4: Assign managed identity roles</strong></td>
@@ -409,7 +411,7 @@
                 </tr>
                 <tr>
                     <td><strong>Module 5: View the sovereignty control report</strong></td>
-                    <td>Read and interpret your report and manage the resource over time.</td>
+                    <td>Review dimension summaries and resource-level compliance, including Encryption in transit results.</td>
                 </tr>
                 <tr>
                     <td><strong>Module 6: Delete a Sovereign View</strong></td>
@@ -660,7 +662,7 @@
 
         <h2>Configure the policy initiative</h2>
 
-        <p>The Sovereign view focuses on specific dimensions or control sets (e.g., Data Residency, Encryption at Rest, etc.) relevant to data sovereignty. All your scoped resources will be evaluated against the selected policy initiative.</p>
+        <p>The Sovereign view focuses on specific dimensions or control sets (e.g., Data Residency, Encryption at Transit &amp; Rest, etc.) relevant to data sovereignty. All your scoped resources will be evaluated against these policy initiatives. Data Residency is a mandatory policy initiative, the rest are optional.</p>
 
         <table>
             <thead>
@@ -675,14 +677,15 @@
                     <td>On the <strong>Policy initiative</strong> tab, review the settings:
                         <ul style="margin: 10px 0;">
                             <li><strong>Data Residency (Geography)</strong> — In the current preview, the default value of Europe will be available.</li>
-                            <li><strong>Encryption at Rest</strong> — Control settings for encryption requirements</li>
-                            <li>Other sovereignty controls relevant to your organization</li>
+                            <li><strong>Encryption at rest</strong> — Select this if you want to evaluate your resources for this policy initiative.</li>
+                            <li><strong>Encryption in transit</strong> — Select this if you want to evaluate whether your resources enforce TLS 1.2 or higher for data in transit.</li>
+                            <li><strong>Controlled Network Exposure</strong> — Select this if you want to evaluate your resources against the two policy initiatives defined in this dimension.</li>
                         </ul>
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align: center;"><strong>2</strong></td>
-                    <td>Check the <strong>"I confirm"</strong> checkbox to allow SCP to proceed with creating the resource and associated policy assignments. All policy assignments are created in non-enforcing mode.</td>
+                    <td>Check <strong>"I confirm"</strong> to allow SCP to proceed with creating the resource and associated policy assignments. All policy assignments are created in non-enforcing mode. Azure Sovereign View does not block any operations or auto-remediate; it only reports sovereign control data. When you're finished, select <strong>Next</strong> to review and create the Sovereign View.</td>
                 </tr>
             </tbody>
         </table>
@@ -703,7 +706,7 @@
             <tbody>
                 <tr>
                     <td style="text-align: center;"><strong>1</strong></td>
-                    <td>On the <strong>Review + create</strong> tab, verify all configuration details (scope, name, region, etc.). Then check the box and click <strong>Create</strong> to deploy the Sovereign view resource.</td>
+                    <td>On the <strong>Review + create</strong> tab, verify all configuration details (scope, name, region, etc.). Then check the box and select <strong>Create</strong> to deploy the Sovereign View resource.</td>
                 </tr>
                 <tr>
                     <td style="text-align: center;"><strong>2</strong></td>
@@ -878,7 +881,7 @@
 
         <div class="breadcrumb">How-to Guide | Step 5 of 7</div>
 
-        <p>After data collection is complete, your Sovereign View resource presents a sovereignty control report in the Azure portal. This guide explains how to read the report and manage the resource over time.</p>
+        <p>Use this module to review the Sovereign View report after data collection completes, including dimension-level summaries and resource-level compliance details.</p>
 
         <h2>Prerequisites</h2>
 
@@ -900,12 +903,12 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Report dashboard</strong></td>
-                    <td>Navigate to your Sovereign View resource in the Azure portal. The <strong>Overview</strong> tab displays a summary of results — typically the overall status of the selected scope, with breakdowns by control category (e.g., Data Residency, Encryption at Rest).</td>
+                    <td><strong>Resource compliance list</strong></td>
+                    <td>From the <strong>Encryption in transit</strong> card, select <strong>View resources out of policy</strong>. The resources page opens with the <strong>Encryption in Transit</strong> filter applied so you can review resource-level compliance.</td>
                 </tr>
                 <tr>
-                    <td><strong>Reasoning and definitions</strong></td>
-                    <td>For each control or policy listed, you can <strong>drill down</strong> for more information about what it checks. Definitions are available on the <a href="https://ms.portal.azure.com/#view/Microsoft_Azure_Policy/PolicyMenuBlade.MenuView/~/Definitions" target="_blank">Azure Policy definition page</a> in the portal.</td>
+                    <td><strong>Policy details</strong></td>
+                    <td>Select a resource to open the details pane. Review the <strong>Encryption in Transit</strong> result and Azure Policy information to understand the gap and plan remediation.</td>
                 </tr>
             </tbody>
         </table>

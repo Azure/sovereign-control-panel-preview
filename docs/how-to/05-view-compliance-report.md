@@ -1,6 +1,6 @@
 # View the sovereignty control report
 
-After data collection is complete, your Sovereign View resource presents a sovereignty control report in the Azure portal. This guide explains how to read the report and manage the resource over time.
+Use this module to review the Sovereign View report after data collection completes, including dimension-level summaries and resource-level compliance details.
 
 ## Prerequisites
 
@@ -15,8 +15,8 @@ After data collection is complete, your Sovereign View resource presents a sover
 
 | Area | What you see | Screenshot |
 | --- | --- | --- |
-| **Report dashboard** | Navigate to your Sovereign View resource in the Azure portal. The **Overview** tab displays a summary of results — typically the overall status of the selected scope, with a breakdown by control category (such as data residency or encryption). | <img src="../assets/img-41.jpg" width="900" alt="Report dashboard on the Overview tab." /> |
-| **Reasoning and definitions** | For each control or policy listed, you can **drill down** for more information about what it checks. Definitions are available on the Azure Policy definition page in the portal. For this preview, the definitions correspond to sovereignty best practices such as encryption and data location restrictions. | <img src="../assets/img-42.jpg" width="900" alt="Reasoning and policy definitions for a control." /> |
+| **Resource compliance list** | From the **Encryption in transit** card, select **View resources out of policy**. The resources page opens with the **Encryption in Transit** filter applied so you can review resource-level compliance. | <img src="../assets/img-41.jpg" width="900" alt="Resources filtered to show Encryption in Transit results that are out of policy." /> |
+| **Policy details** | Select a resource to open the details pane. Review the **Encryption in Transit** result and Azure Policy information to understand the gap and plan remediation. | <img src="../assets/img-42.jpg" width="900" alt="Resource details pane showing policy information for an Encryption in Transit result." /> |
 
 ## Manage the resource
 
