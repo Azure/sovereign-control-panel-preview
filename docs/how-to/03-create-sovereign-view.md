@@ -40,12 +40,12 @@ As you add scopes, SCP checks whether you have permission to assign roles on eac
 
 ## Configure the policy initiative
 
-The Sovereign view focuses on specific dimensions or control sets (e.g., Data Residency, Encryption at Rest, etc.) relevant to data sovereignty. All your scoped resources will be evaluated against these policy initiatives. Data Residency is a mandatory policy initiative, the rest two are optional. 
+The Sovereign view focuses on specific dimensions or control sets (e.g., Data Residency, Encryption at Transit & Rest, etc.) relevant to data sovereignty. All your scoped resources will be evaluated against these policy initiatives. Data Residency is a mandatory policy initiative, the rest are optional.
 
 | # | Step | Screenshot |
 | :-: | --- | --- |
-| 1 | On the **Policy initiative** tab, review the settings:<br>• **Data Residency (Geography)** — In the current preview, the default value of Europe will be available.<br> • **Encryption at rest** – Select this if you want to evaluate your resources for this policy initiative. <br> • **Controlled Network Exposure** – Select this if you want to evaluate your resources against the two policy initiatives defined in this dimension. | <img src="../assets/img-15.png" width="900" alt="Configuring the policy initiative tab." /> |
-| 2 | Check the **“I confirm”** to allow SCP to proceed with creating the resource and associated policy assignments. <br>All policy assignments are created in non-enforcing. Azure Sovereign view does not block any operations or auto-remediate; it only reports sovereign control data. <br>Once done click next at the bottom to finally review and create the Sovereign view. . | <img src="../assets/img-16.png" width="900" alt="Selecting the I confirm checkbox before review." /> |
+| 1 | On the **Policy initiative** tab, review the settings:<br>• **Data Residency (Geography)** — In the current preview, the default value of Europe will be available.<br>• **Encryption at rest** — Select this if you want to evaluate your resources for this policy initiative.<br>• **Encryption in transit** — Select this if you want to evaluate whether your resources enforce TLS 1.2 or higher for data in transit.<br>• **Controlled Network Exposure** — Select this if you want to evaluate your resources against the two policy initiatives defined in this dimension. | <img src="../assets/img-15.png" width="900" alt="Configuring Data Residency, Encryption at rest, Encryption in transit, and Controlled Network Exposure on the Policy initiatives tab." /> |
+| 2 | Check **“I confirm”** to allow SCP to proceed with creating the resource and associated policy assignments.<br>All policy assignments are created in non-enforcing mode. Azure Sovereign View does not block any operations or auto-remediate; it only reports sovereign control data.<br>When you're finished, select **Next** to review and create the Sovereign View. | <img src="../assets/img-16.png" width="900" alt="Confirming the selected policy initiatives before review." /> |
 
 > [!TIP]
 > To learn more about any Azure policy, see its definition on the [Azure Policy](https://ms.portal.azure.com/#view/Microsoft_Azure_Policy/PolicyMenuBlade.MenuView/~/Definitions) page in the portal, or the [list of built-in policy definitions](https://learn.microsoft.com/azure/governance/policy/samples/built-in-policies).
@@ -54,7 +54,7 @@ The Sovereign view focuses on specific dimensions or control sets (e.g., Data Re
 
 | # | Step | Screenshot |
 | :-: | --- | --- |
-| 1 | On the **Review + create** tab, verify all configuration details (scope, name, region, etc.). Then check the box and click Create to deploy the Sovereign view resource. | <img src="../assets/img-17.png" width="900" alt="Reviewing configuration details on the Review + create tab." /> |
+| 1 | On the **Review + create** tab, verify all configuration details (scope, name, region, etc.). Then check the box and select **Create** to deploy the Sovereign View resource. | <img src="../assets/img-17.png" width="900" alt="Reviewing the configuration, accepting the privacy terms, and selecting Create." /> |
 | 2 | Post clicking the **Create** button, within few seconds the deployment will be completed, and your Sovereign view resource will be generated. | <img src="../assets/img-18.png" width="900" alt="Deployment completed for the Sovereign View resource." /> |
 
 The deployment completes within a few seconds, and once your Sovereign View resource is created, you can move on to the next steps to configure the Managed Identity.
