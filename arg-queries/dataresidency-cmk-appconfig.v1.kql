@@ -1,0 +1,19 @@
+// DataResidencyReplica: an App Configuration store's customer-managed key (CMK) resolves to a Key
+// Vault; the handler checks that vault's location against the allowed set. Source: Replication
+// Residency Matrix, 'Linked Resources' sheet (Microsoft.AppConfiguration/configurationStores -> Key Vault).
+// Validated 2026-09-28 against live resources in the Integration subscription.
+resources
+| where type =~ 'microsoft.appconfiguration/configurationstores'
+| extend keyId = tostring(properties.encryption.keyVaultProperties.keyIdentifier)
+| where isnotempty(keyId)
+| extend kvName = tolower(tostring(split(replace_string(keyId, 'https://', ''), '.')[0]))
+| join kind=leftouter (
+    resources
+    | where type =~ 'microsoft.keyvault/vaults'
+    | project kvName = tolower(name), linkedResourceId = tolower(id), linkedLocation = location
+  ) on kvName
+| project
+    primaryResourceId = id,
+    linkedResourceId,
+    linkedResourceType = 'microsoft.keyvault/vaults',
+    location = linkedLocation

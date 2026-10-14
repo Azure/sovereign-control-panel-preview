@@ -1,0 +1,19 @@
+// DataResidencyReplica: a virtual machine references one or more network interfaces (NICs); each NIC is
+// a linked resource whose location must fall within the allowed set. Source: Replication Residency
+// Matrix, 'Linked Resources' sheet (Microsoft.Compute/virtualMachines -> NIC). Validated live in the
+// Integration subscription (2026-09-29).
+resources
+| where type =~ 'microsoft.compute/virtualmachines'
+| mv-expand nic = properties.networkProfile.networkInterfaces
+| extend linkedNicId = tolower(tostring(nic.id))
+| where isnotempty(linkedNicId)
+| join kind=leftouter (
+    resources
+    | where type =~ 'microsoft.network/networkinterfaces'
+    | project linkedNicId = tolower(id), linkedLocation = location
+  ) on linkedNicId
+| project
+    primaryResourceId = id,
+    linkedResourceId = linkedNicId,
+    linkedResourceType = 'microsoft.network/networkinterfaces',
+    location = linkedLocation

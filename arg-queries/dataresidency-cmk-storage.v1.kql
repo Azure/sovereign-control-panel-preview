@@ -1,0 +1,19 @@
+// DataResidencyReplica: a storage account's customer-managed key (CMK) resolves to a Key Vault; the
+// handler checks that vault's location against the allowed set. Source: Replication Residency Matrix,
+// 'Linked Resources' sheet (Microsoft.Storage/storageAccounts -> CMK). This CMK -> Key Vault shape is
+// shared by ~25 other resource types, so it is the canonical linked-resource pattern to validate.
+resources
+| where type =~ 'microsoft.storage/storageaccounts'
+| extend kvUri = tostring(properties.encryption.keyvaultproperties.keyvaulturi)
+| where isnotempty(kvUri)
+| extend kvName = tolower(tostring(split(replace_string(kvUri, 'https://', ''), '.')[0]))
+| join kind=leftouter (
+    resources
+    | where type =~ 'microsoft.keyvault/vaults'
+    | project kvName = tolower(name), linkedResourceId = tolower(id), linkedLocation = location
+  ) on kvName
+| project
+    primaryResourceId = id,
+    linkedResourceId,
+    linkedResourceType = 'microsoft.keyvault/vaults',
+    location = linkedLocation

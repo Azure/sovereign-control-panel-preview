@@ -1,0 +1,19 @@
+// DataResidencyReplica: a virtual machine's managed data disks are linked resources whose location must
+// fall within the allowed set. Source: Replication Residency Matrix, 'Linked Resources' sheet
+// (Microsoft.Compute/virtualMachines -> Data Disk). Validated live in the Integration subscription
+// (2026-09-29).
+resources
+| where type =~ 'microsoft.compute/virtualmachines'
+| mv-expand dataDisk = properties.storageProfile.dataDisks
+| extend linkedDiskId = tolower(tostring(dataDisk.managedDisk.id))
+| where isnotempty(linkedDiskId)
+| join kind=leftouter (
+    resources
+    | where type =~ 'microsoft.compute/disks'
+    | project linkedDiskId = tolower(id), linkedLocation = location
+  ) on linkedDiskId
+| project
+    primaryResourceId = id,
+    linkedResourceId = linkedDiskId,
+    linkedResourceType = 'microsoft.compute/disks',
+    location = linkedLocation

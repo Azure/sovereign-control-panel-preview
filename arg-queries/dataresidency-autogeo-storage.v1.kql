@@ -1,0 +1,14 @@
+// DirectResult: an Auto Geo-Redundant storage account's own SKU deterministically decides residency
+// compliance (the geo-replica is guaranteed to stay in the primary geography). Source: Replication
+// Residency Matrix, 'Auto Geo-Redundant' sheet (Microsoft.Storage/storageAccounts).
+resources
+| where type =~ 'microsoft.storage/storageaccounts'
+| extend skuName = tostring(sku.name)
+| extend isGeoRedundant = (skuName contains 'GRS' or skuName contains 'GZRS')
+| project
+    resourceId = id,
+    state = iff(isGeoRedundant, 'Compliant', 'NonCompliant'),
+    reasonCode = iff(isGeoRedundant, 'GeoRedundantEnabled', 'GeoRedundantDisabled'),
+    skuName,
+    secondaryLocation = tostring(properties.secondaryLocation),
+    statusOfSecondary = tostring(properties.statusOfSecondary)
