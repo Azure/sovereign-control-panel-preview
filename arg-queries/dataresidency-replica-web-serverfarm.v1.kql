@@ -8,10 +8,14 @@ resources
 | join kind=leftouter (
     resources
     | where type =~ 'microsoft.web/serverfarms'
-    | project linkedResourceId = tolower(id), linkedResourceType = type, linkedLocation = location
+    | project linkedResourceId = tolower(id), linkedResourceType = type, linkedName = name, linkedLocation = location
   ) on linkedResourceId
 | project
+    primaryResourceName = name,
     primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
     linkedResourceId,
+    linkedResourceName = linkedName,
     linkedResourceType = coalesce(linkedResourceType, 'microsoft.web/serverfarms'),
-    location = linkedLocation
+    linkedResourceRegion = linkedLocation

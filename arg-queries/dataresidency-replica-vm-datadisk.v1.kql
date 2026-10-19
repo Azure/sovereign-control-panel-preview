@@ -10,10 +10,14 @@ resources
 | join kind=leftouter (
     resources
     | where type =~ 'microsoft.compute/disks'
-    | project linkedDiskId = tolower(id), linkedLocation = location
+    | project linkedDiskId = tolower(id), linkedName = name, linkedLocation = location
   ) on linkedDiskId
 | project
+    primaryResourceName = name,
     primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
     linkedResourceId = linkedDiskId,
+    linkedResourceName = linkedName,
     linkedResourceType = 'microsoft.compute/disks',
-    location = linkedLocation
+    linkedResourceRegion = linkedLocation

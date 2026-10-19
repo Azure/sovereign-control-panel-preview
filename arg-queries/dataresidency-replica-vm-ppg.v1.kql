@@ -9,10 +9,14 @@ resources
 | join kind=leftouter (
     resources
     | where type =~ 'microsoft.compute/proximityplacementgroups'
-    | project linkedPpgId = tolower(id), linkedLocation = location
+    | project linkedPpgId = tolower(id), linkedName = name, linkedLocation = location
   ) on linkedPpgId
 | project
+    primaryResourceName = name,
     primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
     linkedResourceId = linkedPpgId,
+    linkedResourceName = linkedName,
     linkedResourceType = 'microsoft.compute/proximityplacementgroups',
-    location = linkedLocation
+    linkedResourceRegion = linkedLocation

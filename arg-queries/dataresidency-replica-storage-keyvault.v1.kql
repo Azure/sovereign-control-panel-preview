@@ -10,10 +10,14 @@ resources
 | join kind=leftouter (
     resources
     | where type =~ 'microsoft.keyvault/vaults'
-    | project kvName = tolower(name), linkedResourceId = tolower(id), linkedLocation = location
+    | project kvName = tolower(name), linkedResourceId = tolower(id), linkedName = name, linkedLocation = location
   ) on kvName
 | project
+    primaryResourceName = name,
     primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
     linkedResourceId,
+    linkedResourceName = linkedName,
     linkedResourceType = 'microsoft.keyvault/vaults',
-    location = linkedLocation
+    linkedResourceRegion = linkedLocation

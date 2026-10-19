@@ -10,10 +10,14 @@ resources
 | join kind=leftouter (
     resources
     | where type =~ 'microsoft.network/networkinterfaces'
-    | project linkedNicId = tolower(id), linkedLocation = location
+    | project linkedNicId = tolower(id), linkedName = name, linkedLocation = location
   ) on linkedNicId
 | project
+    primaryResourceName = name,
     primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
     linkedResourceId = linkedNicId,
+    linkedResourceName = linkedName,
     linkedResourceType = 'microsoft.network/networkinterfaces',
-    location = linkedLocation
+    linkedResourceRegion = linkedLocation

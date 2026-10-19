@@ -12,10 +12,14 @@ resources
 | join kind=leftouter (
     resources
     | where type =~ 'microsoft.network/virtualnetworks'
-    | project linkedVnetId = tolower(id), linkedLocation = location
+    | project linkedVnetId = tolower(id), linkedName = name, linkedLocation = location
   ) on linkedVnetId
 | project
+    primaryResourceName = name,
     primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
     linkedResourceId = linkedVnetId,
+    linkedResourceName = linkedName,
     linkedResourceType = 'microsoft.network/virtualnetworks',
-    location = linkedLocation
+    linkedResourceRegion = linkedLocation
