@@ -1,0 +1,28 @@
+resources
+| where type =~ "microsoft.containerregistry/registries/replications"
+| extend parentId = tostring(split(id, "/replications/")[0])
+| project
+    parentId,
+    linkedId = id,
+    linkedName = name,
+    linkedType = type,
+    linkedRegion = location
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.containerregistry/registries"
+    | project
+        parentId = id,
+        name,
+        id,
+        location,
+        type
+) on parentId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

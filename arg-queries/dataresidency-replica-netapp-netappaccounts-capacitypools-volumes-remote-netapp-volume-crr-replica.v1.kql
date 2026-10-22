@@ -1,0 +1,20 @@
+resources
+| where type =~ "microsoft.netapp/netappaccounts/capacitypools/volumes"
+| where tostring(properties.dataProtection.replication.endpointType) =~ "dst"
+| extend primaryJoinId=tolower(tostring(properties.dataProtection.replication.remoteVolumeResourceId))
+| where isnotempty(primaryJoinId)
+| project primaryJoinId,linkedId=id,linkedName=name,linkedType=type,linkedRegion=location
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.netapp/netappaccounts/capacitypools/volumes"
+    | project primaryJoinId=tolower(id),name,id,location,type
+) on primaryJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

@@ -1,0 +1,36 @@
+resources
+| where type =~ "microsoft.network/applicationgateways"
+| extend linkedId = tolower(tostring(properties.firewallPolicy.id))
+| project name, id, location, type, linkedId
+| union (resources
+| where type =~ "microsoft.network/applicationgateways"
+| mv-expand l = properties.httpListeners
+| extend linkedId = tolower(tostring(l.properties.firewallPolicy.id))
+| project name, id, location, type, linkedId)
+| union (resources
+| where type =~ "microsoft.network/applicationgateways"
+| mv-expand m = properties.urlPathMaps
+| extend linkedId = tolower(tostring(m.properties.defaultFirewallPolicy.id))
+| project name, id, location, type, linkedId)
+| union (resources
+| where type =~ "microsoft.network/applicationgateways"
+| mv-expand m = properties.urlPathMaps
+| mv-expand p = m.properties.pathRules
+| extend linkedId = tolower(tostring(p.properties.firewallPolicy.id))
+| project name, id, location, type, linkedId)
+| where isnotempty(linkedId)
+| distinct name, id, location, type, linkedId
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.network/applicationgatewaywebapplicationfirewallpolicies"
+    | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location
+) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

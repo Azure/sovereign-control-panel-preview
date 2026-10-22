@@ -1,0 +1,21 @@
+resources
+| where type =~ "microsoft.containerregistry/registries/agentpools"
+| extend rawLinkedId = tostring(properties.virtualNetworkSubnetResourceId)
+| extend marker = indexof(tolower(rawLinkedId), "/subnets/")
+| extend linkedJoinId = tolower(iif(marker >= 0, substring(rawLinkedId, 0, marker), rawLinkedId))
+| where isnotempty(linkedJoinId)
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.network/virtualnetworks"
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on linkedJoinId
+| where isnotempty(linkedId)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

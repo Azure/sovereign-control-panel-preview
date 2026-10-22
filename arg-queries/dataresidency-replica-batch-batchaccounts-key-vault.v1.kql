@@ -1,0 +1,18 @@
+resources
+| where type =~ "microsoft.batch/batchaccounts"
+| extend linkedJoinId = tolower(tostring(properties.keyVaultReference.id))
+| where isnotempty(linkedJoinId)
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.keyvault/vaults"
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on linkedJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

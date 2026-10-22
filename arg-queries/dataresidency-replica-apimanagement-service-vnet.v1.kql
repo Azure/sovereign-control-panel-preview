@@ -1,0 +1,37 @@
+resources
+| where type =~ "microsoft.apimanagement/service"
+| extend primaryLocation =
+    pack(
+        "virtualNetworkConfiguration",
+        properties.virtualNetworkConfiguration
+    )
+| extend networkLocations =
+    array_concat(
+        pack_array(primaryLocation),
+        todynamic(properties.additionalLocations)
+    )
+| mv-expand networkLocation = networkLocations
+| extend subnetId = tolower(
+    tostring(networkLocation.virtualNetworkConfiguration.subnetResourceId)
+)
+| where isnotempty(subnetId)
+| extend linkedId =
+    substring(subnetId, 0, indexof(subnetId, "/subnets/"))
+| join kind=leftouter (
+    Resources
+    | where type =~ "microsoft.network/virtualnetworks"
+    | project
+        linkedId = tolower(id),
+        linkedName = name,
+        linkedType = type,
+        linkedRegion = location
+) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

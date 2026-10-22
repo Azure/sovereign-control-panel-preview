@@ -1,0 +1,19 @@
+resources
+| where type =~ "microsoft.network/privateendpoints"
+| mv-expand connection = properties.privateLinkServiceConnections
+| extend primaryJoinId = tolower(tostring(connection.properties.privateLinkServiceId))
+| project primaryJoinId, linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.synapse/workspaces"
+    | project primaryJoinId = tolower(id), name, id, location, type
+) on primaryJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

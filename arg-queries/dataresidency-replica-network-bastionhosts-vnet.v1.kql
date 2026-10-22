@@ -1,0 +1,19 @@
+resources
+| where type =~ "microsoft.network/bastionhosts"
+| mv-expand c = properties.ipConfigurations
+| extend subnetId = tolower(tostring(c.properties.subnet.id))
+| where subnetId has "/subnets/"
+| extend vnetKey = substring(subnetId, 0, indexof(subnetId, "/subnets/"))
+| distinct name, id, location, type, vnetKey
+| join kind=leftouter (resources
+    | where type =~ "microsoft.network/virtualnetworks"
+    | project vnetKey = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on vnetKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

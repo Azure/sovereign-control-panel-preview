@@ -1,0 +1,14 @@
+resources
+| where type =~ 'microsoft.containerservice/managedclusters'
+| extend linkedId = tolower(tostring(properties.diskEncryptionSetID))
+| where isnotempty(linkedId)
+| join kind=inner (resources | where type =~ 'microsoft.compute/diskencryptionsets' | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

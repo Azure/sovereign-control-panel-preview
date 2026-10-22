@@ -1,0 +1,29 @@
+resources
+| where type =~ 'microsoft.storagecache/amlfilesystems'
+| extend containerIds = pack_array(
+    tostring(properties.hsm.settings.container),
+    tostring(properties.hsm.settings.loggingContainer)
+)
+| mv-expand containerId = containerIds
+| extend containerId = tostring(containerId)
+| extend normalizedLinkedId = tolower(tostring(split(containerId, '/blobServices/')[0]))
+| distinct name, id, location, type, normalizedLinkedId
+| join kind=leftouter (
+    resources
+    | where type =~ 'microsoft.storage/storageaccounts'
+    | project
+        normalizedLinkedId = tolower(id),
+        linkedId = id,
+        linkedName = name,
+        linkedType = type,
+        linkedRegion = location
+) on normalizedLinkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

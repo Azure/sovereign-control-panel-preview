@@ -1,0 +1,19 @@
+resources
+| where type =~ "microsoft.containerinstance/containergroups"
+| extend vaultBaseUrl = tostring(properties.encryptionProperties.vaultBaseUrl)
+| extend refName = tolower(tostring(split(replace_string(replace_string(vaultBaseUrl, "https://", ""), "http://", ""), ".")[0]))
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.keyvault/vaults"
+    | project refName = tolower(name), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on refName
+| where isnotempty(linkedId)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

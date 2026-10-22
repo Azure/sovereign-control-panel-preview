@@ -1,0 +1,18 @@
+resources
+| where type =~ "microsoft.sqlvirtualmachine/sqlvirtualmachines"
+| extend linkedKey = tolower(tostring(properties.sqlVirtualMachineGroupResourceId))
+| where isnotempty(linkedKey)
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.sqlvirtualmachine/sqlvirtualmachinegroups"
+    | project linkedKey = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on linkedKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

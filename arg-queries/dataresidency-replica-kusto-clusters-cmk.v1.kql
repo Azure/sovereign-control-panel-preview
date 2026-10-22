@@ -1,0 +1,18 @@
+resources
+| where type =~ "microsoft.kusto/clusters"
+| extend host = tolower(tostring(properties.keyVaultProperties.keyVaultUri))
+| where isnotempty(host)
+| extend refName = tostring(split(replace_string(host, "https://", ""), ".")[0])
+| extend refKey = strcat(iff(host has ".managedhsm.", "microsoft.keyvault/managedhsms", "microsoft.keyvault/vaults"), "/", refName)
+| join kind=leftouter (resources
+    | where type in~ ("microsoft.keyvault/vaults", "microsoft.keyvault/managedhsms")
+    | project refKey = strcat(tolower(type), "/", tolower(name)), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on refKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

@@ -1,0 +1,16 @@
+resources
+| where type =~ "microsoft.compute/disks"
+| mv-expand link = properties.encryptionSettingsCollection.encryptionSettings
+| extend linkedId = tolower(tostring(link.diskEncryptionKey.sourceVault.id))
+| where isnotempty(linkedId)
+| join kind=leftouter (resources
+    | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

@@ -1,0 +1,18 @@
+resources
+| where type =~ "microsoft.healthcareapis/workspaces/dicomservices"
+| extend linkedId = tolower(tostring(properties.storageConfiguration.storageResourceId))
+| where isnotempty(linkedId)
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.storage/storageaccounts"
+    | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location
+) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

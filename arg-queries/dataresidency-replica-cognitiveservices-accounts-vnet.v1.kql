@@ -1,0 +1,23 @@
+resources
+| where type =~ "microsoft.cognitiveservices/accounts"
+| mv-expand vnetRule = properties.networkAcls.virtualNetworkRules
+| extend subnetId = tolower(tostring(vnetRule.id))
+| where isnotempty(subnetId)
+| extend vnetId = substring(subnetId, 0, indexof(subnetId, "/subnets/"))
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.network/virtualnetworks"
+    | project vnetId = tolower(id),
+              vnetRegion = location,
+              vnetName = name,
+              linkedType = type
+) on vnetId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = vnetId,
+    linkedResourceName = vnetName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = vnetRegion

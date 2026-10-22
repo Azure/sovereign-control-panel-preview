@@ -1,0 +1,18 @@
+resources 
+| where type =~ 'microsoft.compute/virtualmachinescalesets'
+| mv-expand e0 = properties.virtualMachineProfile.networkProfile.networkInterfaceConfigurations 
+| mv-expand e1 = e0.properties.ipConfigurations 
+| extend subnetId = tolower(tostring(e1.properties.subnet.id)) 
+| extend linkedId = tolower(substring(subnetId, 0, indexof(subnetId, '/subnets/'))) 
+| where isnotempty(linkedId) 
+| join kind=leftouter (resources | where type =~ 'microsoft.network/virtualnetworks' 
+    | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location) on linkedId 
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

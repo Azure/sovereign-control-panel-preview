@@ -1,0 +1,31 @@
+resources
+| where type =~ "microsoft.redhatopenshift/openshiftclusters"
+| extend subnetId = tolower(tostring(properties.masterProfile.subnetId))
+| extend linkedId = substring(subnetId, 0, indexof(subnetId, "/subnets/"))
+| project name, id, location, type, linkedId
+| union
+    (resources
+    | where type =~ "microsoft.redhatopenshift/openshiftclusters"
+    | mv-expand e0 = properties.workerProfiles
+    | extend subnetId = tolower(tostring(e0.subnetId))
+    | extend linkedId = substring(subnetId, 0, indexof(subnetId, "/subnets/"))
+    | project name, id, location, type, linkedId)
+| distinct name, id, location, type, linkedId
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.network/virtualnetworks"
+    | project
+        linkedId = tolower(id),
+        linkedName = name,
+        linkedType = type,
+        linkedRegion = location
+) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

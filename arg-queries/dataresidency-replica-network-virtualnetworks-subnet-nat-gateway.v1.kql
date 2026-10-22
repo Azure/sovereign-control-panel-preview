@@ -1,0 +1,17 @@
+resources
+| where type =~ "microsoft.network/virtualnetworks"
+| mv-expand subnet = properties.subnets
+| extend linkedJoinId = tolower(tostring(subnet.properties.natGateway.id))
+| where isnotempty(linkedJoinId)
+| join kind=leftouter (resources
+    | where type =~ "microsoft.network/natgateways"
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on linkedJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

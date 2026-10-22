@@ -1,0 +1,35 @@
+resources
+| where type =~ 'microsoft.devices/iothubs'
+| mv-expand link = properties.routing.endpoints.eventHubs
+| extend namespaceName = tolower(
+    split(
+        replace_string(tostring(link.endpointUri), 'sb://', ''),
+        '.'
+    )[0])
+| extend namespaceId = tolower(strcat(
+    '/subscriptions/', tostring(link.subscriptionId),
+    '/resourceGroups/', tostring(link.resourceGroup),
+    '/providers/Microsoft.EventHub/namespaces/', namespaceName))
+| extend
+    linkedId = strcat(
+        namespaceId,
+        '/eventhubs/',
+        tolower(tostring(link.entityPath))),
+    linkedName = tostring(link.entityPath),
+    linkedType = 'microsoft.eventhub/namespaces/eventhubs'
+| join kind=leftouter (
+    resources
+    | where type =~ 'microsoft.eventhub/namespaces'
+    | project
+        namespaceId = tolower(id),
+        linkedRegion = location
+  ) on namespaceId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

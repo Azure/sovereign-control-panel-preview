@@ -1,0 +1,16 @@
+resources
+| where type =~ 'microsoft.web/sites'
+| extend linkedKey=tolower(tostring(properties.hostingEnvironmentProfile.id))
+| where isnotempty(linkedKey)
+| join kind=leftouter (resources
+    | where type =~ 'microsoft.web/hostingenvironments'
+    | project linkedKey=tolower(id),linkedId=id,linkedName=name,linkedType=type,linkedRegion=location) on linkedKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

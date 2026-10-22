@@ -1,0 +1,19 @@
+resources
+| where type =~ "microsoft.sql/servers/databases"
+| extend linkedJoinId = tolower(tostring(properties.elasticPoolId))
+| where isnotempty(linkedJoinId)
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.sql/servers/elasticpools"
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on linkedJoinId
+| where isnotempty(linkedId)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

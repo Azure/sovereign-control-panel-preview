@@ -1,0 +1,24 @@
+resources
+| where type =~ "microsoft.datafactory/factories"
+| extend vaultBaseUrl = tostring(properties.encryption.vaultBaseUrl)
+| extend linkedNameKey = tolower(tostring(split(replace_string(vaultBaseUrl, "https://", ""), ".")[0]))
+| where isnotempty(linkedNameKey)
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.keyvault/vaults"
+    | project
+        linkedNameKey = tolower(name),
+        linkedId = id,
+        linkedName = name,
+        linkedType = type,
+        linkedRegion = location
+) on linkedNameKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

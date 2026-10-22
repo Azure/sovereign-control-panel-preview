@@ -1,0 +1,17 @@
+resources
+| where type =~ 'microsoft.dbformysql/flexibleservers'
+| extend keyUri = tostring(properties.dataEncryption.primaryKeyURI)
+| extend vaultName = tolower(tostring(split(replace_string(keyUri, 'https://', ''), '.')[0]))
+| join kind=leftouter (resources
+    | where type =~ 'microsoft.keyvault/vaults'
+    | project vaultName = tolower(name), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on vaultName
+| where isnotempty(linkedId)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

@@ -1,0 +1,18 @@
+ resources
+ | where type =~ "microsoft.recoveryservices/vaults"
+ | extend host = tostring(properties.encryption.keyVaultProperties.keyUri)
+ | extend refName = tolower(tostring(split(replace_string(host, "https://", ""), ".")[0]))
+ | join kind=leftouter (resources
+     | where type =~ "microsoft.keyvault/vaults"
+     | project refName = tolower(name), linkedId = id, linkedName = name,
+               linkedType = type, linkedRegion = location) on refName
+ | where isnotempty(linkedId)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

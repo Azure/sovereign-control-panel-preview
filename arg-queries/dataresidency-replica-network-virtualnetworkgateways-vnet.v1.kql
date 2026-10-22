@@ -1,0 +1,20 @@
+resources
+| where type =~ "microsoft.network/virtualnetworkgateways"
+| mv-expand ipconfig = properties.ipConfigurations
+| extend linkedResourceId = tostring(ipconfig.properties.subnet.id)
+| extend linkedResourceId = substring(linkedResourceId, 0, indexof(tolower(linkedResourceId), "/subnets/"))
+| extend linkedJoinId = tolower(linkedResourceId)
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.network/virtualnetworks"
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on linkedJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion
