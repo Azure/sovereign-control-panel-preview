@@ -1,0 +1,17 @@
+resources
+| where type =~ "microsoft.databricks/workspaces"
+| extend kvHost = tostring(properties.encryption.entities.managedServices.keyVaultProperties.keyVaultUri)
+| where isnotempty(kvHost)
+| extend kvName = tolower(split(replace_string(kvHost, "https://", ""), ".")[0])
+| join kind=leftouter (resources
+    | where type =~ "microsoft.keyvault/vaults"
+    | project kvName = tolower(name), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on kvName
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

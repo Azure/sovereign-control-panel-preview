@@ -1,0 +1,21 @@
+resources
+| where type =~ "microsoft.netapp/netappaccounts/capacitypools/volumes"
+| extend linkedJoinId = tolower(tostring(properties.dataProtection.replication.remoteVolumeResourceId))
+| union (resources
+    | where type =~ "microsoft.netapp/netappaccounts/capacitypools/volumes"
+    | mv-expand dr = properties.dataProtection.replication.destinationReplications
+    | extend linkedJoinId = tolower(tostring(dr.resourceId)))
+| where isnotempty(linkedJoinId)
+| summarize by name, id, location, type, linkedJoinId
+| join kind=leftouter (resources
+    | where type in~ ("microsoft.netapp/netappaccounts/capacitypools/volumes")
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on linkedJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

@@ -1,0 +1,15 @@
+resources
+| where type =~ "microsoft.compute/virtualmachines"
+| where subscriptionId == "58dc770d-9924-4b7e-a055-92771af0dca7"
+| extend linkedId = tolower(tostring(properties.storageProfile.osDisk.managedDisk.diskEncryptionSet.id))
+| join kind=leftouter (resources
+    | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

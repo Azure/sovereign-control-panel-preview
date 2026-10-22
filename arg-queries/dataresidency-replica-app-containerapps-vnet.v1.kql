@@ -1,0 +1,29 @@
+resources
+| where type =~ "microsoft.app/containerapps"
+| extend environmentId = tolower(tostring(properties.managedEnvironmentId))
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.app/managedenvironments"
+    | extend environmentId = tolower(id)
+    | extend subnetId = tolower(tostring(properties.vnetConfiguration.infrastructureSubnetId))
+    | extend linkedId = substring(subnetId, 0, indexof(subnetId, "/subnets/"))
+    | project environmentId, linkedId
+) on environmentId
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.network/virtualnetworks"
+    | project
+        linkedId = tolower(id),
+        linkedName = name,
+        linkedType = type,
+        linkedRegion = location
+) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

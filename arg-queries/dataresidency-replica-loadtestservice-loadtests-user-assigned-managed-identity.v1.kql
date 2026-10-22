@@ -1,0 +1,20 @@
+resources
+| where type =~ "microsoft.loadtestservice/loadtests"
+| extend uamiIds = iff(isnull(identity.userAssignedIdentities), dynamic([]), bag_keys(identity.userAssignedIdentities))
+| extend cmkId = tostring(properties.encryption.identity.resourceId)
+| mv-expand refKey = array_concat(uamiIds, iff(isempty(cmkId), dynamic([]), pack_array(cmkId))) to typeof(string)
+| extend refKey = tolower(refKey)
+| where isnotempty(refKey)
+| summarize by name, id, location, type, refKey
+| join kind=leftouter (resources
+    | where type in~ ("microsoft.managedidentity/userassignedidentities")
+    | project refKey = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on refKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

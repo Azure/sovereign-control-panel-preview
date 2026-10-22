@@ -1,0 +1,21 @@
+resources
+| where type =~ "microsoft.hdinsight/clusters" 
+| mv-expand storageAccount = properties.storageProfile.storageaccounts
+| extend endpoint = tostring(storageAccount.name)
+| extend endpointHost = tolower(trim(@"/", replace_string(replace_string(endpoint, "https://", ""), "http://", "")))
+| extend linkedName = tostring(split(endpointHost, ".")[0])
+| where isnotempty(linkedName)
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.storage/storageaccounts"
+    | project linkedId = id, linkedName = tolower(name), linkedType = type, linkedRegion = location
+) on linkedName
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

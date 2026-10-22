@@ -1,0 +1,21 @@
+resources
+| where type =~ "microsoft.deviceupdate/accounts"
+| extend accountJoinId = tolower(id)
+| join kind=inner (resources
+    | where type =~ "microsoft.deviceupdate/accounts/instances"
+    | extend accountJoinId = tolower(substring(id, 0, indexof(id, "/instances/")))
+    | extend linkedId = tolower(tostring(properties.diagnosticStorageProperties.resourceId))
+    | where isnotempty(linkedId)
+    | project accountJoinId, linkedId) on accountJoinId
+| join kind=inner (resources
+    | where type =~ "microsoft.storage/storageaccounts"
+    | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

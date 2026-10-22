@@ -1,0 +1,17 @@
+resources | where type =~ "microsoft.network/azurefirewalls" | mv-expand c = properties.ipConfigurations | project name, id, location, type, ref = tostring(c.properties.publicIPAddress.id)
+| union (resources | where type =~ "microsoft.network/azurefirewalls" | project name, id, location, type, ref = tostring(properties.managementIpConfiguration.properties.publicIPAddress.id))
+| where isnotempty(ref)
+| extend linkedKey = tolower(ref)
+| distinct name, id, location, type, linkedKey
+| join kind=leftouter (resources
+    | where type =~ "microsoft.network/publicipaddresses"
+    | project linkedKey = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on linkedKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

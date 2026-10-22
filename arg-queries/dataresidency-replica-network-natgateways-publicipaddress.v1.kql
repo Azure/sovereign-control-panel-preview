@@ -1,0 +1,20 @@
+resources
+| where type =~ 'microsoft.network/natgateways'
+| mv-expand relationship = properties.publicIpAddresses
+| extend linkedRef = tostring(relationship.id)
+| where isnotempty(linkedRef)
+| extend joinId = tolower(linkedRef)
+| join kind=leftouter (
+    resources
+    | where type =~ 'microsoft.network/publicipaddresses'
+    | project joinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on joinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

@@ -1,0 +1,17 @@
+resources | where type =~ "microsoft.network/applicationgateways" | mv-expand c = properties.sslCertificates | project name, id, location, type, secretId = tolower(tostring(c.properties.keyVaultSecretId))
+| union (resources | where type =~ "microsoft.network/applicationgateways" | mv-expand c = properties.trustedRootCertificates | project name, id, location, type, secretId = tolower(tostring(c.properties.keyVaultSecretId)))
+| where isnotempty(secretId)
+| extend refName = tostring(split(replace_string(secretId, "https://", ""), ".")[0])
+| distinct name, id, location, type, refName
+| join kind=leftouter (resources
+    | where type =~ "microsoft.keyvault/vaults"
+    | project refName = tolower(name), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on refName
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

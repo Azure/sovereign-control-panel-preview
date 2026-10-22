@@ -1,0 +1,23 @@
+resources
+| where type =~ 'microsoft.dbformysql/flexibleservers'
+| where tostring(properties.replicationRole) =~ 'Replica'
+| project linkedId=id,
+          linkedName=name,
+          linkedType=type,
+          linkedRegion=location,
+          sourceServerIdNormalized=tolower(tostring(properties.sourceServerResourceId))
+| join kind=inner (
+    resources
+    | where type =~ 'microsoft.dbformysql/flexibleservers'
+    | project name, id, location, type,
+              sourceServerIdNormalized=tolower(id)
+) on sourceServerIdNormalized
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

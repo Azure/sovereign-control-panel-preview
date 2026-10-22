@@ -1,0 +1,17 @@
+resources
+| where type =~ 'microsoft.dbformysql/flexibleservers'
+| extend subnetId = tolower(tostring(properties.network.delegatedSubnetResourceId))
+| extend linkedKey = substring(subnetId, 0, indexof(subnetId, '/subnets/'))
+| join kind=leftouter (resources
+    | where type =~ 'microsoft.network/virtualnetworks'
+    | project linkedKey = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on linkedKey
+| where isnotempty(linkedId)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

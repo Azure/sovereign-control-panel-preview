@@ -1,0 +1,19 @@
+resources
+| where type =~ "microsoft.servicebus/namespaces"
+| mv-expand encryptionKey = properties.encryption.keyVaultProperties
+| extend linkedJoinName = tolower(tostring(split(replace_string(tostring(encryptionKey.keyVaultUri), "https://", ""), ".")[0]))
+| where isnotempty(linkedJoinName)
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.keyvault/vaults"
+    | project linkedJoinName = tolower(name), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on linkedJoinName
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

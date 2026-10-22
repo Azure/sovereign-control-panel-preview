@@ -1,0 +1,35 @@
+resources
+| where type =~ "microsoft.compute/disks"
+| extend computeSnapshotIdKey =
+    tolower(tostring(properties.creationData.sourceResourceId))
+| where isnotempty(computeSnapshotIdKey)
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.compute/snapshots"
+    | extend
+        computeSnapshotIdKey = tolower(id),
+        linkedIdKey =
+            tolower(tostring(properties.creationData.elasticSanResourceId))
+    | where isnotempty(linkedIdKey)
+    | project computeSnapshotIdKey, linkedIdKey
+) on computeSnapshotIdKey
+| join kind=leftouter (
+    resources
+    | where type =~
+        "microsoft.elasticsan/elasticsans/volumegroups/snapshots"
+    | project
+        linkedIdKey = tolower(id),
+        linkedId = id,
+        linkedName = name,
+        linkedType = type,
+        linkedRegion = location
+) on linkedIdKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

@@ -1,0 +1,23 @@
+resources
+ | where type =~ "microsoft.storage/storageaccounts"
+ | extend keyVaultHost = tostring(properties.encryption.keyvaultproperties.keyvaulturi)
+ | extend keyVaultName = tolower(tostring(
+     split(replace_string(keyVaultHost, "https://", ""), ".")[0]
+ ))
+ | where isnotempty(keyVaultName)
+ | join kind=leftouter (
+     resources
+     | where type =~ "microsoft.keyvault/vaults"
+     | project keyVaultName = tolower(name),
+               linkedId = tolower(id), linkedName = name,
+               linkedType = type, linkedRegion = location
+ ) on keyVaultName
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

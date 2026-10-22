@@ -1,0 +1,27 @@
+resources
+| where type =~ "microsoft.devices/provisioningservices"
+| mv-expand iotHub = properties.iotHubs
+| extend
+    hubHostName = tolower(tostring(iotHub.name)),
+    aliasLocation = tostring(iotHub.location)
+| where isnotempty(hubHostName)
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.devices/iothubs"
+    | extend hubHostName = tolower(tostring(properties.hostName))
+    | project
+        hubHostName,
+        linkedId = id,
+        linkedName = name,
+        linkedType = type,
+        linkedRegion = location
+) on hubHostName
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

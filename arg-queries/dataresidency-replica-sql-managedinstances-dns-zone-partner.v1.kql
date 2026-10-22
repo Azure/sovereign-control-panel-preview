@@ -1,0 +1,22 @@
+resources
+| where type =~ "microsoft.sql/managedinstances"
+| extend dnsZone = tostring(properties.dnsZone)
+| where isnotempty(dnsZone)
+| project name, id, location, type, dnsZone
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.sql/managedinstances"
+    | extend dnsZone = tostring(properties.dnsZone)
+    | where isnotempty(dnsZone)
+    | project dnsZone, linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on dnsZone
+| where tolower(id) != tolower(linkedId)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

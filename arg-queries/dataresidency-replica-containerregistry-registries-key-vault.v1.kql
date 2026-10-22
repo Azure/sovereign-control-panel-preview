@@ -1,0 +1,18 @@
+resources
+| where type =~ "microsoft.containerregistry/registries"
+| extend kvHost = tostring(properties.encryption.keyVaultProperties.keyIdentifier)
+| where isnotempty(kvHost)
+| extend kvName = tolower(split(replace_string(kvHost, "https://", ""), ".")[0])
+| join kind=leftouter (resources
+    | where type =~ "microsoft.keyvault/vaults"
+    | project kvName = tolower(name), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on kvName
+| where isnotempty(linkedId)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

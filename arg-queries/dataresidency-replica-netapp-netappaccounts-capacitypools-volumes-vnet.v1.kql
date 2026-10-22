@@ -1,0 +1,17 @@
+resources
+| where type =~ "microsoft.netapp/netappaccounts/capacitypools/volumes"
+| extend subnetId = tolower(tostring(properties.subnetId))
+| where subnetId has "/subnets/"
+| extend linkedId = substring(subnetId, 0, indexof(subnetId, "/subnets/"))
+| join kind=leftouter (resources
+    | where type =~ "microsoft.network/virtualnetworks"
+    | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

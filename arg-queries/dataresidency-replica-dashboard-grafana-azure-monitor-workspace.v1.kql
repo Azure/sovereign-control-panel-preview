@@ -1,0 +1,23 @@
+resources
+| where type =~ "microsoft.dashboard/grafana"
+| mv-expand integration = properties.grafanaIntegrations.azureMonitorWorkspaceIntegrations
+| extend monitorWorkspaceKey = tolower(tostring(integration.azureMonitorWorkspaceResourceId))
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.monitor/accounts"
+    | project
+        monitorWorkspaceKey = tolower(id),
+        linkedId = id,
+        linkedName = name,
+        linkedType = type,
+        linkedRegion = location
+) on monitorWorkspaceKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

@@ -1,0 +1,20 @@
+resources
+| where type =~ "microsoft.synapse/workspaces"
+| extend keyVaultUrl = tostring(properties.encryption.cmk.key.keyVaultUrl)
+| where isnotempty(keyVaultUrl)
+| extend linkedNameKey = tolower(tostring(split(replace_string(keyVaultUrl, "https://", ""), ".")[0]))
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.keyvault/vaults"
+    | extend linkedNameKey = tolower(name)
+    | project linkedNameKey, linkedId=id, linkedName=name, linkedType=type, linkedRegion=location
+) on linkedNameKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

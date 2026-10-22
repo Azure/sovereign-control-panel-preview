@@ -1,0 +1,25 @@
+resources
+| where type =~ "microsoft.devices/iothubs"
+| mv-expand link = properties.routing.endpoints.serviceBusQueues
+| extend linkedNamespaceName = tolower(tostring(split(replace_string(tostring(link.endpointUri), "sb://", ""), ".")[0]))
+| extend linkedId = tolower(strcat(
+    "/subscriptions/", tostring(link.subscriptionId),
+    "/resourceGroups/", tostring(link.resourceGroup),
+    "/providers/Microsoft.ServiceBus/namespaces/", linkedNamespaceName))
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.servicebus/namespaces"
+    | project linkedId = tolower(id),
+        linkedName = name,
+        linkedType = type,
+        linkedRegion = location
+) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

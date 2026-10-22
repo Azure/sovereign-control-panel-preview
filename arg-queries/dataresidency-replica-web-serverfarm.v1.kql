@@ -1,0 +1,21 @@
+// DataResidencyReplica: a Web/site's linked App Service Plan (server farm) is the residency-relevant
+// linked resource; the handler checks its location against the allowed set. Source: Replication
+// Residency Matrix, 'Linked Resources' sheet (Microsoft.Web/sites -> Server Farms).
+resources
+| where type =~ 'microsoft.web/sites'
+| extend linkedResourceId = tolower(tostring(properties.serverFarmId))
+| where isnotempty(linkedResourceId)
+| join kind=leftouter (
+    resources
+    | where type =~ 'microsoft.web/serverfarms'
+    | project linkedResourceId = tolower(id), linkedResourceType = type, linkedName = name, linkedLocation = location
+  ) on linkedResourceId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId,
+    linkedResourceName = linkedName,
+    linkedResourceType = coalesce(linkedResourceType, 'microsoft.web/serverfarms'),
+    linkedResourceRegion = linkedLocation

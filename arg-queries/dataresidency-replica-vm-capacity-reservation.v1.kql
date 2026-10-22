@@ -1,0 +1,18 @@
+resources
+| where type =~ "microsoft.compute/virtualmachines"
+| extend linkedId = tolower(tostring(properties.capacityReservation.capacityReservationGroup.id))
+| where isnotempty(linkedId)
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.compute/capacityreservationgroups"
+    | project linkedId = tolower(id), linkedFullId = id, linkedName = name, linkedType = type, linkedRegion = location
+  ) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedFullId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

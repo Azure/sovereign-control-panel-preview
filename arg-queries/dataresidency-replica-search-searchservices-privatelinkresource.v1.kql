@@ -1,0 +1,15 @@
+resources
+| where type =~ "microsoft.search/searchservices"
+| mv-expand e0 = properties.sharedPrivateLinkResources
+| extend linkedId = tolower(tostring(e0.properties.privateLinkResourceId))
+| join kind=leftouter (resources
+    | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

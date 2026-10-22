@@ -1,0 +1,18 @@
+kustoresources
+| where type =~ "microsoft.kusto/clusters/databases/dataconnections"
+| extend linkedJoinId = tostring(properties.eventHubResourceId)
+| where linkedJoinId has "/providers/Microsoft.Devices/IotHubs/"
+| extend linkedJoinId = tolower(linkedJoinId)
+| where isnotempty(linkedJoinId)
+| join kind=leftouter (resources
+    | where type =~ "microsoft.devices/iothubs"
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on linkedJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

@@ -1,0 +1,16 @@
+resources
+| where type =~ "microsoft.eventhub/namespaces"
+| mv-expand e0 = properties.encryption.keyVaultProperties
+| extend host = tostring(e0.keyVaultUri)
+| extend refName = tolower(tostring(split(replace_string(host, "https://", ""), ".")[0]))
+| where isnotempty(refName)
+| join kind=leftouter (resources | project refName=tolower(name), linkedId=id, linkedName=name, linkedType=type, linkedRegion=location) on refName
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

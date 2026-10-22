@@ -1,0 +1,15 @@
+resources
+| where type =~ 'microsoft.containerservice/managedclusters'
+| mv-expand link = properties.agentPoolProfiles
+| extend linkedId = tolower(tostring(link.creationData.sourceResourceId))
+| where isnotempty(linkedId)
+| join kind=inner (resources | where type =~ 'microsoft.containerservice/snapshots' | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

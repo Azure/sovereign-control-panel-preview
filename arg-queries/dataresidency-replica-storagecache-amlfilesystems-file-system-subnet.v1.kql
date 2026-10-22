@@ -1,0 +1,19 @@
+resources
+| where type =~ 'microsoft.storagecache/amlfilesystems'
+| extend linkedId = tostring(properties.filesystemSubnet)
+| extend vnetId = tolower(tostring(split(linkedId, '/subnets/')[0]))
+| join kind=leftouter (
+    resources
+    | where type =~ 'microsoft.network/virtualnetworks'
+    | project vnetId=tolower(id), linkedRegion=location
+) on vnetId
+| extend linkedName=tostring(split(linkedId, '/')[-1]), linkedType='microsoft.network/virtualnetworks/subnets'
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

@@ -1,0 +1,15 @@
+resources
+| where type =~ "microsoft.batch/batchaccounts"
+| extend host = tostring(properties.encryption.keyVaultProperties.keyIdentifier)
+| extend refName = tostring(split(replace_string(host, "https://", ""), ".")[0])
+| join kind=leftouter (resources | where type =~ "microsoft.keyvault/vaults"
+    | project refName = tolower(name), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on refName
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

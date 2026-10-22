@@ -1,0 +1,19 @@
+resources
+| where type =~ "microsoft.network/virtualnetworks"
+| mv-expand e0 = properties.virtualNetworkPeerings
+| extend linkedRef = tostring(e0.properties.remoteVirtualNetwork.id)
+| where isnotempty(linkedRef)
+| extend lid = tolower(linkedRef)
+| join kind=leftouter (resources
+    | project lid = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on lid
+| project name, id, location, type, linkedId = iff(isnotempty(linkedId), linkedId, linkedRef), linkedName, linkedType, linkedRegion
+| distinct name, id, location, type, linkedId, linkedName, linkedType, linkedRegion
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion
