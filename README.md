@@ -11,6 +11,10 @@ This repository contains the onboarding documentation for the SCP Private Previe
 
 Private Preview focuses on the **View Experience** — the ability to create and view Sovereign control across your Azure resources. In this phase, SCP is **read-only**. It does not update or automatically remediate your resources.
 
+## Regulatory documents
+
+Create a Sovereign View using controls relevant to **Digital Operational Resilience Act (DORA)** or **Network and Information Security Directive 2 (NIS2)**, or start with the **Azure cloud sovereign baseline**. See [Regulatory documents](/docs/reference/regulatory-documents.md) for the feature overview, supported selections, source-document links, and coverage limitations.
+
 ## Prerequisites
 
 Before you begin onboarding, make sure you have:
