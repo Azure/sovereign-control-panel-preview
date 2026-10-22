@@ -2,10 +2,10 @@
 
 Regulatory Documents help you create a Sovereign View with a curated selection of sovereign controls relevant to a regulation. Instead of starting only from individual policy initiatives, you select a document and review the controls available for that selection.
 
-The selected document determines which controls are available in the create experience. You still choose the subscriptions or management groups to assess and configure the supported controls. SCP uses those controls to report the technical configuration posture of resources in your scope.
+The selected document determines which controls are available in the create experience. You still choose the subscriptions or management groups to assess and configure the supported controls.
 
 > [!IMPORTANT]
-> Support for a regulatory document means that SCP provides selected technical controls relevant to it. It does not mean that SCP evaluates every requirement, certifies compliance, or provides legal advice. Review the source document and your organization's obligations separately.
+> Support for a regulatory document means that SCP provides selected technical controls relevant to it. Please review the source document and your organization's obligations separately.
 
 ## Supported documents and baseline
 
@@ -27,7 +27,7 @@ The Private Preview catalog includes the following selections. Availability depe
 6. Complete the [managed identity role assignments](/docs/how-to/04-assign-managed-identity-roles.md), then [view the sovereignty control report](/docs/how-to/05-view-compliance-report.md).
 
 > [!NOTE]
-> If **Select regulation** is not shown, the regulatory-document experience might not yet be enabled for your preview. You can continue with the existing policy-initiative create experience or contact the [preview support team](/docs/how-to/07-troubleshooting-and-support.md#get-help-or-give-feedback).
+> If **Select regulation** is not shown, the regulatory-document experience might not yet be enabled for your preview. You can continue with the existing policy-initiative create experience or contact the [support team](/docs/how-to/07-troubleshooting-and-support.md#get-help-or-give-feedback).
 
 Choose the document when you create the view. To assess a different document, create a separate Sovereign View with that selection.
 
@@ -40,7 +40,7 @@ For DORA and NIS2, the create experience separates:
 
 The baseline selection shows the general sovereign controls rather than the document-specific supported and unsupported sections.
 
-In Private Preview, policy assignments used for these assessments are non-enforcing. Selecting a regulatory document does not change application resources or automatically remediate findings. A successful view deployment or a compliant technical-control result is not evidence that all requirements of the document have been met.
+In Private Preview, policy assignments used for these assessments are non-enforcing. Selecting a regulatory document does not change application resources or automatically remediate findings.
 
 ## Related guides
 
