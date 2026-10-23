@@ -55,6 +55,12 @@ reviewable Infrastructure-as-Code workflow.
 
 </details>
 
+## Azure Resource Graph (ARG) queries
+
+Sovereign Control Panel uses Azure Resource Graph queries, written in Kusto Query Language (KQL), to evaluate resource compliance posture across a Sovereign View scope. The [ARG queries guide](/arg-queries/README.md) introduces the query files so you can inspect the logic behind ARG-based compliance evaluation results.
+
+When a compliance evaluation result in the Azure portal references an ARG query, select **View query** to open the corresponding versioned `.kql` file in this repository.
+
 ## Support and feedback
 We prefer support requests, feedback, and bugs for the Private Preview features to be emailed to **(Azscp@microsoft.com)** or raised directly with your Microsoft contacts.
 
