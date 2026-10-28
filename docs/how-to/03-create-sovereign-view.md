@@ -40,8 +40,6 @@ As you add scopes, SCP checks whether you have permission to assign roles on eac
 
 ## Configure the policy initiative
 
-If your preview shows **Select regulation** on the **Sovereign controls** tab, refer to [Regulatory documents](/docs/reference/regulatory-documents.md) for understanding the supported controls for available Regulatory documents.
-
 The Sovereign view focuses on specific dimensions or control sets (e.g., Data Residency, Encryption at Transit & Rest, etc.) relevant to data sovereignty. All your scoped resources will be evaluated against these policy initiatives. Data Residency is a mandatory policy initiative, the rest are optional.
 
 | # | Step | Screenshot |

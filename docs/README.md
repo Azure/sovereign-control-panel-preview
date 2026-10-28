@@ -26,7 +26,6 @@ Use these modules to complete an end-to-end onboarding: register the resource pr
 
 | Article | Description |
 | ------- | ----------- |
-| [Regulatory documents](/docs/reference/regulatory-documents.md) | Understand the document-based create experience, supported DORA and NIS2 selections, the Azure cloud sovereign baseline, and source-document links and coverage limits. |
 | [Glossary](/docs/reference/glossary.md) | Definitions of key sovereignty and Azure terms used throughout this guide. |
 | [Bicep deployment package](/docs/bicep) | Downloadable templates, customer parameters, role modules, and resource-provider registration helper. |
 
