@@ -7,7 +7,7 @@ Use this guide to resolve common onboarding issues, understand the preview's lim
 Sovereign View is in Private Preview. Be aware of these known constraints:
 
 - **No editing or updates**: Modifying an existing Sovereign View's settings or scope after creation isn't supported in preview. The resource is effectively read-only after creation. To change the scope or included controls, delete and recreate it.
-- **Review only, no enforcement**: All evaluations are non-enforcing. Sovereign View doesn't block any operations or auto-remediate; it only reports sovereign control data. The underlying Azure policies are assigned in **DoNotEnforce** mode and don't affect your running services.
+- **Non-enforcing evaluations**: Sovereign View doesn't block operations or automatically remediate resources. The underlying Azure policies are assigned in **DoNotEnforce** mode and don't affect your running services. [Data Residency remediation](/docs/how-to/08-remediate-data-residency.md) is a separate, user-initiated workflow that requires explicit template deployment and resource move operations.
 - **Support scope**: Preview support is currently limited to targeted customers. Work with the Microsoft product team or your account team by email or through the Microsoft Teams channel.
 
 ## Troubleshooting

@@ -24,5 +24,6 @@ The Sovereign View resource periodically refreshes its data (for example, every 
 
 ## Next steps
 
+- [Remediate Data Residency issues](/docs/how-to/08-remediate-data-residency.md)
 - [Delete a Sovereign View](/docs/how-to/06-delete-sovereign-view.md)
 - [Troubleshooting and support](/docs/how-to/07-troubleshooting-and-support.md)
