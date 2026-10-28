@@ -22,6 +22,14 @@ Use these modules to complete an end-to-end onboarding: register the resource pr
 | [Module 6: Delete a Sovereign View](/docs/how-to/06-delete-sovereign-view.md) | Remove a Sovereign View resource and understand what deletion affects. |
 | [Module 7: Troubleshooting and support](/docs/how-to/07-troubleshooting-and-support.md) | Resolve common onboarding issues, review preview limitations, and get help. |
 
+## Remediation - Data Residency
+
+Remediation is user-initiated. Deploying the generated ARM template sets up Azure Resource Mover; you must complete the move and validate the workload separately.
+
+| Module | Description |
+| ------ | ----------- |
+| [Remediate Data Residency issues](/docs/how-to/08-remediate-data-residency.md) | Review required permissions and supported resources, configure the destination, download or deploy the template, complete the move, and verify the residency result. |
+
 ## Reference
 
 | Article | Description |

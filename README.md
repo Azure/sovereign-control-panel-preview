@@ -9,7 +9,7 @@ This repository contains the onboarding documentation for the SCP Private Previe
 
 ## What SCP does in Private Preview
 
-Private Preview focuses on the **View Experience** — the ability to create and view Sovereign control across your Azure resources. In this phase, SCP is **read-only**. It does not update or automatically remediate your resources.
+The **View Experience** lets you create and view Sovereign control across your Azure resources. Evaluations are non-enforcing and do not automatically remediate resources. For eligible Data Residency findings, you can explicitly initiate remediation, review and deploy a generated ARM template, and then complete the resource move in Azure Resource Mover.
 
 ## Prerequisites
 
@@ -48,6 +48,17 @@ reviewable Infrastructure-as-Code workflow.
 | Module | Description |
 | ------ | ----------- |
 | [Deploy a Sovereign View with Bicep](/docs/how-to/03b-deploy-sovereign-view-with-bicep.md) | Configure, preview, deploy, and validate a Sovereign View across subscription and management-group scopes. |
+
+</details>
+
+<details open>
+<summary><h3>Remediation - Data Residency</h3></summary>
+
+Use the remediation guide to address eligible out-of-region resources. Review permissions and supported resource types, configure the destination, and download or deploy the generated ARM template. Template deployment sets up Azure Resource Mover; it does not complete the move or immediately update compliance.
+
+| Module | Description |
+| ------ | ----------- |
+| [Remediate Data Residency issues](/docs/how-to/08-remediate-data-residency.md) | Identify a finding, configure and deploy the remediation setup, complete the move in Azure Resource Mover, and verify residency after the next policy evaluation cycle. |
 
 </details>
 
