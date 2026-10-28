@@ -21,3 +21,4 @@ resources
     linkedResourceName = vnetName,
     linkedResourceType = linkedType,
     linkedResourceRegion = vnetRegion
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

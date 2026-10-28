@@ -13,3 +13,4 @@ resources
     linkedResourceName = linkedName,
     linkedResourceType = linkedType,
     linkedResourceRegion = linkedRegion
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

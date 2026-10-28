@@ -4,7 +4,10 @@ resources
 | mv-expand e1 = e0.properties.backendIPConfigurations
 | extend ipConfigId = tolower(tostring(e1.id))
 | where isnotempty(ipConfigId)
-| extend linkedJoinId = tolower(tostring(substring(ipConfigId, 0, indexof(ipConfigId, "/ipconfigurations/"))))
+// Scale-set NICs are not in the resources table, so link to the owning scale set instead.
+| extend linkedJoinId = iff(ipConfigId contains "/virtualmachinescalesets/",
+    substring(ipConfigId, 0, indexof(ipConfigId, "/virtualmachines/")),
+    substring(ipConfigId, 0, indexof(ipConfigId, "/ipconfigurations/")))
 | where isnotempty(linkedJoinId)
 | distinct name, id, location, type, linkedJoinId
 | join kind=leftouter (resources
