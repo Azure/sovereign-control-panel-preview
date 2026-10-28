@@ -1,6 +1,6 @@
 resources
 | where type =~ "microsoft.containerregistry/registries/replications"
-| extend parentId = tostring(split(id, "/replications/")[0])
+| extend parentId = tolower(tostring(split(id, "/replications/")[0]))
 | project
     parentId,
     linkedId = id,
@@ -11,7 +11,7 @@ resources
     resources
     | where type =~ "microsoft.containerregistry/registries"
     | project
-        parentId = id,
+        parentId = tolower(id),
         name,
         id,
         location,

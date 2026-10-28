@@ -5,6 +5,7 @@ resources
 | extend subnetId = tolower(tostring(e1.properties.subnet.id)) 
 | extend linkedId = tolower(substring(subnetId, 0, indexof(subnetId, '/subnets/'))) 
 | where isnotempty(linkedId) 
+| distinct name, id, location, type, linkedId
 | join kind=leftouter (resources | where type =~ 'microsoft.network/virtualnetworks' 
     | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location) on linkedId 
 | project

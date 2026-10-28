@@ -21,3 +21,4 @@ resources
     linkedResourceName = linkedName,
     linkedResourceType = 'microsoft.compute/disks',
     linkedResourceRegion = linkedLocation
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion
