@@ -1,6 +1,6 @@
 # Sovereign Control Panel Private Preview
 
-Sovereign Control Panel (SCP) is a unified Azure portal experience for viewing, managing, and evaluating sovereignty posture across tenant resources. It aggregates sovereignty signals into a centralized experience so you can understand configuration posture across subscriptions and workloads.
+Sovereign Control Panel (SCP) is a unified Azure portal experience for viewing, managing, evaluating and remediate (data residency) sovereignty posture across tenant resources. It aggregates sovereignty signals into a centralized experience so you can understand configuration posture across subscriptions and workloads.
 
 This repository contains the onboarding documentation for the SCP Private Preview.
 
