@@ -1,3 +1,7 @@
+// Find disk encryption sets referenced by Azure Kubernetes Service clusters.
+// Match each cluster's disk encryption set ID to an existing encryption set resource.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ 'microsoft.containerservice/managedclusters'
 | extend linkedId = tolower(tostring(properties.diskEncryptionSetID))

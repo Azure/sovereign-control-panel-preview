@@ -1,3 +1,7 @@
+// Find virtual networks referenced by Azure AI services account network rules.
+// Read the subnet IDs in the rules and match their parent virtual networks.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.cognitiveservices/accounts"
 | mv-expand vnetRule = properties.networkAcls.virtualNetworkRules

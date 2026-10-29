@@ -1,3 +1,7 @@
+// Find virtual networks referenced by Azure NetApp Files volumes.
+// Derive each network ID from the volume's subnet ID and look up the matching network.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.netapp/netappaccounts/capacitypools/volumes"
 | extend subnetId = tolower(tostring(properties.subnetId))

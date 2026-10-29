@@ -1,3 +1,7 @@
+// Find storage accounts referenced when creating managed disks.
+// Read the storage account ID in each disk's creation settings and look up the matching account.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.compute/disks"
 | extend linkedId = tolower(tostring(properties.creationData.storageAccountId))

@@ -1,8 +1,7 @@
-// DataResidencyReplica: a storage account's network ACL virtual-network rules reference subnets; each
-// subnet's parent virtual network is a linked resource whose location must fall within the allowed set.
-// Source: Replication Residency Matrix, 'Linked Resources' sheet (Microsoft.Storage/storageAccounts ->
-// VNet). The parent VNet id is derived from the subnet id (everything before '/subnets/'). Validated
-// live in the Integration subscription (2026-09-29).
+// Find virtual networks referenced by storage account network rules.
+// Read the subnet IDs in the rules and look up their parent virtual networks.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ 'microsoft.storage/storageaccounts'
 | mv-expand vnetRule = properties.networkAcls.virtualNetworkRules

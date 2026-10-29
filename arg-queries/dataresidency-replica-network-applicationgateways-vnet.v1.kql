@@ -1,3 +1,7 @@
+// Find virtual networks referenced by Application Gateway IP configurations.
+// Read the configured subnet IDs and look up their parent virtual networks.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.network/applicationgateways"
 | mv-expand c = properties.gatewayIPConfigurations

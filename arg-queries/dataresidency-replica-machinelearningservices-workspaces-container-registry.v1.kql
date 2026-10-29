@@ -1,3 +1,7 @@
+// Find container registries referenced by Azure Machine Learning workspaces.
+// Read each workspace's container registry resource ID and look up the matching registry.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "Microsoft.MachineLearningServices/workspaces"
 | extend linkedJoinId = tolower(tostring(properties.containerRegistry))

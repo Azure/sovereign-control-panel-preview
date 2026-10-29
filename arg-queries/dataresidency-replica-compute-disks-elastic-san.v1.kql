@@ -1,3 +1,7 @@
+// Find Elastic SAN snapshots referenced through the source snapshots of managed disks.
+// Match each disk's source to a Compute snapshot, then look up its Elastic SAN snapshot reference.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.compute/disks"
 | extend computeSnapshotIdKey =

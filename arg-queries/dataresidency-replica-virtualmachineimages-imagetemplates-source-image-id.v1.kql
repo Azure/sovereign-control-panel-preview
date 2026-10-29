@@ -1,3 +1,7 @@
+// Find managed images referenced as sources by Azure VM Image Builder templates.
+// Read each template's source image resource ID and return matching managed image resources.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.virtualmachineimages/imagetemplates"
 | extend linkedJoinId = tolower(tostring(properties.source.imageId))

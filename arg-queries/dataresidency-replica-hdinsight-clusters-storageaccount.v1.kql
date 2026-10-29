@@ -1,3 +1,8 @@
+// Find storage accounts referenced by HDInsight clusters.
+// Extract account names from the configured storage endpoints and return matching storage
+// resources.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.hdinsight/clusters" 
 | mv-expand storageAccount = properties.storageProfile.storageaccounts

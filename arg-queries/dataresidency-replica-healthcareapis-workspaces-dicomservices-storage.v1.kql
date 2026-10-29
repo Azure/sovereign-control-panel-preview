@@ -1,3 +1,8 @@
+// Find storage accounts referenced by Azure Health Data Services DICOM services.
+// Read the storage resource ID in each service's storage configuration and return matching
+// accounts.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.healthcareapis/workspaces/dicomservices"
 | extend linkedId = tolower(tostring(properties.storageConfiguration.storageResourceId))

@@ -1,3 +1,8 @@
+// Find IoT hubs referenced by Azure Data Explorer data connections.
+// Keep event source resource IDs that identify IoT hubs and look up the corresponding hub
+// resources.
+// Return details of both resources, including their locations.
+
 kustoresources
 | where type =~ "microsoft.kusto/clusters/databases/dataconnections"
 | extend linkedJoinId = tostring(properties.eventHubResourceId)

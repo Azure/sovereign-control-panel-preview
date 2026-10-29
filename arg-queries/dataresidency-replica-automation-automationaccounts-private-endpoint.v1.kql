@@ -1,3 +1,7 @@
+// Find private endpoints connected to Automation accounts.
+// Select successfully provisioned endpoints and match their connection target IDs to accounts.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.network/privateendpoints"
 | where properties.provisioningState =~ "Succeeded"

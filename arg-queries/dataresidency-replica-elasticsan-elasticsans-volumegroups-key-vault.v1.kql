@@ -1,3 +1,7 @@
+// Find Key Vaults referenced by Elastic SAN volume group encryption settings.
+// Extract vault names from the configured vault URLs and look up matching vault resources.
+// Return details of both resources, including their locations.
+
 elasticsanresources
 | where type =~ "microsoft.elasticsan/elasticsans/volumegroups"
 | extend kvHost = tostring(properties.encryptionProperties.keyVaultProperties.keyVaultUri)

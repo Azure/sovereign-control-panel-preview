@@ -1,3 +1,7 @@
+// Find public IP addresses referenced by virtual network gateway IP configurations.
+// Read the configured public IP resource IDs and look up the corresponding resources.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.network/virtualnetworkgateways"
 | mv-expand ipconfig = properties.ipConfigurations

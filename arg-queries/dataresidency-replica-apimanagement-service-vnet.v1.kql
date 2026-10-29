@@ -1,3 +1,8 @@
+// Find virtual networks referenced by API Management services.
+// Collect subnet references from the primary and additional locations and match their parent
+// networks.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.apimanagement/service"
 | extend primaryLocation =

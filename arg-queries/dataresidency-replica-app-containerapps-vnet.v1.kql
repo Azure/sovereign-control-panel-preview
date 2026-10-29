@@ -1,3 +1,7 @@
+// Find virtual networks referenced by Container Apps through their managed environments.
+// Look up each app's environment and match its infrastructure subnet to the parent virtual network.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.app/containerapps"
 | extend environmentId = tolower(tostring(properties.managedEnvironmentId))

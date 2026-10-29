@@ -1,7 +1,7 @@
-// DataResidencyReplica: a storage account's customer-managed key (CMK) resolves to a Key Vault; the
-// handler checks that vault's location against the allowed set. Source: Replication Residency Matrix,
-// 'Linked Resources' sheet (Microsoft.Storage/storageAccounts -> CMK). This CMK -> Key Vault shape is
-// shared by ~25 other resource types, so it is the canonical linked-resource pattern to validate.
+// Find Key Vaults referenced by storage account encryption settings.
+// Extract vault names from the configured vault URLs and look up matching Key Vaults.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ 'microsoft.storage/storageaccounts'
 | extend kvUri = tostring(properties.encryption.keyvaultproperties.keyvaulturi)

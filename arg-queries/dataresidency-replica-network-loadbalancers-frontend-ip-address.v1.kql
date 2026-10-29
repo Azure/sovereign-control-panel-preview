@@ -1,3 +1,7 @@
+// Find resources referenced by load balancer frontend IP configurations.
+// For each frontend, look up its public IP address, public IP prefix, or subnet's parent network.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.network/loadbalancers"
 | mv-expand e0 = properties.frontendIPConfigurations

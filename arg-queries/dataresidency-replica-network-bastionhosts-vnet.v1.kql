@@ -1,3 +1,7 @@
+// Find virtual networks referenced by Azure Bastion IP configurations.
+// Read the configured subnet IDs and look up their distinct parent virtual networks.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.network/bastionhosts"
 | mv-expand c = properties.ipConfigurations

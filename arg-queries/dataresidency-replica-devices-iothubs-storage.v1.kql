@@ -1,3 +1,7 @@
+// Find storage accounts referenced by IoT Hub storage container routing endpoints.
+// Build account IDs from the endpoint URL, subscription, and resource group, then match accounts.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.devices/iothubs"
 | mv-expand link = properties.routing.endpoints.storageContainers

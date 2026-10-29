@@ -1,3 +1,7 @@
+// Find Key Vaults referenced by Azure Migrate Hyper-V site agents.
+// Read the Key Vault IDs in each site's agent details and return matching vault resources.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.offazure/hypervsites"
 | extend rawLinkedId = tostring(properties.agentDetails.keyVaultId)

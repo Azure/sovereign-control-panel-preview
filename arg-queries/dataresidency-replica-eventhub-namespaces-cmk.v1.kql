@@ -1,3 +1,8 @@
+// Find Key Vaults referenced by Event Hubs namespace encryption settings.
+// Expand the encryption key entries, extract vault names from their URLs, and look up matching
+// vaults.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.eventhub/namespaces"
 | mv-expand e0 = properties.encryption.keyVaultProperties

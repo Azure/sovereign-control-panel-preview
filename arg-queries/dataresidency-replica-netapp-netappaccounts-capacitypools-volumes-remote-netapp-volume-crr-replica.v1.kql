@@ -1,3 +1,8 @@
+// Find Azure NetApp Files replication destination volumes and their source volumes.
+// Select destination endpoints and match their remote volume resource IDs to source volumes.
+// Return each source volume's details alongside its destination's details, including both
+// locations.
+
 resources
 | where type =~ "microsoft.netapp/netappaccounts/capacitypools/volumes"
 | where tostring(properties.dataProtection.replication.endpointType) =~ "dst"

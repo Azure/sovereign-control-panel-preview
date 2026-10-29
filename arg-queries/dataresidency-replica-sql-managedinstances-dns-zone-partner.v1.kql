@@ -1,3 +1,7 @@
+// Find SQL managed instances that share a DNS zone with another managed instance.
+// Match instances by their nonempty DNS zone value and exclude matches to the same resource.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.sql/managedinstances"
 | extend dnsZone = tostring(properties.dnsZone)

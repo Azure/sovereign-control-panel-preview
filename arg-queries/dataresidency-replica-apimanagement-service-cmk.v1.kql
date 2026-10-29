@@ -1,3 +1,7 @@
+// Find Key Vaults referenced by API Management custom hostname configurations.
+// Extract vault names from the configured Key Vault URLs and keep matching vault resources.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.apimanagement/service"
 | mv-expand link = properties.hostnameConfigurations

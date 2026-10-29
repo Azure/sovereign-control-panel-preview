@@ -1,3 +1,8 @@
+// Find Service Bus namespaces referenced by IoT Hub queue routing endpoints.
+// Build namespace IDs from the endpoint URL, subscription, and resource group, then match
+// namespaces.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.devices/iothubs"
 | mv-expand link = properties.routing.endpoints.serviceBusQueues

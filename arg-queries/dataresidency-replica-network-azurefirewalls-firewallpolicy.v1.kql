@@ -1,3 +1,7 @@
+// Find firewall policies referenced by Azure Firewall resources.
+// Read each firewall's policy resource ID and look up the matching policy.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.network/azurefirewalls"
 | extend ref = tostring(properties.firewallPolicy.id)

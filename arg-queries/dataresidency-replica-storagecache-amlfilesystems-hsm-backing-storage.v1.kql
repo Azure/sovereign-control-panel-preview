@@ -1,3 +1,7 @@
+// Find storage accounts referenced by Azure Managed Lustre storage tiering settings.
+// Derive account IDs from the data and logging container references and look up distinct accounts.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ 'microsoft.storagecache/amlfilesystems'
 | extend containerIds = pack_array(

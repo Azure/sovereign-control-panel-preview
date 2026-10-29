@@ -1,3 +1,7 @@
+// Find user-assigned managed identities attached to virtual machine scale sets.
+// Expand the assigned identity IDs and look up the matching managed identity resources.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.compute/virtualmachinescalesets"
 | mv-expand kind=array assignedIdentity = identity.userAssignedIdentities

@@ -1,3 +1,7 @@
+// Find snapshots referenced when creating Azure Kubernetes Service node pools.
+// Read the node pool source resource IDs and match them to snapshot resources.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ 'microsoft.containerservice/managedclusters'
 | mv-expand link = properties.agentPoolProfiles

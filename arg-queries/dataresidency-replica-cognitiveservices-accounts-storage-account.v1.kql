@@ -1,3 +1,7 @@
+// Find storage accounts referenced by Azure AI services accounts.
+// Read the user-owned storage references and match their resource IDs to storage accounts.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.cognitiveservices/accounts"
 | mv-expand link = properties.userOwnedStorage

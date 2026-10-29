@@ -1,3 +1,7 @@
+// Find remote volumes referenced by Azure NetApp Files replication settings.
+// Combine remote volume and destination replication references, deduplicate, and look up volumes.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.netapp/netappaccounts/capacitypools/volumes"
 | extend linkedJoinId = tolower(tostring(properties.dataProtection.replication.remoteVolumeResourceId))

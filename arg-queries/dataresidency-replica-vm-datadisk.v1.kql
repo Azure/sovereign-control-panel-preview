@@ -1,7 +1,7 @@
-// DataResidencyReplica: a virtual machine's managed data disks are linked resources whose location must
-// fall within the allowed set. Source: Replication Residency Matrix, 'Linked Resources' sheet
-// (Microsoft.Compute/virtualMachines -> Data Disk). Validated live in the Integration subscription
-// (2026-09-29).
+// Find managed data disks referenced by virtual machines.
+// Expand each virtual machine's data disk list and match the managed disk IDs to disk resources.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ 'microsoft.compute/virtualmachines'
 | mv-expand dataDisk = properties.storageProfile.dataDisks

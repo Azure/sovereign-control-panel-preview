@@ -1,3 +1,7 @@
+// Find Log Analytics workspaces referenced by data collection rule destinations.
+// Expand the Log Analytics destination entries and look up their workspace resource IDs.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.insights/datacollectionrules"
 | mv-expand e0 = properties.destinations.logAnalytics

@@ -1,3 +1,7 @@
+// Find storage accounts referenced by Azure Machine Learning workspaces.
+// Read each workspace's storage account resource ID and look up the matching account.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "Microsoft.MachineLearningServices/workspaces"
 | extend linkedJoinId = tolower(tostring(properties.storageAccount))

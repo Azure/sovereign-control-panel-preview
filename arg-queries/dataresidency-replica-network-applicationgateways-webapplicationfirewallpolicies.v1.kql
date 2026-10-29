@@ -1,3 +1,7 @@
+// Find Web Application Firewall policies referenced by Application Gateways.
+// Combine gateway, listener, URL path map, and path rule references and look up distinct policies.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.network/applicationgateways"
 | extend linkedId = tolower(tostring(properties.firewallPolicy.id))
