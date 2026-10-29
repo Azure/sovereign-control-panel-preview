@@ -1,0 +1,20 @@
+// Find App Service plans referenced by web app deployment slots.
+// Read each slot's server farm resource ID and look up the matching App Service plan.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ 'microsoft.web/sites/slots'
+| extend linkedKey=tolower(tostring(properties.serverFarmId))
+| where isnotempty(linkedKey)
+| join kind=leftouter (resources
+    | where type =~ 'microsoft.web/serverfarms'
+    | project linkedKey=tolower(id),linkedId=id,linkedName=name,linkedType=type,linkedRegion=location) on linkedKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

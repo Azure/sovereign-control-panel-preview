@@ -1,6 +1,5 @@
 resources
 | where type =~ 'microsoft.dbformysql/flexibleservers'
-| where tostring(properties.replicationRole) =~ 'Replica'
 | project linkedId=id,
           linkedName=name,
           linkedType=type,

@@ -1,0 +1,24 @@
+// Find user-assigned managed identities referenced by SQL virtual machine identity settings.
+// Read each configured identity resource ID and return matching managed identity resources.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.sqlvirtualmachine/sqlvirtualmachines"
+| extend rawLinkedId = tostring(properties.virtualMachineIdentitySettings.resourceId)
+| extend linkedJoinId = tolower(rawLinkedId)
+| where isnotempty(linkedJoinId)
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.managedidentity/userassignedidentities"
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on linkedJoinId
+| where isnotempty(linkedId)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

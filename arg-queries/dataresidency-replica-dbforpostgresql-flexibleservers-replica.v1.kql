@@ -1,6 +1,5 @@
 resources
 | where type =~ 'microsoft.dbforpostgresql/flexibleservers'
-| where tostring(properties.replica.role) =~ 'AsyncReplica'
 | project linkedId=id,
           linkedName=name,
           linkedType=type,

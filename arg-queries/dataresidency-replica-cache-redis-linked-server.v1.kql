@@ -1,0 +1,30 @@
+// Find Azure Cache for Redis instances and their linked caches.
+// Derive cache resource IDs from the linked server entries and return matching caches.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.cache/redis" 
+| mv-expand link = properties.linkedServers
+| extend linkId = tolower(tostring(link.id))
+| extend redisPrefix = strcat(tostring(split(linkId, "/redis/")[0]), "/redis/"),
+         linkedCacheName = tostring(split(linkId, "/linkedservers/")[1])
+| where isnotempty(linkedCacheName)
+| extend linkedJoinId = strcat(redisPrefix, linkedCacheName)
+| project name, id, location, type, linkedJoinId
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.cache/redis"
+    | project linkedJoinId = tolower(id), linkedId = id,
+              linkedName = name, linkedType = type, linkedRegion = location
+) on linkedJoinId
+| where isnotempty(linkedId)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion
