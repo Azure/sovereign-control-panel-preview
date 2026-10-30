@@ -52,7 +52,7 @@ SCP remediation is limited to eligible primary resources of the following types.
 | Network security group |
 | Load balancer |
 | SQL server |
-| SQL database Primary DB |
+| SQL database (Primary DB) |
 | SQL elastic pool |
 
 Associated disks move with a supported VM; standalone disk remediation is not offered in this experience. Resources outside this list are not supported. Check the [Resource Mover prerequisites](https://learn.microsoft.com/azure/resource-mover/move-region-within-resource-group) and [VM support matrix](https://learn.microsoft.com/azure/resource-mover/support-matrix-move-region-azure-vm) for configuration-specific restrictions, including operating systems, disks, and networking settings.
