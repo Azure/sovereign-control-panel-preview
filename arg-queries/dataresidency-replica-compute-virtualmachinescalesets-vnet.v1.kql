@@ -1,3 +1,7 @@
+// Find virtual networks referenced by virtual machine scale set network configurations.
+// Read subnet IDs from the network interface IP configurations and match their parent networks.
+// Return details of both resources, including their locations.
+
 resources 
 | where type =~ 'microsoft.compute/virtualmachinescalesets'
 | mv-expand e0 = properties.virtualMachineProfile.networkProfile.networkInterfaceConfigurations 

@@ -1,3 +1,7 @@
+// Find local network gateways linked to virtual network gateways through connection resources.
+// Read each connection's first virtual network gateway and second local network gateway references.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.network/connections"
 | where isnotempty(properties.virtualNetworkGateway1.id) and isnotempty(properties.localNetworkGateway2.id)

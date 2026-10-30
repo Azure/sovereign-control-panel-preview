@@ -1,3 +1,7 @@
+// Find App Service Environments referenced by web apps.
+// Read each app's hosting environment resource ID and look up the matching environment.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ 'microsoft.web/sites'
 | extend linkedKey=tolower(tostring(properties.hostingEnvironmentProfile.id))

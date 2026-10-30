@@ -1,3 +1,7 @@
+// Find source resources referenced by Event Grid system topics.
+// Read each topic's source resource ID and look up the corresponding resource.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.eventgrid/systemtopics"
 | extend linkedId = tolower(tostring(properties.source))

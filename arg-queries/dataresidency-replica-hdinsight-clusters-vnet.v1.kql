@@ -1,3 +1,7 @@
+// Find virtual networks referenced by HDInsight cluster roles.
+// Keep fully qualified subnet IDs, derive their parent network IDs, and return distinct matches.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.hdinsight/clusters" 
 | mv-expand role = properties.computeProfile.roles

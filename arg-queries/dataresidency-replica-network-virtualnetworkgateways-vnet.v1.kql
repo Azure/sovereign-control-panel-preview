@@ -1,3 +1,7 @@
+// Find virtual networks referenced by virtual network gateway IP configurations.
+// Derive network IDs from the configured subnet references and look up matching networks.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.network/virtualnetworkgateways"
 | mv-expand ipconfig = properties.ipConfigurations

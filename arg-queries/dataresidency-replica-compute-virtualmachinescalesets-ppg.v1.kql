@@ -1,3 +1,7 @@
+// Find proximity placement groups referenced by virtual machine scale sets.
+// Match each scale set's placement group ID to the corresponding resource.
+// Return details of both resources, including their locations.
+
 resources 
 | where type =~ 'microsoft.compute/virtualmachinescalesets' 
 | extend linkedId = tolower(tostring(properties.proximityPlacementGroup.id)) 

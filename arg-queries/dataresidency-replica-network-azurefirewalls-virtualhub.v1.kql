@@ -1,3 +1,7 @@
+// Find virtual hubs referenced by Azure Firewall resources.
+// Read each firewall's virtual hub resource ID and look up the matching hub.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.network/azurefirewalls"
 | extend ref = tostring(properties.virtualHub.id)

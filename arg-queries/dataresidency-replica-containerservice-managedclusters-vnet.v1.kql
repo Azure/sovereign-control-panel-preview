@@ -1,3 +1,7 @@
+// Find virtual networks referenced by Azure Kubernetes Service node pools.
+// Derive network IDs from the node pool subnet references and return distinct matching networks.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ 'microsoft.containerservice/managedclusters'
 | mv-expand e0 = properties.agentPoolProfiles

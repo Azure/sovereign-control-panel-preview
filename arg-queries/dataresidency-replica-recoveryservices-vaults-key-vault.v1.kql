@@ -1,3 +1,7 @@
+// Find Key Vaults referenced by Recovery Services vault encryption settings.
+// Extract vault names from the configured key URLs and return matching vault resources.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.recoveryservices/vaults"
 | extend keyUri = tostring(properties.encryption.keyVaultProperties.keyUri)

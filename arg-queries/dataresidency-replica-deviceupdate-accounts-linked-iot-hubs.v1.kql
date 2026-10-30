@@ -1,3 +1,7 @@
+// Find IoT hubs referenced by Device Update account instances.
+// Match instances to their parent accounts, then look up the IoT hub resource IDs in each instance.
+// Return the account and IoT hub details, including their locations.
+
 resources
 | where type =~ "microsoft.deviceupdate/accounts"
 | extend accountJoinId = tolower(id)

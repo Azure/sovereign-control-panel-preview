@@ -1,3 +1,8 @@
+// Find private endpoints connected to Elastic SAN volume groups.
+// Select successfully provisioned endpoints and derive parent SAN IDs from their connection
+// targets.
+// Return the parent SAN and private endpoint details, including their locations.
+
 resources
 | where type =~ "microsoft.network/privateendpoints"
 | where properties.provisioningState =~ "Succeeded"

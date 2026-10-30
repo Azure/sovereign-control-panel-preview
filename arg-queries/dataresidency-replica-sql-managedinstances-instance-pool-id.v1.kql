@@ -1,3 +1,7 @@
+// Find instance pools referenced by SQL managed instances.
+// Read each managed instance's pool resource ID and return matching pool resources.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.sql/managedinstances"
 | extend linkedKey = tolower(tostring(properties.instancePoolId))

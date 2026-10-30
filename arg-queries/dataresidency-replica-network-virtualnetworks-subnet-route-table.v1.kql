@@ -1,3 +1,7 @@
+// Find route tables referenced by virtual network subnets.
+// Expand each network's subnets and return route tables matching the configured resource IDs.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.network/virtualnetworks"
 | mv-expand subnet = properties.subnets

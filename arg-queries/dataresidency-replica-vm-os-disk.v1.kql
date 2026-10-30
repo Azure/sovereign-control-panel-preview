@@ -1,3 +1,7 @@
+// Find managed operating system disks referenced by virtual machines.
+// Read each virtual machine's managed OS disk ID and look up the matching disk.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.compute/virtualMachines"
 | extend linkedId = tolower(tostring(properties.storageProfile.osDisk.managedDisk.id))

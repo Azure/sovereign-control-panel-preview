@@ -1,3 +1,7 @@
+// Find private endpoints connected to container registries.
+// Read each endpoint's connection target ID and match it to a container registry.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.network/privateendpoints"
 | mv-expand connection = properties.privateLinkServiceConnections

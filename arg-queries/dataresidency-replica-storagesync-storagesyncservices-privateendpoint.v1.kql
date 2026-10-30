@@ -1,3 +1,7 @@
+// Find private endpoints referenced by Storage Sync services.
+// Expand the private endpoint connections and look up each referenced endpoint resource ID.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.storagesync/storagesyncservices"
 | mv-expand connection = properties.privateEndpointConnections

@@ -1,3 +1,7 @@
+// Find Key Vaults referenced by Azure Managed Lustre encryption settings.
+// Extract vault names from the configured encryption key URLs and look up matching vaults.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ 'microsoft.storagecache/amlfilesystems'
 | extend host = tostring(properties.encryptionSettings.keyEncryptionKey.keyUrl)

@@ -1,3 +1,7 @@
+// Find SQL virtual machine groups referenced by SQL virtual machine resources.
+// Read each configured group resource ID and return matching group resources.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.sqlvirtualmachine/sqlvirtualmachines"
 | extend linkedKey = tolower(tostring(properties.sqlVirtualMachineGroupResourceId))

@@ -1,3 +1,7 @@
+// Find Key Vaults referenced by Batch account encryption settings.
+// Extract the vault name from each key URL and look up the matching Key Vault.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.batch/batchaccounts"
 | extend host = tostring(properties.encryption.keyVaultProperties.keyIdentifier)

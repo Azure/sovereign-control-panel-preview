@@ -1,3 +1,8 @@
+// Find diagnostic storage accounts referenced by Device Update account instances.
+// Match instances to their parent accounts, then look up each instance's diagnostic storage
+// account.
+// Return the account and storage account details, including their locations.
+
 resources
 | where type =~ "microsoft.deviceupdate/accounts"
 | extend accountJoinId = tolower(id)

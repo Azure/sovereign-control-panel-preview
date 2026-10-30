@@ -1,3 +1,7 @@
+// Find virtual networks referenced by Container Registry agent pools.
+// Derive network IDs from the configured subnet references and return matching networks.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.containerregistry/registries/agentpools"
 | extend rawLinkedId = tostring(properties.virtualNetworkSubnetResourceId)

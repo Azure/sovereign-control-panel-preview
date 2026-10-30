@@ -1,3 +1,7 @@
+// Find storage accounts referenced by Batch account automatic storage settings.
+// Match the configured storage account IDs to storage resources.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.batch/batchaccounts"
 | extend linkedId = tolower(tostring(properties.autoStorage.storageAccountId))

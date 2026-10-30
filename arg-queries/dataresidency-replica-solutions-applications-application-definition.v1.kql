@@ -1,3 +1,7 @@
+// Find application definitions referenced by Azure managed applications.
+// Read each application's definition resource ID and look up the corresponding resource.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.solutions/applications"
 | extend linkedId = tolower(tostring(properties.applicationDefinitionId))

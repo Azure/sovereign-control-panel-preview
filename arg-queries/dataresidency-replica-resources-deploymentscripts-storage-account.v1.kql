@@ -1,0 +1,23 @@
+// Find storage accounts referenced by Azure deployment scripts.
+// Read each script's reported storage account ID and return matching storage resources.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.resources/deploymentscripts"
+| extend linkedJoinId = tolower(tostring(properties.status.storageAccountId))
+| where isnotempty(linkedJoinId)
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.storage/storageaccounts"
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on linkedJoinId
+| where isnotempty(linkedId)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

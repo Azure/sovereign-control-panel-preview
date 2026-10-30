@@ -1,3 +1,7 @@
+// Find virtual networks referenced by load balancer backend address entries.
+// Expand the backend address pools and look up the network IDs configured in their addresses.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.network/loadbalancers"
 | mv-expand e0 = properties.backendAddressPools

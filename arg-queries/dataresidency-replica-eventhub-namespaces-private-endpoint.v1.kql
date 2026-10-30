@@ -1,3 +1,7 @@
+// Find private endpoints connected to Event Hubs namespaces.
+// Read each endpoint's connection target ID and match it to a namespace resource.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.network/privateendpoints"
 | mv-expand connection = properties.privateLinkServiceConnections

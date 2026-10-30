@@ -1,3 +1,7 @@
+// Find Key Vaults referenced by Azure Databricks managed services encryption settings.
+// Extract vault names from the configured vault URLs and look up matching vaults.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.databricks/workspaces"
 | extend kvHost = tostring(properties.encryption.entities.managedServices.keyVaultProperties.keyVaultUri)

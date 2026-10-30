@@ -1,3 +1,7 @@
+// Find dedicated clusters referenced by Stream Analytics jobs.
+// Read each job's cluster resource ID and look up the matching Stream Analytics cluster.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.streamanalytics/streamingjobs"
 | extend normalizedLinkedId = tolower(tostring(properties.cluster.id))

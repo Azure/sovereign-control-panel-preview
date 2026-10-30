@@ -1,3 +1,7 @@
+// Find Microsoft Purview accounts referenced by Data Factory instances.
+// Read the configured Purview resource IDs and return matching accounts.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.datafactory/factories"
 | extend linkedIdKey = tolower(tostring(properties.purviewConfiguration.purviewResourceId))

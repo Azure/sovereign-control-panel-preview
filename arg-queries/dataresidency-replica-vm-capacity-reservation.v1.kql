@@ -1,3 +1,7 @@
+// Find capacity reservation groups referenced by virtual machines.
+// Read each virtual machine's reservation group ID and return matching groups.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.compute/virtualmachines"
 | extend linkedId = tolower(tostring(properties.capacityReservation.capacityReservationGroup.id))

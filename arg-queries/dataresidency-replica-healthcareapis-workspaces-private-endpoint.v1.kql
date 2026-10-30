@@ -1,3 +1,8 @@
+// Find private endpoints connected to Azure Health Data Services workspaces.
+// Select successfully provisioned endpoints with approved connections and match their target
+// workspaces.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.network/privateendpoints"
 | where properties.provisioningState =~ "Succeeded"

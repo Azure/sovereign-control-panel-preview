@@ -1,3 +1,7 @@
+// Find IoT hubs linked to Device Provisioning Service instances.
+// Expand the configured IoT hub entries and match their names to IoT hub hostnames.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.devices/provisioningservices"
 | mv-expand iotHub = properties.iotHubs

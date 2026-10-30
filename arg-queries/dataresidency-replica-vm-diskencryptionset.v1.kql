@@ -1,3 +1,7 @@
+// Find disk encryption sets referenced by virtual machine operating system disks.
+// Read each managed OS disk's encryption set ID and look up the matching resource.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.compute/virtualmachines"
 | extend linkedId = tolower(tostring(properties.storageProfile.osDisk.managedDisk.diskEncryptionSet.id))

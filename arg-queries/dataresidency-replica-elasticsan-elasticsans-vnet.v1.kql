@@ -1,3 +1,8 @@
+// Find virtual networks referenced by Elastic SAN volume group network rules.
+// Match volume groups to their parent SANs and look up networks using the subnet IDs in their
+// rules.
+// Return the parent SAN and virtual network details, including their locations.
+
 resources
 | where type =~ "microsoft.elasticsan/elasticsans"
 | project primaryJoinId=tolower(id), name, id, location, type

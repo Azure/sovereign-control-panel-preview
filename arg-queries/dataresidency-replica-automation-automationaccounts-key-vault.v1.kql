@@ -1,3 +1,7 @@
+// Find Key Vaults referenced by Automation account encryption settings.
+// Extract the vault name from each configured vault URL and look up the matching Key Vault.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.automation/automationaccounts"
 | extend kvHost = tostring(properties.encryption.keyvaultProperties.keyvaultUri)

@@ -1,3 +1,7 @@
+// Find resources referenced by Azure AI Search shared private link configurations.
+// Expand the shared private link entries and look up their target resource IDs.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.search/searchservices"
 | mv-expand e0 = properties.sharedPrivateLinkResources

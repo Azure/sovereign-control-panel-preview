@@ -1,3 +1,7 @@
+// Find Key Vaults or Managed HSMs referenced by Azure NetApp Files account encryption settings.
+// Extract the vault name and service type from each URL and match both to a resource.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.netapp/netappaccounts"
 | extend host = tolower(tostring(properties.encryption.keyVaultProperties.keyVaultUri))

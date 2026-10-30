@@ -1,3 +1,8 @@
+// Find remote networks referenced by virtual network peerings.
+// Expand the peering entries and look up each remote network ID, retaining IDs when no match is
+// found.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.network/virtualnetworks"
 | mv-expand e0 = properties.virtualNetworkPeerings

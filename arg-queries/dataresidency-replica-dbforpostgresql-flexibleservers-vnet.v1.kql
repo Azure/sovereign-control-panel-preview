@@ -1,3 +1,7 @@
+// Find virtual networks referenced by Azure Database for PostgreSQL flexible servers.
+// Derive network IDs from the delegated subnet references and return matching networks.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ 'microsoft.dbforpostgresql/flexibleservers'
 | extend subnetId = tolower(tostring(properties.network.delegatedSubnetResourceId))

@@ -1,3 +1,7 @@
+// Find NAT gateways referenced by virtual network subnets.
+// Expand each network's subnets and look up the configured NAT gateway resource IDs.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.network/virtualnetworks"
 | mv-expand subnet = properties.subnets

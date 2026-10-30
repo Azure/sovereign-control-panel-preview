@@ -1,3 +1,7 @@
+// Find Azure Monitor workspaces referenced by Azure Managed Grafana integrations.
+// Expand the configured workspace integrations and match their resource IDs to Monitor workspaces.
+// Return details of both resources, including their locations.
+
 resources
 | where type =~ "microsoft.dashboard/grafana"
 | mv-expand integration = properties.grafanaIntegrations.azureMonitorWorkspaceIntegrations
