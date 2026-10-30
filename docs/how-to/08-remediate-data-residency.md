@@ -52,7 +52,7 @@ SCP remediation is limited to eligible primary resources of the following types.
 | Network security group |
 | Load balancer |
 | SQL server |
-| SQL database |
+| SQL database Primary DB |
 | SQL elastic pool |
 
 Associated disks move with a supported VM; standalone disk remediation is not offered in this experience. Resources outside this list are not supported. Check the [Resource Mover prerequisites](https://learn.microsoft.com/azure/resource-mover/move-region-within-resource-group) and [VM support matrix](https://learn.microsoft.com/azure/resource-mover/support-matrix-move-region-azure-vm) for configuration-specific restrictions, including operating systems, disks, and networking settings.
@@ -138,7 +138,7 @@ The remaining operations follow the official Resource Mover lifecycle. They are 
 
 <img src="../assets/data-residency-remediation-09.png" width="900" alt="Example destination SQL server in France Central with an In policy residency result." />
 
-The Move Collection and its system-assigned identity remain until cleaned up. Follow the [Resource Mover cleanup guidance](https://learn.microsoft.com/azure/resource-mover/remove-move-resources) after a successful move. Do not delete the source or target resource group as part of setup cleanup.
+This deployment creates a managed identity that runs the setup script, holding Contributor on target resource group and reader on source resource group, it is only used while the script runs. Once you have committed the move in the Azure Resource Mover, you can delete the Move Collection and the identity; neither is removed automatically.
 
 ## Support and next steps
 
