@@ -71,6 +71,8 @@ When a compliance evaluation result in the Azure portal references an ARG query,
 ## Support and feedback
 We prefer support requests, feedback, and bugs for the Private Preview features to be emailed to **(Azscp@microsoft.com)** or raised directly with your Microsoft contacts.
 
+See [SUPPORT.md](SUPPORT.md) for support channels and the Microsoft Support Policy.
+
 > [!NOTE]
 > Do not report security vulnerabilities through public GitHub issues. See [SECURITY.md](SECURITY.md) for reporting guidance.
 
