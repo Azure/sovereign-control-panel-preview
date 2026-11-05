@@ -438,7 +438,7 @@ You do not need to redeploy Bicep to refresh the report.
 
 For additional issues, see
 [Module 7: Troubleshooting and support](/docs/how-to/07-troubleshooting-and-support.md)
-or email **Azscp@microsoft.com**.
+or contact your Microsoft account representative.
 
 ## Delete the deployment
 

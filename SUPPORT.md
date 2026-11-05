@@ -3,8 +3,8 @@
 ## How to file issues and get help
 
 For Sovereign Control Panel Private Preview support requests, bug reports, feature
-requests, and feedback, email [Azscp@microsoft.com](mailto:Azscp@microsoft.com) or
-contact your Microsoft product team or account representative. You can also use
+requests, and feedback, contact your Microsoft product team or account
+representative. You can also use
 your existing Microsoft Teams channel for the preview.
 
 Before requesting assistance, review the

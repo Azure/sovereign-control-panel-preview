@@ -69,7 +69,7 @@ Sovereign Control Panel uses Azure Resource Graph queries, written in Kusto Quer
 When a compliance evaluation result in the Azure portal references an ARG query, select **View query** to open the corresponding versioned `.kql` file in this repository.
 
 ## Support and feedback
-We prefer support requests, feedback, and bugs for the Private Preview features to be emailed to **(Azscp@microsoft.com)** or raised directly with your Microsoft contacts.
+Raise support requests, feedback, and bugs for the Private Preview features directly with your Microsoft contacts or through your existing preview Microsoft Teams channel.
 
 See [SUPPORT.md](SUPPORT.md) for support channels and the Microsoft Support Policy.
 

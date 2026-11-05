@@ -51,7 +51,7 @@ These statuses indicate that a particular sovereign control found no applicable 
 
 ## Get help or give feedback
 
-To report an issue or request assistance, contact your Microsoft account representative or email us. For product feedback, reach us at **Azscp@microsoft.com** or through Teams chat. 
+To report an issue, request assistance, or share product feedback, contact your Microsoft product team or account representative, or use your existing preview Microsoft Teams channel.
 
 > [!NOTE]
 > Don't report security vulnerabilities through public GitHub issues. See [SECURITY.md](/SECURITY.md) for reporting guidance.
