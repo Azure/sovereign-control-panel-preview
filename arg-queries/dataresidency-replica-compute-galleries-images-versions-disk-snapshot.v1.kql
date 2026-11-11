@@ -1,18 +1,26 @@
 // Find source resources referenced by Azure Compute Gallery image versions.
-// Use the OS disk image source ID, falling back to the storage profile source ID, and look up
-// resources.
+// Collect storage profile, OS disk image, and data disk image source references.
+// Deduplicate source IDs and look up matching resources using case-insensitive joins.
 // Return details of both resources, including their locations.
 
 resources
 | where type =~ "microsoft.compute/galleries/images/versions"
-| extend linkedId = tolower(tostring(coalesce(
-    properties.storageProfile.osDiskImage.source.id,
-    properties.storageProfile.source.id)))
+| extend linkedSources = array_concat(
+    pack_array(
+        properties.storageProfile.source,
+        properties.storageProfile.osDiskImage.source),
+    coalesce(properties.storageProfile.dataDiskImages, dynamic([])))
+| mv-expand linkedSource = linkedSources
+| extend linkedId = coalesce(
+    tostring(linkedSource.id),
+    tostring(linkedSource.source.id))
 | where isnotempty(linkedId)
+| distinct name, id, location, type, linkedId
+| extend linkedKey = tolower(linkedId)
 | join kind=leftouter (
     resources
-    | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location
-  ) on linkedId
+    | project linkedKey = tolower(id), linkedName = name, linkedType = type, linkedRegion = location
+  ) on linkedKey
 | project
     primaryResourceName = name,
     primaryResourceId = id,

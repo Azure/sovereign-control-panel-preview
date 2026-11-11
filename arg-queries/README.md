@@ -101,7 +101,6 @@ Offerings: Shared Image Gallery (Azure Compute Gallery)
 | --- | --- | --- |
 | [dataresidency-replica-compute-galleries-images-versions-disk-snapshot.v1.kql](./dataresidency-replica-compute-galleries-images-versions-disk-snapshot.v1.kql) | Disk Snapshot | Find source resources referenced by Azure Compute Gallery image versions. |
 | [dataresidency-replica-compute-galleries-images-versions-managed-image-version-source.v1.kql](./dataresidency-replica-compute-galleries-images-versions-managed-image-version-source.v1.kql) | Managed Image (Version Source) | Find managed images referenced as sources by Azure Compute Gallery image versions. |
-| [dataresidency-replica-compute-galleries-images-versions-storage-profile.v1.kql](./dataresidency-replica-compute-galleries-images-versions-storage-profile.v1.kql) | Storage Profile | Find source resources referenced by Azure Compute Gallery image version storage profiles. |
 
 ### Microsoft.Compute/hostGroups/hosts
 
@@ -417,7 +416,6 @@ Offerings: Azure NetApp Files
 
 | Query | Linked Resource | Description |
 | --- | --- | --- |
-| [dataresidency-replica-netapp-netappaccounts-capacitypools-volumes-remote-netapp-volume-crr-replica.v1.kql](./dataresidency-replica-netapp-netappaccounts-capacitypools-volumes-remote-netapp-volume-crr-replica.v1.kql) | Remote NetApp Volume (CRR Replica) | Find Azure NetApp Files replication destination volumes and their source volumes. |
 | [dataresidency-replica-netapp-netappaccounts-capacitypools-volumes-remote-volume.v1.kql](./dataresidency-replica-netapp-netappaccounts-capacitypools-volumes-remote-volume.v1.kql) | Remote Volume | Find remote volumes referenced by Azure NetApp Files replication settings. |
 | [dataresidency-replica-netapp-netappaccounts-capacitypools-volumes-vnet.v1.kql](./dataresidency-replica-netapp-netappaccounts-capacitypools-volumes-vnet.v1.kql) | VNet | Find virtual networks referenced by Azure NetApp Files volumes. |
 
@@ -523,7 +521,6 @@ Offerings: Backup, Site Recovery
 
 | Query | Linked Resource | Description |
 | --- | --- | --- |
-| [dataresidency-replica-recoveryservices-vaults-cmk.v1.kql](./dataresidency-replica-recoveryservices-vaults-cmk.v1.kql) | CMK | Find Key Vaults referenced by Recovery Services vault encryption settings. |
 | [dataresidency-replica-recoveryservices-vaults-key-vault.v1.kql](./dataresidency-replica-recoveryservices-vaults-key-vault.v1.kql) | Key Vault | Find Key Vaults referenced by Recovery Services vault encryption settings. |
 
 ### Microsoft.RedHatOpenShift/openShiftClusters
@@ -601,7 +598,6 @@ Offerings: Storage, Archive Storage, Azure Data Lake Storage Gen2, Azure Files, 
 | Query | Linked Resource | Description |
 | --- | --- | --- |
 | [dataresidency-autogeo-storage.v1.kql](./dataresidency-autogeo-storage.v1.kql) |  | Check whether storage account SKU names indicate geo-redundant replication. |
-| [dataresidency-replica-storage-cmk.v1.kql](./dataresidency-replica-storage-cmk.v1.kql) | CMK | Find Key Vaults referenced by storage account encryption settings. |
 | [dataresidency-replica-storage-keyvault.v1.kql](./dataresidency-replica-storage-keyvault.v1.kql) | CMK | Find Key Vaults referenced by storage account encryption settings. |
 | [dataresidency-replica-storage-vnet.v1.kql](./dataresidency-replica-storage-vnet.v1.kql) | VNet | Find virtual networks referenced by storage account network rules. |
 
@@ -637,7 +633,6 @@ Offerings: Azure Synapse Analytics
 
 | Query | Linked Resource | Description |
 | --- | --- | --- |
-| [dataresidency-replica-synapse-workspaces-cmk.v1.kql](./dataresidency-replica-synapse-workspaces-cmk.v1.kql) | CMK | Find Key Vaults referenced by Azure Synapse workspace encryption settings. |
 | [dataresidency-replica-synapse-workspaces-key-vault.v1.kql](./dataresidency-replica-synapse-workspaces-key-vault.v1.kql) | Key Vault | Find Key Vaults referenced by Azure Synapse workspace encryption settings. |
 | [dataresidency-replica-synapse-workspaces-private-endpoint.v1.kql](./dataresidency-replica-synapse-workspaces-private-endpoint.v1.kql) | Private Endpoint | Find private endpoints connected to Azure Synapse workspaces. |
 | [dataresidency-replica-synapse-workspaces-purview-account.v1.kql](./dataresidency-replica-synapse-workspaces-purview-account.v1.kql) | Purview Account | Find Microsoft Purview accounts referenced by Azure Synapse workspaces. |
