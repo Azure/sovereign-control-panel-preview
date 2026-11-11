@@ -1,5 +1,5 @@
 // Find Azure Database for PostgreSQL flexible server replicas and their source servers.
-// Match each configured source server resource ID to a server resource, without filtering by role.
+// Select servers with the AsyncReplica role and match their source server IDs to server resources.
 // Return each source server's details alongside its replica's details, including both locations.
 
 resources
