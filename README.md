@@ -42,12 +42,14 @@ Follow these how-to modules to set up your first Sovereign view using Azure Port
 <details open>
 <summary><h3>Create Sovereign View using Bicep</h3></summary>
 
-Use the Bicep deployment guide to create a Sovereign View with a repeatable,
-reviewable Infrastructure-as-Code workflow.
+Choose an explicit API-version package from the [Bicep version catalog](/docs/bicep/README.md)
+for a repeatable, reviewable Infrastructure-as-Code workflow. Confirm that the
+service supports the selected contract before deploying.
 
 | Module | Description |
 | ------ | ----------- |
-| [Deploy a Sovereign View with Bicep](/docs/how-to/03b-deploy-sovereign-view-with-bicep.md) | Configure, preview, deploy, and validate a Sovereign View across subscription and management-group scopes. |
+| [Deploy with Bicep: 2026-10-31-preview](/docs/how-to/03c-deploy-sovereign-view-with-bicep-2026-10-31-preview.md) | Reference existing policy assignments and configure Business Continuity and per-dimension settings. Requires service support for the published contract. |
+| [Legacy Bicep: 2026-03-15-preview](/docs/how-to/03b-deploy-sovereign-view-with-bicep.md) | Use the unchanged legacy package with assignment parameters and role modules. |
 
 </details>
 
