@@ -14,6 +14,7 @@ Offerings: API Management
 | Query | Linked Resource | Description |
 | --- | --- | --- |
 | [dataresidency-replica-apimanagement-service-cmk.v1.kql](./dataresidency-replica-apimanagement-service-cmk.v1.kql) | CMK | Find Key Vaults referenced by API Management custom hostname configurations. |
+| [dataresidency-replica-apimanagement-service-replica.v1.kql](./dataresidency-replica-apimanagement-service-replica.v1.kql) | Replica | Find API Management services deployed to additional gateway locations. |
 | [dataresidency-replica-apimanagement-service-vnet.v1.kql](./dataresidency-replica-apimanagement-service-vnet.v1.kql) | VNet | Find virtual networks referenced by API Management services. |
 
 ### Microsoft.App/containerApps
@@ -101,6 +102,7 @@ Offerings: Shared Image Gallery (Azure Compute Gallery)
 | --- | --- | --- |
 | [dataresidency-replica-compute-galleries-images-versions-disk-snapshot.v1.kql](./dataresidency-replica-compute-galleries-images-versions-disk-snapshot.v1.kql) | Disk Snapshot | Find source resources referenced by Azure Compute Gallery image versions. |
 | [dataresidency-replica-compute-galleries-images-versions-managed-image-version-source.v1.kql](./dataresidency-replica-compute-galleries-images-versions-managed-image-version-source.v1.kql) | Managed Image (Version Source) | Find managed images referenced as sources by Azure Compute Gallery image versions. |
+| [dataresidency-replica-compute-galleries-images-versions-replica.v1.kql](./dataresidency-replica-compute-galleries-images-versions-replica.v1.kql) | Replica | Find Azure Compute Gallery image versions and the regions they are replicated to. |
 
 ### Microsoft.Compute/hostGroups/hosts
 
@@ -234,6 +236,7 @@ Offerings: IoT Hub, Azure IoT Edge
 | --- | --- | --- |
 | [dataresidency-replica-devices-iothubs-event-hub.v1.kql](./dataresidency-replica-devices-iothubs-event-hub.v1.kql) | Event Hub | Find Event Hubs referenced by IoT Hub message routing endpoints. |
 | [dataresidency-replica-devices-iothubs-private-endpoint.v1.kql](./dataresidency-replica-devices-iothubs-private-endpoint.v1.kql) | Private Endpoint | Find private endpoints connected to IoT hubs. |
+| [dataresidency-replica-devices-iothubs-replica.v1.kql](./dataresidency-replica-devices-iothubs-replica.v1.kql) | Replica | Find IoT hubs and their disaster recovery secondary locations. |
 | [dataresidency-replica-devices-iothubs-service-bus.v1.kql](./dataresidency-replica-devices-iothubs-service-bus.v1.kql) | Service Bus | Find Service Bus namespaces referenced by IoT Hub queue routing endpoints. |
 | [dataresidency-replica-devices-iothubs-storage.v1.kql](./dataresidency-replica-devices-iothubs-storage.v1.kql) | Storage Account | Find storage accounts referenced by IoT Hub storage container routing endpoints. |
 
@@ -270,6 +273,7 @@ Offerings: Azure Cosmos DB
 | Query | Linked Resource | Description |
 | --- | --- | --- |
 | [dataresidency-replica-documentdb-databaseaccounts-cmk.v1.kql](./dataresidency-replica-documentdb-databaseaccounts-cmk.v1.kql) | CMK | Find Key Vaults referenced by Azure Cosmos DB account encryption settings. |
+| [dataresidency-replica-documentdb-databaseaccounts-replica.v1.kql](./dataresidency-replica-documentdb-databaseaccounts-replica.v1.kql) | Replica | Find Azure Cosmos DB accounts and every region the account is deployed to. |
 | [dataresidency-replica-documentdb-databaseaccounts-vnet.v1.kql](./dataresidency-replica-documentdb-databaseaccounts-vnet.v1.kql) | VNet | Find virtual networks referenced by Azure Cosmos DB account network rules. |
 
 ### Microsoft.ElasticSan/elasticSans
@@ -305,6 +309,7 @@ Offerings: Event Hubs
 | --- | --- | --- |
 | [dataresidency-replica-eventhub-namespaces-cmk.v1.kql](./dataresidency-replica-eventhub-namespaces-cmk.v1.kql) | CMK | Find Key Vaults referenced by Event Hubs namespace encryption settings. |
 | [dataresidency-replica-eventhub-namespaces-private-endpoint.v1.kql](./dataresidency-replica-eventhub-namespaces-private-endpoint.v1.kql) | Private Endpoint | Find private endpoints connected to Event Hubs namespaces. |
+| [dataresidency-replica-eventhub-namespaces-replica.v1.kql](./dataresidency-replica-eventhub-namespaces-replica.v1.kql) | Replica | Find Event Hubs namespaces with geo-replication configured. |
 
 ### Microsoft.FluidRelay/fluidRelayServers
 
@@ -350,6 +355,14 @@ Offerings: Azure Monitor
 | --- | --- | --- |
 | [dataresidency-replica-insights-datacollectionrules-la-workspace-telemetry-destination.v1.kql](./dataresidency-replica-insights-datacollectionrules-la-workspace-telemetry-destination.v1.kql) | Log Analytics Workspace | Find Log Analytics workspaces referenced by data collection rule destinations. |
 
+### Microsoft.KeyVault/managedHSMs
+
+Offerings: Azure Key Vault Managed HSM
+
+| Query | Linked Resource | Description |
+| --- | --- | --- |
+| [dataresidency-replica-keyvault-managedhsms-replica.v1.kql](./dataresidency-replica-keyvault-managedhsms-replica.v1.kql) | Replica | Find Key Vault Managed HSM pools extended to additional regions. |
+
 ### Microsoft.Kusto/clusters
 
 Offerings: Azure Data Explorer
@@ -374,6 +387,14 @@ Offerings: Azure App Testing
 | --- | --- | --- |
 | [dataresidency-replica-loadtestservice-loadtests-key-vault.v1.kql](./dataresidency-replica-loadtestservice-loadtests-key-vault.v1.kql) | Key Vault | Find Key Vaults referenced by Azure Load Testing encryption settings. |
 | [dataresidency-replica-loadtestservice-loadtests-user-assigned-managed-identity.v1.kql](./dataresidency-replica-loadtestservice-loadtests-user-assigned-managed-identity.v1.kql) | User Assigned Managed Identity | Find user-assigned managed identities referenced by Azure Load Testing resources. |
+
+### Microsoft.MachineLearningServices/registries
+
+Offerings: Azure Machine Learning
+
+| Query | Linked Resource | Description |
+| --- | --- | --- |
+| [dataresidency-replica-machinelearningservices-registries-replica.v1.kql](./dataresidency-replica-machinelearningservices-registries-replica.v1.kql) | Replica | Find Azure Machine Learning registries and the regions they replicate to. |
 
 ### Microsoft.MachineLearningServices/workspaces
 
@@ -515,6 +536,14 @@ Offerings: Azure Migrate
 | --- | --- | --- |
 | [dataresidency-replica-offazure-vmwaresites-key-vault.v1.kql](./dataresidency-replica-offazure-vmwaresites-key-vault.v1.kql) | Key Vault | Find Key Vaults referenced by Azure Migrate VMware site agents. |
 
+### Microsoft.OperationalInsights/workspaces
+
+Offerings: Azure Monitor
+
+| Query | Linked Resource | Description |
+| --- | --- | --- |
+| [dataresidency-replica-operationalinsights-workspaces-replica.v1.kql](./dataresidency-replica-operationalinsights-workspaces-replica.v1.kql) | Replica | Find Log Analytics workspaces with workspace replication enabled. |
+
 ### Microsoft.RecoveryServices/vaults
 
 Offerings: Backup, Site Recovery
@@ -554,6 +583,7 @@ Offerings: Service Bus
 | Query | Linked Resource | Description |
 | --- | --- | --- |
 | [dataresidency-replica-servicebus-namespaces-cmk.v1.kql](./dataresidency-replica-servicebus-namespaces-cmk.v1.kql) | CMK | Find Key Vaults referenced by Service Bus namespace encryption settings. |
+| [dataresidency-replica-servicebus-namespaces-replica.v1.kql](./dataresidency-replica-servicebus-namespaces-replica.v1.kql) | Replica | Find Service Bus namespaces with geo-replication configured. |
 
 ### Microsoft.Solutions/applications
 
@@ -597,7 +627,7 @@ Offerings: Storage, Archive Storage, Azure Data Lake Storage Gen2, Azure Files, 
 
 | Query | Linked Resource | Description |
 | --- | --- | --- |
-| [dataresidency-autogeo-storage.v1.kql](./dataresidency-autogeo-storage.v1.kql) |  | Check whether storage account SKU names indicate geo-redundant replication. |
+| [dataresidency-autogeo-storage.v1.kql](./dataresidency-autogeo-storage.v1.kql) | Replica | Check whether storage account SKU names indicate geo-redundant replication. |
 | [dataresidency-replica-storage-keyvault.v1.kql](./dataresidency-replica-storage-keyvault.v1.kql) | CMK | Find Key Vaults referenced by storage account encryption settings. |
 | [dataresidency-replica-storage-vnet.v1.kql](./dataresidency-replica-storage-vnet.v1.kql) | VNet | Find virtual networks referenced by storage account network rules. |
 

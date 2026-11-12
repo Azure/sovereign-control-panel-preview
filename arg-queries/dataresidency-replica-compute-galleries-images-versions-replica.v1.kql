@@ -1,0 +1,21 @@
+// Find Azure Compute Gallery image versions and the regions they are replicated to.
+// Expand the target regions, which include the source region, and normalize each region name.
+// Return the image version's details once per target region, using it as the linked location.
+
+resources
+| where type =~ 'microsoft.compute/galleries/images/versions'
+| extend targetRegions = properties.publishingProfile.targetRegions
+| where isnotempty(targetRegions)
+| mv-expand tr = targetRegions
+| extend replicaLocationName = replace_string(tolower(tostring(tr.name)), ' ', '')
+| where isnotempty(replicaLocationName)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = id,
+    linkedResourceName = name,
+    linkedResourceType = type,
+    linkedResourceRegion = replicaLocationName
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion
