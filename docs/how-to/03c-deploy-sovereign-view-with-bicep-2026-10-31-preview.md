@@ -30,10 +30,11 @@ system-assigned managed identity. Its properties select subscription and
 management-group scopes, associate existing policy assignments with compliance
 dimensions, and configure evaluation settings.
 
-The template declares **no policy or role assignment resources** and includes
-no role-assignment scripts. The service can perform its own identity and access
-orchestration; verify that separately. The registration helper only registers
-`Microsoft.Sovereign`.
+The template declares **no policy or role assignment resources**. The optional
+`create-policy-assignments.ps1` helper creates the policy assignments first and
+supplies their IDs to the template. There are no role-assignment scripts.
+The service can perform its own identity and access orchestration; verify that
+separately. The registration helper only registers `Microsoft.Sovereign`.
 
 Private Preview evaluations are read-only and do not automatically remediate
 resources. Existing policy assignments retain their own effects; this template
@@ -48,7 +49,8 @@ view name, scope IDs, and display labels. The published schema allows optional
 labels; include them during initial testing and confirm deployed behavior before
 omitting them.
 
-You also need the following for every selected initiative:
+The policy helper can resolve and generate the following inputs. If supplying
+your own assignments, collect them for every selected initiative:
 
 | Input | Requirement |
 | --- | --- |
@@ -58,10 +60,15 @@ You also need the following for every selected initiative:
 | `policyAssignmentIds` | Full resource IDs of existing assignments corresponding to the initiative and intended scopes. |
 
 Confirm approved Data Residency locations and the desired evaluation mode.
-The Business Continuity example uses dummy inputs: replace its initiative ID,
-version, and assignment IDs, or remove the block when not selected.
+The helper resolves the built-in Business Continuity initiative when selected;
+the manual Bicep example uses placeholders that must be replaced or removed.
+Availability and preview eligibility must be confirmed for each dimension.
 
 The deployment identity needs Contributor or Owner on the resource group.
+Running the policy helper also requires
+`Microsoft.Authorization/policyAssignments/write` at every selected scope
+(for example, Resource Policy Contributor). The helper neither grants this
+permission nor creates policy definitions or managed identities.
 Provider registration and access to selected scopes require the permissions
 described in the onboarding guide. Granting missing managed-identity roles
 separately requires Owner or User Access Administrator on the relevant scopes.
@@ -69,7 +76,7 @@ Do not assume resource creation success guarantees the identity has access.
 
 ## 1. Download the versioned package
 
-Download all three files from
+Download all five files from
 [`docs/bicep/2026-10-31-preview`](/docs/bicep/2026-10-31-preview)
 into one local folder:
 
@@ -78,6 +85,8 @@ into one local folder:
   main.bicep
   example.bicepparam
   register-scopes.ps1
+  create-policy-assignments.ps1
+  policy-overrides.example.json
 ```
 
 Open PowerShell in that folder:
@@ -90,11 +99,10 @@ az bicep version
 If Bicep is missing, run `az bicep install`. Do not copy role modules from the
 legacy package.
 
-## 2. Verify the deployment tenant, subscription, and UK South readiness
+## 2. Verify the deployment tenant, subscription, and Sweden Central readiness
 
 Use an existing approved login. These commands do not change the active account
-or cloud. This public package uses public ARM, not the private namespace's
-Canary endpoint or Canary-resource-group requirement.
+or cloud. This package uses the public ARM endpoint.
 
 ```powershell
 $expectedTenantId = "<APPROVED-TENANT-ID>"
@@ -116,11 +124,10 @@ az rest --method get `
 if ($LASTEXITCODE -ne 0) { throw "Provider readiness could not be read." }
 ```
 
-The supplied example selects `uksouth`. Confirm both UK South and
-`2026-10-31-preview` are advertised for the approved subscription. The template
-also permits `swedencentral`; use it only after confirming eligibility and
-obtaining approval for that region. Public SystemAssigned identity remains
-enabled; do not copy the private package's no-MI limitation into this package.
+The supplied example selects `swedencentral`, the only supported production
+deployment region. Confirm both Sweden Central and `2026-10-31-preview`
+are advertised for the approved subscription. The template and policy helper
+allow only `swedencentral`. SystemAssigned identity remains enabled.
 Data Residency allowed locations are a separate evaluation setting and are not
 limited to the region where the view is created.
 
@@ -145,10 +152,115 @@ stops on CLI errors, and bounds subscription-registration polling.
 Management-group registration is asynchronous and does not recursively
 register subscriptions.
 
-## 4. Create the customer parameter file
+## 4. Select dimensions and create policy assignments
+
+Use PowerShell 7.2 or later. This restores the dimension-selection and
+`assignmentParameters` customization experience without putting the older
+field in the Sovereign View CREATE body.
+
+The helper loads each selected initiative from ARM and uses its own parameter
+`defaultValue`, just like the portal. It does **not** substitute audit effects
+or invent allowed regions. A parameter with no default must be supplied;
+for Data Residency this currently includes `listOfAllowedLocations`.
+`-AllowedLocations` supplies the same approved values to DR and R360 and to
+the view's evaluation settings.
+
+```powershell
+$policySetup = @{
+  ExpectedTenantId = $expectedTenantId
+  SovereignViewName = "contoso-production-view"
+  SubscriptionIds = @("<APPROVED-SUBSCRIPTION-ID>")
+  # ManagementGroupIds = @("<APPROVED-MANAGEMENT-GROUP-ID>")
+  Dimensions = @("DataResidency", "EncryptionAtRest", "ControlledNetworkExposure", "BusinessContinuity")
+  AllowedLocations = @("<APPROVED-AZURE-REGION>")
+  OutputDirectory = ".\generated-production"
+}
+
+# Read definitions/scopes and review resolved bodies; no assignments or files.
+.\create-policy-assignments.ps1 @policySetup -WhatIf
+
+# After approval, create dedicated assignments and write the handoff files.
+.\create-policy-assignments.ps1 @policySetup -Confirm
+$parameterFile = ".\generated-production\view.parameters.json"
+```
+
+The default dimension is DataResidency, which must remain selected. Residency360
+is the default evaluation mode and creates both DR and R360 assignments.
+`-ResourceEvaluationScope ResourceOnly` selects DR without R360.
+ControlledNetworkExposure includes both network initiatives, as in the portal.
+The helper creates one assignment per selected initiative **at each scope**.
+It accepts subscription GUIDs and bare or full management-group IDs, resolves
+their display labels, and verifies they belong to the approved tenant.
+
+Assignments default to `DoNotEnforce`, independently of the policy's parameter
+defaults. For example, an initiative may retain `effect: Deny` while its
+assignment does not enforce it. Explicitly choosing `-EnforcementMode Default`
+can enforce those defaults: review the complete plan before changing this.
+The helper creates no role grants and never changes the active account.
+EncryptionInTransit is not included in this helper. Effective
+DeployIfNotExists/Modify effects require policy-assignment identity even with
+DoNotEnforce; the helper stops during planning if a selected initiative's effect
+parameter needs identity. It never silently disables that parameter. Supply
+an explicit supported non-remediating override or manage such assignments
+separately.
+
+### Customize parameters or initiative versions
+
+Copy `policy-overrides.example.json` and pass `-OverridesPath` to replace
+individual defaults using the familiar ARM `{ "value": ... }` wrappers.
+Unspecified values retain their definition defaults. For example, the supplied
+EAR override selects Audit and disables its deny-only effect.
+
+```powershell
+$policySetup.OverridesPath = ".\policy-overrides.example.json"
+.\create-policy-assignments.ps1 @policySetup -WhatIf
+```
+
+Use a new output directory when actually creating another set. An override may
+also specify an explicit `policyVersion` or the management-group/subscription
+form of the same approved initiative ID. Only selected, supported initiatives
+and known parameter names/types/allowed values are accepted. Defaults are read
+from the requested version; the assignment uses its minor wildcard version,
+while the view receives the concrete version. Confirm deployed-service support
+before selecting an older minor version.
+
+If configuring `listOfAllowedLocations` through overrides instead of the
+shared switch, remove `AllowedLocations` from the splat and supply it for both
+DR and R360. Their effective locations must agree. Required values, duplicate
+scopes, malformed overrides and assignment-name collisions fail before any
+assignment is created.
+
+### Use the generated IDs with Bicep or REST
+
+| Generated file | Use |
+| --- | --- |
+| `view.parameters.json` | Complete parameters for this package's `main.bicep`, including resolved scope labels, settings and `policyInitiatives`. |
+| `view-properties.json` | The `properties` object for the REST CREATE body; add the view location, approved tags and public SystemAssigned identity separately. |
+| `manifest.json` | Exact created IDs, effective parameter values, ownership marker and progress for review or cleanup. |
+
+The assignment IDs in both handoff files are the **same IDs actually created**
+by the helper. No policy/role resource is added to the Sovereign View template.
+Review the generated JSON before continuing. The deployment location is
+`swedencentral`; use `-IsWorkload:$false` when needed. Data Residency locations
+are not inferred from the view's location. Keep generated files in your environment
+folder, not in source control.
+
+The helper never overwrites an existing output directory or updates an existing
+assignment. It uses unique names compatible with management-group limits.
+On an API or verification failure it stops, retains `manifest.json`, and does
+not automatically delete assignments. A record marked Creating may have
+succeeded remotely; inspect its exact ID. Deploy-ready files are produced only
+after all creations are verified. Each new run creates a separate set, so keep
+the manifest and do not rerun creation merely to retrieve IDs.
+
+### Alternative: supply existing assignments manually
+
+If you already have dedicated assignments, continue with the original
+parameter-file editing experience instead of running the helper:
 
 ```powershell
 Copy-Item ".\example.bicepparam" ".\production.bicepparam"
+$parameterFile = ".\production.bicepparam"
 ```
 
 Replace all required placeholders. Set the view name, deployment location,
@@ -213,14 +325,16 @@ omission without unsupported non-null defaults on nullable Bicep parameters.
 Check for unresolved placeholders, then compile:
 
 ```powershell
-if (Select-String -Path ".\production.bicepparam" -Pattern '<REQUIRED:') {
+if (Select-String -Path $parameterFile -Pattern '<REQUIRED:') {
   throw "Replace all required placeholders before deployment."
 }
 
 az bicep build --file ".\main.bicep" --stdout | Out-Null
 if ($LASTEXITCODE -ne 0) { throw "Bicep compilation failed." }
-az bicep build-params --file ".\production.bicepparam" --stdout | Out-Null
-if ($LASTEXITCODE -ne 0) { throw "Bicep parameter compilation failed." }
+if ($parameterFile.EndsWith(".bicepparam")) {
+  az bicep build-params --file $parameterFile --stdout | Out-Null
+  if ($LASTEXITCODE -ne 0) { throw "Bicep parameter compilation failed." }
+}
 ```
 
 Before What-If or creation, run provider validation:
@@ -231,7 +345,7 @@ az deployment group validate `
   --subscription $deploymentSubscriptionId `
   --resource-group $resourceGroupName `
   --template-file ".\main.bicep" `
-  --parameters ".\production.bicepparam"
+  --parameters $parameterFile
 if ($LASTEXITCODE -ne 0) { throw "Provider validation failed; do not deploy." }
 ```
 
@@ -250,7 +364,7 @@ az deployment group what-if `
   --subscription $deploymentSubscriptionId `
   --resource-group $resourceGroupName `
   --template-file ".\main.bicep" `
-  --parameters ".\production.bicepparam"
+  --parameters $parameterFile
 if ($LASTEXITCODE -ne 0) { throw "What-If failed; do not deploy." }
 ```
 
@@ -272,7 +386,7 @@ az deployment group create `
   --subscription $deploymentSubscriptionId `
   --resource-group $resourceGroupName `
   --template-file ".\main.bicep" `
-  --parameters ".\production.bicepparam" `
+  --parameters $parameterFile `
   --output table
 if ($LASTEXITCODE -ne 0) { throw "Deployment failed; inspect the operation before retrying." }
 
@@ -310,3 +424,5 @@ step merely because they were associated with this view. Conversely, do not
 assume a view DELETE or failed CREATE leaves them intact. Confirm the service's
 applicable lifecycle behavior and follow
 [the view deletion guide](/docs/how-to/06-delete-sovereign-view.md).
+This also applies to the dedicated assignments created by the policy helper:
+keep their manifest, and do not reuse them across independently deleted views.

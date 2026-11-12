@@ -8,7 +8,6 @@ param sovereignViewName string
   // Add a region only after Microsoft.Sovereign/sovereignViews reports it for
   // the deployment subscription.
   'swedencentral'
-  'uksouth'
 ])
 param location string
 

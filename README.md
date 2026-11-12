@@ -48,8 +48,8 @@ service supports the selected contract before deploying.
 
 | Module | Description |
 | ------ | ----------- |
-| [Deploy with Bicep: 2026-10-31-preview](/docs/how-to/03c-deploy-sovereign-view-with-bicep-2026-10-31-preview.md) | Reference existing policy assignments and configure Business Continuity and per-dimension settings. Requires service support for the published contract. |
-| [Legacy Bicep: 2026-03-15-preview](/docs/how-to/03b-deploy-sovereign-view-with-bicep.md) | Use the unchanged legacy package with assignment parameters and role modules. |
+| [Deploy with Bicep: 2026-10-31-preview](/docs/how-to/03c-deploy-sovereign-view-with-bicep-2026-10-31-preview.md) | Select dimensions, create dedicated policy assignments with defaults or overrides, and deploy using their IDs. Requires service support for the published contract. |
+| [Legacy Bicep: 2026-03-15-preview](/docs/how-to/03b-deploy-sovereign-view-with-bicep.md) | Use the legacy assignment-parameter workflow and role modules in Sweden Central. |
 
 </details>
 

@@ -2,12 +2,14 @@ using './main.bicep'
 
 // Copy this file for the customer environment and replace all required
 // placeholders. Do not deploy this example unchanged.
+// Alternatively, create-policy-assignments.ps1 accepts dimensions and scopes
+// and generates view.parameters.json with the created assignment IDs.
 
 param sovereignViewName = '<REQUIRED: SOVEREIGN-VIEW-NAME>'
 
 // Use a location returned for Microsoft.Sovereign/sovereignViews in the
 // deployment subscription and allowed by main.bicep.
-param location = 'uksouth'
+param location = 'swedencentral'
 
 // Add every approved subscription. Use [] for a management-group-only view.
 param scopeSubscriptions = [

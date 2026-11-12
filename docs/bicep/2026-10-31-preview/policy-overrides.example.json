@@ -1,0 +1,13 @@
+[
+  {
+    "policyInitiativeId": "/providers/Microsoft.Authorization/policySetDefinitions/f15f4d95-c59c-4395-9317-be6978d0743f",
+    "assignmentParameters": {
+      "effect": {
+        "value": "Audit"
+      },
+      "effect_deny": {
+        "value": "Disabled"
+      }
+    }
+  }
+]

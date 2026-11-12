@@ -36,7 +36,6 @@ param sovereignViewName string
 @description('Azure region where the Sovereign View resource is created. Confirm provider availability before deployment.')
 @allowed([
   'swedencentral'
-  'uksouth'
 ])
 param location string
 
