@@ -1,0 +1,21 @@
+// Find Azure Machine Learning registries and the regions they replicate to.
+// Expand the registry's region details, including the primary region, and normalize each name.
+// Return the registry's details once per region, using it as the linked location.
+
+resources
+| where type =~ 'microsoft.machinelearningservices/registries'
+| extend regionDetails = properties.regionDetails
+| where isnotempty(regionDetails)
+| mv-expand rd = regionDetails
+| extend replicaLocationName = replace_string(tolower(tostring(rd.location)), ' ', '')
+| where isnotempty(replicaLocationName)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = id,
+    linkedResourceName = name,
+    linkedResourceType = type,
+    linkedResourceRegion = replicaLocationName
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

@@ -1,0 +1,22 @@
+// Find Event Hubs namespaces with geo-replication configured.
+// Expand the geo-replication locations, keep secondary replicas, and normalize each region name.
+// Return the namespace's details once per secondary region, using it as the linked location.
+
+resources
+| where type =~ 'microsoft.eventhub/namespaces'
+| extend geoLocations = properties.geoDataReplication.locations
+| where isnotempty(geoLocations)
+| mv-expand loc = geoLocations
+| extend secondaryLocationName = replace_string(tolower(tostring(loc.locationName)), ' ', ''),
+         roleType = tostring(loc.roleType)
+| where roleType =~ 'Secondary'
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = id,
+    linkedResourceName = name,
+    linkedResourceType = type,
+    linkedResourceRegion = secondaryLocationName
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

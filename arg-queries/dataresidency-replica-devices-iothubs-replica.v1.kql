@@ -1,0 +1,22 @@
+// Find IoT hubs and their disaster recovery secondary locations.
+// Expand the hub's locations, keep the secondary role, and normalize the region name.
+// Return the hub's details once per secondary location, using it as the linked location.
+
+resources
+| where type =~ 'microsoft.devices/iothubs'
+| extend hubLocations = properties.locations
+| where isnotempty(hubLocations)
+| mv-expand loc = hubLocations
+| extend roleType = tolower(tostring(loc.role)),
+         secondaryLocationName = replace_string(tolower(tostring(loc.location)), ' ', '')
+| where roleType == 'secondary' and isnotempty(secondaryLocationName)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = id,
+    linkedResourceName = name,
+    linkedResourceType = type,
+    linkedResourceRegion = secondaryLocationName
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

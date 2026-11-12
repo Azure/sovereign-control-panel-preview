@@ -1,0 +1,22 @@
+// Find Key Vault Managed HSM pools extended to additional regions.
+// Expand the pool's regions, exclude the primary region, and normalize each region name.
+// Return the pool's details once per extended region, using it as the linked location.
+
+resources
+| where type =~ 'microsoft.keyvault/managedhsms'
+| extend hsmRegions = properties.regions
+| where isnotempty(hsmRegions)
+| mv-expand region = hsmRegions
+| extend isPrimary = tobool(region.isPrimary),
+         secondaryLocationName = replace_string(tolower(tostring(region.name)), ' ', '')
+| where isPrimary == false and isnotempty(secondaryLocationName)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = id,
+    linkedResourceName = name,
+    linkedResourceType = type,
+    linkedResourceRegion = secondaryLocationName
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

@@ -1,0 +1,21 @@
+// Find API Management services deployed to additional gateway locations.
+// Expand the additional locations (not the main service location) and normalize each region name.
+// Return the service's details once per additional location, using it as the linked location.
+
+resources
+| where type =~ 'microsoft.apimanagement/service'
+| extend additionalLocations = properties.additionalLocations
+| where isnotempty(additionalLocations)
+| mv-expand loc = additionalLocations
+| extend secondaryLocationName = replace_string(tolower(tostring(loc.location)), ' ', '')
+| where isnotempty(secondaryLocationName)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = id,
+    linkedResourceName = name,
+    linkedResourceType = type,
+    linkedResourceRegion = secondaryLocationName
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion
