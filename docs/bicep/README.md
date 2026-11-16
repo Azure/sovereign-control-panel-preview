@@ -11,9 +11,6 @@ template, parameter file, and helpers from the same package.
 > [!IMPORTANT]
 > The `2026-10-31-preview` package targets the
 > [published API contract](https://github.com/Azure/azure-rest-api-specs/blob/main/specification/sovereign/resource-manager/Microsoft.Sovereign/Sovereign/preview/2026-10-31-preview/sovereign.json).
-> Use it only after your service deployment supports that contract, including
-> references to existing policy assignments. Publication of a specification and
-> successful Bicep compilation do not establish live service compatibility.
 
 The existing files in this directory remain the legacy package. Do not mix its
 role modules or parameter file with the new package. Customer examples contain
@@ -44,7 +41,3 @@ Keep each versioned download self-contained. Registration and policy-creation
 helpers are included; the new template does not depend on legacy modules.
 Existing role modules and scripts are retained for legacy users only.
 
-Repository tags or pinned commit downloads can provide additional release
-snapshots. If module release versions are introduced later, version the package
-interface separately from the Azure API date version. A registry or template
-spec is not required to use these local files.
