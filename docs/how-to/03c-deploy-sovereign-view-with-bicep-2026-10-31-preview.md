@@ -6,22 +6,15 @@ use the [legacy Bicep guide](/docs/how-to/03b-deploy-sovereign-view-with-bicep.m
 The [version catalog](/docs/bicep/README.md) explains how packages are maintained.
 
 > [!IMPORTANT]
-> Sovereign Control Panel is an invite-only **Private Preview**. Confirm that
-> the customer tenant and intended subscriptions are approved before deployment.
-
-> [!IMPORTANT]
 > This package requires a service deployment that supports the
 > [published creation contract](https://github.com/Azure/azure-rest-api-specs/blob/main/specification/sovereign/resource-manager/Microsoft.Sovereign/Sovereign/examples/2026-10-31-preview/SovereignViewOperations_Create.json),
 > including existing `policyAssignmentIds`. Confirm that support before
-> running What-If or deploying. Bicep compilation alone does not verify it.
-> Do not add the older `assignmentParameters` field as a workaround.
+> running What-If or deploying.
 
 > [!CAUTION]
 > For preliminary tests, use dedicated disposable policy assignments rather
 > than shared assignments. Confirm the deployed service's ownership and cleanup
-> behavior before associating customer policy assignments. A reference in an
-> ARM template is not a guarantee that service-side rollback or deletion will
-> preserve the referenced assignment.
+> behavior before associating customer policy assignments.
 
 ## What the package creates
 
@@ -36,7 +29,7 @@ supplies their IDs to the template. There are no role-assignment scripts.
 The service can perform its own identity and access orchestration; verify that
 separately. The registration helper only registers `Microsoft.Sovereign`.
 
-Private Preview evaluations are read-only and do not automatically remediate
+Preview evaluations are read-only and do not automatically remediate
 resources. Existing policy assignments retain their own effects; this template
 does not change them.
 
@@ -415,14 +408,3 @@ No role-provisioning script is needed as a normal step of this package.
 Continue with [the compliance report](/docs/how-to/05-view-compliance-report.md)
 only after required access is present. For errors, see
 [troubleshooting and support](/docs/how-to/07-troubleshooting-and-support.md).
-
-## Existing assignments and cleanup
-
-The policy assignment IDs in this package are references, not resources managed
-by its ARM deployment. Do not remove customer policy assignments as a cleanup
-step merely because they were associated with this view. Conversely, do not
-assume a view DELETE or failed CREATE leaves them intact. Confirm the service's
-applicable lifecycle behavior and follow
-[the view deletion guide](/docs/how-to/06-delete-sovereign-view.md).
-This also applies to the dedicated assignments created by the policy helper:
-keep their manifest, and do not reuse them across independently deleted views.
