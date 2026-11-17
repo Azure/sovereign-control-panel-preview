@@ -144,8 +144,8 @@ az provider show `
   --output table
 ```
 
-The checked-in template currently allows `swedencentral` and `uksouth`. Use a
-location returned by the command. Availability can differ by subscription.
+The checked-in template allows only `swedencentral`, the supported production
+deployment region. Confirm it is returned for the deployment subscription.
 
 The **Sovereign View deployment region** controls where the view resource is
 created. The **Data Residency allowed locations** control which Azure locations
@@ -168,7 +168,6 @@ For example, if the service exposes a new region named `examplelocation`:
 ```bicep
 @allowed([
   'swedencentral'
-  'uksouth'
   'examplelocation'
 ])
 param location string = 'swedencentral'
@@ -233,7 +232,7 @@ Replace every `<REQUIRED: ...>` placeholder and review every optional value.
 
 ```bicep
 param sovereignViewName = 'contoso-production-view'
-param location = 'uksouth'
+param location = 'swedencentral'
 
 param scopeSubscriptions = [
   {

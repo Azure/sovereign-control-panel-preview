@@ -7,7 +7,7 @@ param sovereignViewName = '<REQUIRED: SOVEREIGN-VIEW-NAME>'
 
 // Use a location returned for Microsoft.Sovereign/sovereignViews in the
 // deployment subscription.
-param location = 'uksouth'
+param location = 'swedencentral'
 
 // Add every approved subscription. Use [] for a management-group-only view.
 param scopeSubscriptions = [
