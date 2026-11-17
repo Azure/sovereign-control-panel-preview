@@ -8,7 +8,7 @@ Coordinate changes with the SCP team and submit pull requests for SCP team revie
 
 ## Support and feedback
 
-For support requests, feedback, and bug reports, reach us using the support contact link rather than submitting a pull request. The link will be added to the [README support section](README.md#support-and-feedback) when the Microsoft Learn support page is available.
+For support requests, feedback, and bug reports, reach us using the [support contact](https://learn.microsoft.com/en-us/azure/azure-sovereign-clouds/public/sovereign-control-panel) rather than submitting a pull request.
 
 Do not report security vulnerabilities in public issues or pull requests. Follow [SECURITY.md](SECURITY.md).
 
