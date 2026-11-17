@@ -2,18 +2,21 @@
 
 Sovereign Control Panel (SCP) provides a unified experience in the Azure portal to assess and manage sovereignty posture across Azure resources. It brings sovereignty insights together to help organizations understand their posture, apply controls, and prioritize action.
 
-Sovereign Control Panel is in **public preview**. Learn more in the [Sovereign Control Panel overview on Microsoft Learn](https://learn.microsoft.com/azure/azure-sovereign-clouds/public/sovereign-control-panel).
+> [!IMPORTANT]
+> Sovereign Control Panel is in **public preview**.
+
+Learn more in the [Sovereign Control Panel overview on Microsoft Learn](https://learn.microsoft.com/azure/azure-sovereign-clouds/public/sovereign-control-panel).
 
 ## Create a Sovereign View using Bicep
 
-Choose an explicit API-version package from the [Bicep version catalog](/docs/bicep/README.md)
+Choose an explicit API-version package from the [Bicep version catalog](/bicep/README.md)
 for a repeatable, reviewable Infrastructure-as-Code workflow. Confirm that the
 service supports the selected contract before deploying.
 
-| Deployment guide | Description |
+| Template package | Description |
 | ------ | ----------- |
-| [Deploy with Bicep: 2026-10-31-preview](/docs/how-to/03c-deploy-sovereign-view-with-bicep-2026-10-31-preview.md) | Select dimensions, create dedicated policy assignments with defaults or overrides, and deploy using their IDs. Requires service support for the published contract. |
-| [Legacy Bicep: 2026-03-15-preview](/docs/how-to/03b-deploy-sovereign-view-with-bicep.md) | Use the legacy assignment-parameter workflow and role modules in Sweden Central. |
+| [Bicep: 2026-10-31-preview](/bicep/2026-10-31-preview) | Select dimensions, create dedicated policy assignments with defaults or overrides, and deploy using their IDs. Requires service support for the published contract. |
+| [Legacy Bicep: 2026-03-15-preview](/bicep/main.bicep) | Use the legacy assignment-parameter workflow and role modules in Sweden Central. |
 
 ## Azure Resource Graph (ARG) queries
 
