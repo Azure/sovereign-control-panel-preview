@@ -29,10 +29,15 @@ When a compliance evaluation result in the Azure portal references an ARG query,
 This repository is maintained exclusively by the internal SCP team (`@Azure/scp-team`). External contributions, including pull requests, are not accepted. See [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution policy.
 
 ## Support and feedback
-We prefer support requests, feedback, and bugs for the public preview features to be emailed to **(Azscp@microsoft.com)** or raised directly with your Microsoft contacts.
+
+For support requests, feedback, and bug reports, reach us using the support contact link. The link will be added here when the Microsoft Learn support page is available.
 
 > [!NOTE]
 > Do not report security vulnerabilities through public GitHub issues. See [SECURITY.md](SECURITY.md) for reporting guidance.
+
+## Disclaimer
+
+The Bicep templates and ARG queries in this repository are provided as reference materials, "as is" and without warranties. Validate their suitability, configuration, and results in your environment before use. You are responsible for your final implementation and deployment.
 
 ## Additional resources
 

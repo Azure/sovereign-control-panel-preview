@@ -8,7 +8,7 @@ Coordinate changes with the SCP team and submit pull requests for SCP team revie
 
 ## Support and feedback
 
-Send support requests, feedback, and bug reports to **Azscp@microsoft.com** or your Microsoft contact rather than submitting a pull request.
+For support requests, feedback, and bug reports, reach us using the support contact link rather than submitting a pull request. The link will be added to the [README support section](README.md#support-and-feedback) when the Microsoft Learn support page is available.
 
 Do not report security vulnerabilities in public issues or pull requests. Follow [SECURITY.md](SECURITY.md).
 
