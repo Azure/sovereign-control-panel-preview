@@ -1,11 +1,13 @@
 # Sovereign Control Panel
 
+This repository is dedicated to **Azure Resource Graph (ARG) queries and Bicep templates** for Sovereign Control Panel (SCP). It does not host product documentation or onboarding guides.
+
 Sovereign Control Panel (SCP) provides a unified experience in the Azure portal to assess and manage sovereignty posture across Azure resources. It brings sovereignty insights together to help organizations understand their posture, apply controls, and prioritize action.
 
 > [!IMPORTANT]
 > Sovereign Control Panel is in **public preview**.
 
-Learn more in the [Sovereign Control Panel overview on Microsoft Learn](https://learn.microsoft.com/azure/azure-sovereign-clouds/public/sovereign-control-panel).
+For product documentation and onboarding guidance, visit the [Sovereign Control Panel overview on Microsoft Learn](https://learn.microsoft.com/azure/azure-sovereign-clouds/public/sovereign-control-panel).
 
 ## Create a Sovereign View using Bicep
 
