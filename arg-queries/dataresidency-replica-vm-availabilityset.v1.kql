@@ -1,0 +1,22 @@
+// Find availability sets referenced by virtual machines.
+// Read each virtual machine's availability set ID and look up the matching resource.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ 'microsoft.compute/virtualmachines'
+| extend linkedAvsetId = tolower(tostring(properties.availabilitySet.id))
+| where isnotempty(linkedAvsetId)
+| join kind=leftouter (
+    resources
+    | where type =~ 'microsoft.compute/availabilitysets'
+    | project linkedAvsetId = tolower(id), linkedName = name, linkedLocation = location
+  ) on linkedAvsetId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedAvsetId,
+    linkedResourceName = linkedName,
+    linkedResourceType = 'microsoft.compute/availabilitysets',
+    linkedResourceRegion = linkedLocation

@@ -1,0 +1,20 @@
+// Find DDoS protection plans referenced by virtual networks.
+// Read each network's protection plan ID and look up the matching plan resource.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.network/virtualnetworks"
+| extend linkedId = tolower(tostring(properties.ddosProtectionPlan.id))
+| where isnotempty(linkedId)
+| join kind=leftouter (resources
+    | where type =~ "microsoft.network/ddosprotectionplans"
+    | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

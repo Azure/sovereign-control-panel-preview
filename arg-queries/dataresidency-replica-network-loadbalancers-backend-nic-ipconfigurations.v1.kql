@@ -1,0 +1,27 @@
+// Find resources referenced by load balancer backend network interface IP configurations.
+// Derive network interface IDs for standalone backends or parent scale set IDs for scale set
+// backends.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.network/loadbalancers"
+| mv-expand e0 = properties.backendAddressPools
+| mv-expand e1 = e0.properties.backendIPConfigurations
+| extend ipConfigId = tolower(tostring(e1.id))
+| where isnotempty(ipConfigId)
+| extend linkedJoinId = iff(ipConfigId contains "/virtualmachinescalesets/",
+    substring(ipConfigId, 0, indexof(ipConfigId, "/virtualmachines/")),
+    substring(ipConfigId, 0, indexof(ipConfigId, "/ipconfigurations/")))
+| where isnotempty(linkedJoinId)
+| distinct name, id, location, type, linkedJoinId
+| join kind=leftouter (resources
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on linkedJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

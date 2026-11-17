@@ -1,0 +1,29 @@
+// Find virtual networks referenced by Azure Cosmos DB account network rules.
+// Derive network IDs from the configured subnet rules and return matching networks.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.documentdb/databaseaccounts"
+| mv-expand rule = properties.virtualNetworkRules
+| extend subnetId = tostring(rule.id)
+| extend vnetKey = tolower(substring(subnetId, 0, indexof(tolower(subnetId), "/subnets/")))
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.network/virtualnetworks"
+    | project
+        vnetKey = tolower(id),
+        linkedId = id,
+        linkedName = name,
+        linkedType = type,
+        linkedRegion = location
+) on vnetKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

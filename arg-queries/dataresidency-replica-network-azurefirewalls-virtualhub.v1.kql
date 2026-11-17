@@ -1,0 +1,21 @@
+// Find virtual hubs referenced by Azure Firewall resources.
+// Read each firewall's virtual hub resource ID and look up the matching hub.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.network/azurefirewalls"
+| extend ref = tostring(properties.virtualHub.id)
+| where isnotempty(ref)
+| extend linkedKey = tolower(ref)
+| join kind=leftouter (resources
+    | where type =~ "microsoft.network/virtualhubs"
+    | project linkedKey = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on linkedKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

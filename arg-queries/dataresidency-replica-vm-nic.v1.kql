@@ -1,0 +1,24 @@
+// Find network interfaces referenced by virtual machines.
+// Expand each virtual machine's network interface references and look up matching interfaces.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ 'microsoft.compute/virtualmachines'
+| mv-expand nic = properties.networkProfile.networkInterfaces
+| extend linkedNicId = tolower(tostring(nic.id))
+| where isnotempty(linkedNicId)
+| join kind=leftouter (
+    resources
+    | where type =~ 'microsoft.network/networkinterfaces'
+    | project linkedNicId = tolower(id), linkedName = name, linkedLocation = location
+  ) on linkedNicId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedNicId,
+    linkedResourceName = linkedName,
+    linkedResourceType = 'microsoft.network/networkinterfaces',
+    linkedResourceRegion = linkedLocation
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

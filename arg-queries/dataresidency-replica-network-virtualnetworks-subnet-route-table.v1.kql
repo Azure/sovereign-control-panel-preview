@@ -1,0 +1,25 @@
+// Find route tables referenced by virtual network subnets.
+// Expand each network's subnets and return route tables matching the configured resource IDs.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.network/virtualnetworks"
+| mv-expand subnet = properties.subnets
+| extend linkedJoinId = tolower(tostring(subnet.properties.routeTable.id))
+| where isnotempty(linkedJoinId)
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.network/routetables"
+    | extend linkedJoinId = tolower(id)
+    | project linkedJoinId, linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+    ) on linkedJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

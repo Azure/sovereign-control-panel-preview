@@ -1,0 +1,19 @@
+// Find Key Vaults referenced by Redis Enterprise customer-managed encryption settings.
+// Extract the vault name from each encryption key URL and look up the matching Key Vault.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.cache/redisenterprise"
+| extend host = tostring(properties.encryption.customerManagedKeyEncryption.keyEncryptionKeyUrl)
+| extend refName = tostring(split(replace_string(host, "https://", ""), ".")[0])
+| join kind=leftouter (resources | where type =~ "microsoft.keyvault/vaults"
+    | project refName = tolower(name), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on refName
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

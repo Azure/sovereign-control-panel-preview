@@ -1,0 +1,21 @@
+// Find virtual networks referenced by Azure Firewall resources.
+// Combine regular and management subnet references and look up their distinct parent networks.
+// Return details of both resources, including their locations.
+
+resources | where type =~ "microsoft.network/azurefirewalls" | mv-expand c = properties.ipConfigurations | project name, id, location, type, subnetId = tolower(tostring(c.properties.subnet.id))
+| union (resources | where type =~ "microsoft.network/azurefirewalls" | project name, id, location, type, subnetId = tolower(tostring(properties.managementIpConfiguration.properties.subnet.id)))
+| where subnetId has "/subnets/"
+| extend vnetKey = substring(subnetId, 0, indexof(subnetId, "/subnets/"))
+| distinct name, id, location, type, vnetKey
+| join kind=leftouter (resources
+    | where type =~ "microsoft.network/virtualnetworks"
+    | project vnetKey = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on vnetKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

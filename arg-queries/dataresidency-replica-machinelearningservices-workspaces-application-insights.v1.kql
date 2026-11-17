@@ -1,0 +1,22 @@
+// Find Application Insights resources referenced by Azure Machine Learning workspaces.
+// Read each workspace's Application Insights resource ID and look up the matching resource.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "Microsoft.MachineLearningServices/workspaces"
+| extend linkedJoinId = tolower(tostring(properties.applicationInsights))
+| where isnotempty(linkedJoinId)
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.insights/components"
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on linkedJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

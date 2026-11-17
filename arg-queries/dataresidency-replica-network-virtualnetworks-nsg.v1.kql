@@ -1,0 +1,22 @@
+// Find network security groups referenced by virtual network subnets.
+// Expand each network's subnets and look up the configured network security group IDs.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.network/virtualnetworks"
+| mv-expand subnet = properties.subnets
+| extend linkedJoinId = tolower(tostring(subnet.properties.networkSecurityGroup.id))
+| where isnotempty(linkedJoinId)
+| join kind=leftouter (resources
+    | where type =~ "microsoft.network/networksecuritygroups"
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on linkedJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

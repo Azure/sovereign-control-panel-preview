@@ -1,0 +1,27 @@
+// Find private endpoints connected to Azure Health Data Services workspaces.
+// Select successfully provisioned endpoints with approved connections and match their target
+// workspaces.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.network/privateendpoints"
+| where properties.provisioningState =~ "Succeeded"
+| mv-expand connection=properties.privateLinkServiceConnections
+| where tostring(connection.properties.privateLinkServiceConnectionState.status) =~ "Approved"
+| extend primaryJoinId=tolower(tostring(connection.properties.privateLinkServiceId))
+| project primaryJoinId, linkedId=id, linkedName=name, linkedType=type, linkedRegion=location
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.healthcareapis/workspaces"
+    | project primaryJoinId=tolower(id), name, id, location, type
+) on primaryJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

@@ -1,0 +1,24 @@
+// Find Key Vaults referenced by HDInsight disk encryption settings.
+// Extract vault names from the configured vault URLs and return matching vault resources.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.hdinsight/clusters" 
+| extend vaultUri = tostring(properties.diskEncryptionProperties.vaultUri)
+| extend vaultHost = tolower(trim(@"/", replace_string(replace_string(vaultUri, "https://", ""), "http://", "")))
+| extend linkedName = tostring(split(vaultHost, ".")[0])
+| where isnotempty(linkedName)
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.keyvault/vaults"
+    | project linkedId = id, linkedName = tolower(name), linkedType = type, linkedRegion = location
+) on linkedName
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

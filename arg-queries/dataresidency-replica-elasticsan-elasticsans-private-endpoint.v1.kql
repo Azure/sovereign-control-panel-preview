@@ -1,0 +1,27 @@
+// Find private endpoints connected to Elastic SAN volume groups.
+// Select successfully provisioned endpoints and derive parent SAN IDs from their connection
+// targets.
+// Return the parent SAN and private endpoint details, including their locations.
+
+resources
+| where type =~ "microsoft.network/privateendpoints"
+| where properties.provisioningState =~ "Succeeded"
+| mv-expand connection = properties.privateLinkServiceConnections
+| extend targetId = tolower(tostring(connection.properties.privateLinkServiceId))
+| extend primaryJoinId = tostring(split(targetId, '/volumegroups/')[0])
+| project primaryJoinId, linkedId=id, linkedName=name, linkedType=type, linkedRegion=location
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.elasticsan/elasticsans"
+    | project primaryJoinId=tolower(id), name, id, location, type
+) on primaryJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

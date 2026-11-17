@@ -1,0 +1,22 @@
+// Find virtual networks referenced by load balancer backend address entries.
+// Expand the backend address pools and look up the network IDs configured in their addresses.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.network/loadbalancers"
+| mv-expand e0 = properties.backendAddressPools
+| mv-expand e1 = e0.properties.loadBalancerBackendAddresses
+| extend linkedJoinId = tolower(tostring(e1.properties.virtualNetwork.id))
+| where isnotempty(linkedJoinId)
+| distinct name, id, location, type, linkedJoinId
+| join kind=leftouter (resources
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on linkedJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

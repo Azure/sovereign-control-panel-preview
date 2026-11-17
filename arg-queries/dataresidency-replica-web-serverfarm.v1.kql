@@ -1,0 +1,22 @@
+// Find App Service plans referenced by web apps.
+// Read each app's server farm resource ID and look up the matching App Service plan.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ 'microsoft.web/sites'
+| extend linkedResourceId = tolower(tostring(properties.serverFarmId))
+| where isnotempty(linkedResourceId)
+| join kind=leftouter (
+    resources
+    | where type =~ 'microsoft.web/serverfarms'
+    | project linkedResourceId = tolower(id), linkedResourceType = type, linkedName = name, linkedLocation = location
+  ) on linkedResourceId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId,
+    linkedResourceName = linkedName,
+    linkedResourceType = coalesce(linkedResourceType, 'microsoft.web/serverfarms'),
+    linkedResourceRegion = linkedLocation

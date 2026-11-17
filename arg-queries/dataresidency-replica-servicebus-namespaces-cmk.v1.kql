@@ -1,0 +1,25 @@
+// Find Key Vaults referenced by Service Bus namespace encryption settings.
+// Expand the encryption key entries, extract vault names from their URLs, and look up matching
+// vaults.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.servicebus/namespaces"
+| mv-expand encryptionKey = properties.encryption.keyVaultProperties
+| extend linkedJoinName = tolower(tostring(split(replace_string(tostring(encryptionKey.keyVaultUri), "https://", ""), ".")[0]))
+| where isnotempty(linkedJoinName)
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.keyvault/vaults"
+    | project linkedJoinName = tolower(name), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on linkedJoinName
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

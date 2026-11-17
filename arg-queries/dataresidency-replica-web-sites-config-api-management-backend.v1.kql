@@ -1,0 +1,23 @@
+// Find API Management services referenced by web app configuration resources.
+// Read each configured API Management resource ID and return matching services.
+// Return details of both resources, including their locations.
+
+appserviceresources
+| where type =~ "microsoft.web/sites/config"
+| extend linkedJoinId = tolower(tostring(properties.ApiManagementConfig.Id))
+| where isnotempty(linkedJoinId)
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.apimanagement/service"
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on linkedJoinId
+| where isnotempty(linkedId)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

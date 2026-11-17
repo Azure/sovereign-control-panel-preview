@@ -1,0 +1,25 @@
+// Find virtual networks referenced by virtual network gateway IP configurations.
+// Derive network IDs from the configured subnet references and look up matching networks.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.network/virtualnetworkgateways"
+| mv-expand ipconfig = properties.ipConfigurations
+| extend linkedResourceId = tostring(ipconfig.properties.subnet.id)
+| extend linkedResourceId = substring(linkedResourceId, 0, indexof(tolower(linkedResourceId), "/subnets/"))
+| extend linkedJoinId = tolower(linkedResourceId)
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.network/virtualnetworks"
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on linkedJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

@@ -1,0 +1,30 @@
+// Find storage accounts referenced by IoT Hub storage container routing endpoints.
+// Build account IDs from the endpoint URL, subscription, and resource group, then match accounts.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.devices/iothubs"
+| mv-expand link = properties.routing.endpoints.storageContainers
+| extend linkedAccountName = tolower(tostring(split(replace_string(tostring(link.endpointUri), "https://", ""), ".")[0]))
+| extend linkedId = tolower(strcat(
+    "/subscriptions/", tostring(link.subscriptionId),
+    "/resourceGroups/", tostring(link.resourceGroup),
+    "/providers/Microsoft.Storage/storageAccounts/", linkedAccountName))
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.storage/storageaccounts"
+    | project linkedId = tolower(id),
+        linkedName = name,
+        linkedType = type,
+        linkedRegion = location
+) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

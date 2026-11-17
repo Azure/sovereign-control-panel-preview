@@ -1,0 +1,23 @@
+// Find utility storage accounts referenced by Azure Migrate projects.
+// Read each project's utility storage account ID and look up the matching storage account.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.migrate/migrateprojects"
+| extend linkedId = tolower(tostring(properties.utilityStorageAccountId))
+| where isnotempty(linkedId)
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.storage/storageaccounts"
+    | extend linkedId = tolower(id)
+    | project linkedId, linkedName = name, linkedType = type, linkedRegion = location
+) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

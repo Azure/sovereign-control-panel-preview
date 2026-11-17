@@ -1,0 +1,16 @@
+// Check whether storage account SKU names indicate geo-redundant replication.
+// Treat SKU names containing GRS or GZRS as geo-redundant and label them Compliant; label others
+// NonCompliant.
+// Return the account ID, state, reason code, SKU, secondary location, and secondary status.
+
+resources
+| where type =~ 'microsoft.storage/storageaccounts'
+| extend skuName = tostring(sku.name)
+| extend isGeoRedundant = (skuName contains 'GRS' or skuName contains 'GZRS')
+| project
+    resourceId = id,
+    state = iff(isGeoRedundant, 'Compliant', 'NonCompliant'),
+    reasonCode = iff(isGeoRedundant, 'GeoRedundantEnabled', 'GeoRedundantDisabled'),
+    skuName,
+    secondaryLocation = tostring(properties.secondaryLocation),
+    statusOfSecondary = tostring(properties.statusOfSecondary)

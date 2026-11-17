@@ -1,0 +1,24 @@
+// Find resources referenced by load balancer frontend IP configurations.
+// For each frontend, look up its public IP address, public IP prefix, or subnet's parent network.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.network/loadbalancers"
+| mv-expand e0 = properties.frontendIPConfigurations
+| extend pipId = tolower(tostring(e0.properties.publicIPAddress.id)),
+         prefixId = tolower(tostring(e0.properties.publicIPPrefix.id)),
+         subnetId = tolower(tostring(e0.properties.subnet.id))
+| extend linkedJoinId = tolower(tostring(case(isnotempty(pipId), pipId, isnotempty(prefixId), prefixId, isnotempty(subnetId), substring(subnetId, 0, indexof(subnetId, "/subnets/")), "")))
+| where isnotempty(linkedJoinId)
+| distinct name, id, location, type, linkedJoinId
+| join kind=leftouter (resources
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on linkedJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

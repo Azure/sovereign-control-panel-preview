@@ -1,0 +1,24 @@
+// Find storage accounts referenced by Azure Synapse default data lake settings.
+// Extract account names from the configured storage URLs and look up matching storage resources.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.synapse/workspaces"
+| extend storageUrl = tolower(tostring(properties.defaultDataLakeStorage.accountUrl))
+| where isnotempty(storageUrl)
+| extend linkedNameKey = tolower(tostring(split(replace_string(storageUrl, "https://", ""), ".")[0]))
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.storage/storageaccounts"
+    | extend linkedNameKey = tolower(name)
+    | project linkedNameKey, linkedId=id, linkedName=name, linkedType=type, linkedRegion=location
+) on linkedNameKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

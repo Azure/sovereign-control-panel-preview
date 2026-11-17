@@ -1,0 +1,22 @@
+// Find Log Analytics workspaces referenced by Container Instances diagnostic settings.
+// Match each configured workspace ID to a workspace's customer ID and keep matching workspaces.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.containerinstance/containergroups"
+| extend workspaceCustomerId = tolower(tostring(properties.diagnostics.logAnalytics.workspaceId))
+| where isnotempty(workspaceCustomerId)
+| join kind=leftouter (resources
+    | where type =~ "microsoft.operationalinsights/workspaces"
+    | extend workspaceCustomerId = tolower(tostring(properties.customerId))
+    | project workspaceCustomerId, linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on workspaceCustomerId
+| where isnotempty(linkedId)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

@@ -1,0 +1,19 @@
+// Find user-assigned managed identities referenced by Batch automatic storage settings.
+// Match each node identity resource ID to the corresponding managed identity.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.batch/batchaccounts"
+| extend linkedId = tolower(tostring(properties.autoStorage.nodeIdentityReference.resourceId))
+| where isnotempty(linkedId)
+| join kind=leftouter (resources
+    | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

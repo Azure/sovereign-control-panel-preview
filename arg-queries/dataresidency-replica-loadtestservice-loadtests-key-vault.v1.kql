@@ -1,0 +1,21 @@
+// Find Key Vaults referenced by Azure Load Testing encryption settings.
+// Extract vault names from the configured encryption key URLs and look up matching vaults.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.loadtestservice/loadtests"
+| extend keyUrl = tolower(tostring(properties.encryption.keyUrl))
+| where isnotempty(keyUrl)
+| extend refName = tostring(split(replace_string(keyUrl, "https://", ""), ".")[0])
+| join kind=leftouter (resources
+    | where type =~ "microsoft.keyvault/vaults"
+    | project refName = tolower(name), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on refName
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

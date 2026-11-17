@@ -1,0 +1,23 @@
+// Find Microsoft Purview accounts referenced by Azure Synapse workspaces.
+// Read each workspace's configured Purview resource ID and look up the matching account.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.synapse/workspaces"
+| extend linkedIdKey = tolower(tostring(properties.purviewConfiguration.purviewResourceId))
+| where isnotempty(linkedIdKey)
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.purview/accounts"
+    | extend linkedIdKey = tolower(id)
+    | project linkedIdKey, linkedId=id, linkedName=name, linkedType=type, linkedRegion=location
+) on linkedIdKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

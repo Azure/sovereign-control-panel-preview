@@ -1,0 +1,23 @@
+// Find Azure Machine Learning workspaces referenced by Azure Databricks workspace parameters.
+// Read each configured machine learning workspace ID and return matching workspaces.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.databricks/workspaces"
+| extend linkedJoinId = tolower(tostring(properties.parameters.amlWorkspaceId.value))
+| where isnotempty(linkedJoinId)
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.machinelearningservices/workspaces"
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on linkedJoinId
+| where isnotempty(linkedId)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

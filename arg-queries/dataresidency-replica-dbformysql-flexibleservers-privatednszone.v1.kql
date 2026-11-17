@@ -1,0 +1,20 @@
+// Find private DNS zones referenced by Azure Database for MySQL flexible servers.
+// Match each configured private DNS zone resource ID to an existing zone.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ 'microsoft.dbformysql/flexibleservers'
+| extend linkedKey = tolower(tostring(properties.network.privateDnsZoneResourceId))
+| join kind=leftouter (resources
+    | where type =~ 'microsoft.network/privatednszones'
+    | project linkedKey = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on linkedKey
+| where isnotempty(linkedId)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

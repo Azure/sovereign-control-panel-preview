@@ -1,0 +1,25 @@
+// Find IoT hubs linked to Device Provisioning Service instances.
+// Expand the configured IoT hub entries and match their hostName values to IoT hub hostnames.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ 'microsoft.devices/provisioningservices'
+| mv-expand hub = properties.iotHubs
+| extend linkedHostName = tolower(tostring(hub.hostName))
+| where isnotempty(linkedHostName)
+| join kind=leftouter (
+    resources
+    | where type =~ 'microsoft.devices/iothubs'
+    | project hubHostName = tolower(tostring(properties.hostName)),
+              hubId = id, hubName = name, hubType = type, hubRegion = location
+) on $left.linkedHostName == $right.hubHostName
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = hubId,
+    linkedResourceName = hubName,
+    linkedResourceType = hubType,
+    linkedResourceRegion = hubRegion
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

@@ -1,0 +1,22 @@
+// Find virtual networks referenced by Azure Managed Instance for Apache Cassandra clusters.
+// Derive each network ID from the delegated management subnet ID and look up the matching network.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.documentdb/cassandraclusters"
+| extend subnetId = tostring(properties.delegatedManagementSubnetId)
+| extend linkedId = tostring(split(tolower(subnetId), "/subnets/")[0])
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.network/virtualnetworks"
+    | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location
+) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

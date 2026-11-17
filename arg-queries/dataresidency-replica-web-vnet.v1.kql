@@ -1,0 +1,21 @@
+// Find virtual networks referenced by web app virtual network integration settings.
+// Derive network IDs from the configured subnet references and look up matching networks.
+// Return details of both resources, including their locations.
+
+Resources
+| where type =~ 'microsoft.web/sites'
+| extend subnetId=tostring(properties.virtualNetworkSubnetId)
+| where isnotempty(subnetId)
+| extend linkedKey=tolower(substring(subnetId,0,indexof(tolower(subnetId),'/subnets/')))
+| join kind=leftouter (Resources
+    | where type =~ 'microsoft.network/virtualnetworks'
+    | project linkedKey=tolower(id),linkedId=id,linkedName=name,linkedType=type,linkedRegion=location) on linkedKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

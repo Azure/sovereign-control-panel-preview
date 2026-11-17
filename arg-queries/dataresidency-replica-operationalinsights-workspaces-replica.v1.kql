@@ -1,0 +1,18 @@
+// Find Log Analytics workspaces with workspace replication enabled.
+// Read the replication location, which is separate from the workspace location, and normalize it.
+// Return the workspace's details with the replication region as the linked location.
+
+resources
+| where type =~ 'microsoft.operationalinsights/workspaces'
+| extend replicationEnabled = tobool(properties.replication.enabled),
+         replicaLocationName = replace_string(tolower(tostring(properties.replication.location)), ' ', '')
+| where replicationEnabled == true
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = id,
+    linkedResourceName = name,
+    linkedResourceType = type,
+    linkedResourceRegion = replicaLocationName

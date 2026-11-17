@@ -1,0 +1,23 @@
+// Find Key Vaults referenced by storage account encryption settings.
+// Extract vault names from the configured vault URLs and look up matching Key Vaults.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ 'microsoft.storage/storageaccounts'
+| extend kvUri = tostring(properties.encryption.keyvaultproperties.keyvaulturi)
+| where isnotempty(kvUri)
+| extend kvName = tolower(tostring(split(replace_string(kvUri, 'https://', ''), '.')[0]))
+| join kind=leftouter (
+    resources
+    | where type =~ 'microsoft.keyvault/vaults'
+    | project kvName = tolower(name), linkedResourceId = tolower(id), linkedName = name, linkedLocation = location
+  ) on kvName
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId,
+    linkedResourceName = linkedName,
+    linkedResourceType = 'microsoft.keyvault/vaults',
+    linkedResourceRegion = linkedLocation

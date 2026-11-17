@@ -1,0 +1,22 @@
+// Find Log Analytics workspaces referenced by data collection rule destinations.
+// Expand the Log Analytics destination entries and look up their workspace resource IDs.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.insights/datacollectionrules"
+| mv-expand e0 = properties.destinations.logAnalytics
+| extend linkedJoinId = tolower(tostring(e0.workspaceResourceId))
+| where isnotempty(linkedJoinId)
+| join kind=leftouter (resources
+    | where type =~ "microsoft.operationalinsights/workspaces"
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on linkedJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

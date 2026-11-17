@@ -1,0 +1,21 @@
+// Find the source resources referenced when creating managed disks.
+// Match each disk's source resource ID to the corresponding resource.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.compute/disks"
+| extend srcKey = tolower(tostring(properties.creationData.sourceResourceId))
+| where isnotempty(srcKey)
+| join kind=leftouter (
+    resources
+    | project joinKey = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+  ) on $left.srcKey == $right.joinKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

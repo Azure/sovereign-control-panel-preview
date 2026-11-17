@@ -1,0 +1,18 @@
+// Find Log Analytics workspaces referenced by Azure Kubernetes Service monitoring settings.
+// Match each monitoring workspace resource ID to an existing workspace.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ 'microsoft.containerservice/managedclusters'
+| extend linkedId = tolower(tostring(properties.addonProfiles.omsagent.config.logAnalyticsWorkspaceResourceID))
+| where isnotempty(linkedId)
+| join kind=inner (resources | where type =~ 'microsoft.operationalinsights/workspaces' | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

@@ -1,0 +1,21 @@
+// Find Key Vaults referenced by Device Update account encryption settings.
+// Extract vault names from the configured key URLs and return matching vault resources.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.deviceupdate/accounts"
+| extend kvHost = tostring(properties.encryption.keyVaultKeyUri)
+| where isnotempty(kvHost)
+| extend kvName = tolower(split(replace_string(kvHost, "https://", ""), ".")[0])
+| join kind=inner (resources
+    | where type =~ "microsoft.keyvault/vaults"
+    | project kvName = tolower(name), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on kvName
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

@@ -1,0 +1,20 @@
+// Find Azure Cosmos DB accounts and every region the account is deployed to.
+// Expand the account's locations, including the write region, and normalize each region name.
+// Return the account's details once per region, using that region as the linked location.
+
+resources
+| where type =~ 'microsoft.documentdb/databaseaccounts'
+| extend cosmosLocations = properties.locations
+| where isnotempty(cosmosLocations)
+| mv-expand loc = cosmosLocations
+| extend secondaryLocationName = replace_string(tolower(tostring(loc.locationName)), ' ', '')
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = id,
+    linkedResourceName = name,
+    linkedResourceType = type,
+    linkedResourceRegion = secondaryLocationName
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

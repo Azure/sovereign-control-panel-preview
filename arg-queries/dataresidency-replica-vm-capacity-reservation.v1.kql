@@ -1,0 +1,22 @@
+// Find capacity reservation groups referenced by virtual machines.
+// Read each virtual machine's reservation group ID and return matching groups.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.compute/virtualmachines"
+| extend linkedId = tolower(tostring(properties.capacityReservation.capacityReservationGroup.id))
+| where isnotempty(linkedId)
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.compute/capacityreservationgroups"
+    | project linkedId = tolower(id), linkedFullId = id, linkedName = name, linkedType = type, linkedRegion = location
+  ) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedFullId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

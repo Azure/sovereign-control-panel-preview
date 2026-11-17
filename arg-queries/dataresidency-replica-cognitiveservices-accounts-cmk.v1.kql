@@ -1,0 +1,18 @@
+// Find Key Vaults referenced by Azure AI services account encryption settings.
+// Extract the vault name from each configured vault URL and look up the matching Key Vault.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.cognitiveservices/accounts"
+| extend host = tostring(properties.encryption.keyVaultProperties.keyVaultUri)
+| extend kvName = tostring(split(replace_string(host,"https://",""), ".")[0])
+| join kind=leftouter (resources | where type=~"microsoft.keyvault/vaults" | project kvName=tolower(name), linkedId=id, linkedName=name, linkedType=type, linkedRegion=location) on kvName
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

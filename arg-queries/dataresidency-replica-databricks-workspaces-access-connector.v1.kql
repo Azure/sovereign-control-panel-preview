@@ -1,0 +1,20 @@
+// Find access connectors referenced by Azure Databricks workspaces.
+// Read each workspace's access connector ID and look up the matching connector.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.databricks/workspaces"
+| extend linkedId = tolower(tostring(properties.accessConnector.id))
+| where isnotempty(linkedId)
+| join kind=leftouter (resources
+    | where type =~ "microsoft.databricks/accessconnectors"
+    | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

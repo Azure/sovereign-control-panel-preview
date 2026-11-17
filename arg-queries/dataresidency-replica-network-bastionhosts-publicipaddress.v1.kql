@@ -1,0 +1,21 @@
+// Find public IP resources referenced by Azure Bastion IP configurations.
+// Read the configured public IP resource IDs and look up the corresponding resources.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.network/bastionhosts"
+| mv-expand e0 = properties.ipConfigurations
+| extend linkedRef = tolower(tostring(e0.properties.publicIPAddress.id))
+| where isnotempty(linkedRef)
+| join kind=leftouter (resources
+    | project linkedRef = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on linkedRef
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

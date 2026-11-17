@@ -1,0 +1,32 @@
+// Find Container Registry replicas and their parent registries.
+// Derive the parent registry ID from each replica's resource ID and look up the matching registry.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.containerregistry/registries/replications"
+| extend parentId = tolower(tostring(split(id, "/replications/")[0]))
+| project
+    parentId,
+    linkedId = id,
+    linkedName = name,
+    linkedType = type,
+    linkedRegion = location
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.containerregistry/registries"
+    | project
+        parentId = tolower(id),
+        name,
+        id,
+        location,
+        type
+) on parentId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

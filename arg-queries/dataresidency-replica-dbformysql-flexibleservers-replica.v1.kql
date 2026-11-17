@@ -1,0 +1,26 @@
+// Find Azure Database for MySQL flexible server replicas and their source servers.
+// Match each configured source server resource ID to a server resource, without filtering by role.
+// Return each source server's details alongside its replica's details, including both locations.
+
+resources
+| where type =~ 'microsoft.dbformysql/flexibleservers'
+| project linkedId=id,
+          linkedName=name,
+          linkedType=type,
+          linkedRegion=location,
+          sourceServerIdNormalized=tolower(tostring(properties.sourceServerResourceId))
+| join kind=inner (
+    resources
+    | where type =~ 'microsoft.dbformysql/flexibleservers'
+    | project name, id, location, type,
+              sourceServerIdNormalized=tolower(id)
+) on sourceServerIdNormalized
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

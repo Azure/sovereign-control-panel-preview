@@ -1,0 +1,24 @@
+// Find public IP addresses referenced by virtual network gateway IP configurations.
+// Read the configured public IP resource IDs and look up the corresponding resources.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.network/virtualnetworkgateways"
+| mv-expand ipconfig = properties.ipConfigurations
+| extend linkedResourceId = tostring(ipconfig.properties.publicIPAddress.id)
+| extend linkedJoinId = tolower(linkedResourceId)
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.network/publicipaddresses"
+    | project linkedJoinId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on linkedJoinId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

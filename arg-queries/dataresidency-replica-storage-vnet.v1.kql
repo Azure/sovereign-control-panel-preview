@@ -1,0 +1,25 @@
+// Find virtual networks referenced by storage account network rules.
+// Read the subnet IDs in the rules and look up their parent virtual networks.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ 'microsoft.storage/storageaccounts'
+| mv-expand vnetRule = properties.networkAcls.virtualNetworkRules
+| extend subnetId = tolower(tostring(vnetRule.id))
+| where isnotempty(subnetId)
+| extend linkedVnetId = substring(subnetId, 0, indexof(subnetId, '/subnets/'))
+| join kind=leftouter (
+    resources
+    | where type =~ 'microsoft.network/virtualnetworks'
+    | project linkedVnetId = tolower(id), linkedName = name, linkedLocation = location
+  ) on linkedVnetId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedVnetId,
+    linkedResourceName = linkedName,
+    linkedResourceType = 'microsoft.network/virtualnetworks',
+    linkedResourceRegion = linkedLocation
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

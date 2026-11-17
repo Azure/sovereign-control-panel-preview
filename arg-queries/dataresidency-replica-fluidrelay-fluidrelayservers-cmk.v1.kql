@@ -1,0 +1,19 @@
+// Find Key Vaults referenced by Azure Fluid Relay customer-managed encryption settings.
+// Extract the vault name from each key encryption URL and look up the matching Key Vault.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.fluidrelay/fluidrelayservers"
+| extend kvHost=tostring(properties.encryption.customerManagedKeyEncryption.keyEncryptionKeyUrl)
+| where isnotempty(kvHost)
+| extend kvName=tolower(tostring(split(replace_string(kvHost, "https://", ""), ".")[0]))
+| join kind=leftouter (resources | project kvName=tolower(name), linkedId=id, linkedName=name, linkedType=type, linkedRegion=location) on kvName
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

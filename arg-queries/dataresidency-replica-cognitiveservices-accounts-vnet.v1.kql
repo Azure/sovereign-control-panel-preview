@@ -1,0 +1,28 @@
+// Find virtual networks referenced by Azure AI services account network rules.
+// Read the subnet IDs in the rules and match their parent virtual networks.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.cognitiveservices/accounts"
+| mv-expand vnetRule = properties.networkAcls.virtualNetworkRules
+| extend subnetId = tolower(tostring(vnetRule.id))
+| where isnotempty(subnetId)
+| extend vnetId = substring(subnetId, 0, indexof(subnetId, "/subnets/"))
+| join kind=leftouter (
+    resources
+    | where type =~ "microsoft.network/virtualnetworks"
+    | project vnetId = tolower(id),
+              vnetRegion = location,
+              vnetName = name,
+              linkedType = type
+) on vnetId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = vnetId,
+    linkedResourceName = vnetName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = vnetRegion
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

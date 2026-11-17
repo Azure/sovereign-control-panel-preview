@@ -1,0 +1,30 @@
+// Find virtual networks referenced by HDInsight cluster roles.
+// Keep fully qualified subnet IDs, derive their parent network IDs, and return distinct matches.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.hdinsight/clusters" 
+| mv-expand role = properties.computeProfile.roles
+| extend subnetId = trim(@" ", tostring(role.virtualNetworkProfile.subnet))
+| where isnotempty(subnetId)
+    and tolower(subnetId) startswith "/subscriptions/"
+    and tolower(subnetId) has "/providers/microsoft.network/virtualnetworks/"
+    and tolower(subnetId) has "/subnets/"
+    and indexof(tolower(subnetId), "/subnets/") > 0
+    and array_length(split(subnetId, "/")) == 11
+| extend linkedKey = tolower(substring(subnetId, 0, indexof(tolower(subnetId), "/subnets/")))
+| summarize by name, id, location, type, linkedKey
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.network/virtualnetworks"
+    | project joinKey = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on $left.linkedKey == $right.joinKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

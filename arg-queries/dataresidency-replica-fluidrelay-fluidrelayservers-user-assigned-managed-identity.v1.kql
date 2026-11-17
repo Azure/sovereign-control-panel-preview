@@ -1,0 +1,18 @@
+// Find managed identities referenced by Azure Fluid Relay customer-managed encryption settings.
+// Read the configured user-assigned identity IDs and look up matching identity resources.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.fluidrelay/fluidRelayServers"
+| extend linkedId=tolower(tostring(properties.encryption.customerManagedKeyEncryption.keyEncryptionKeyIdentity.userAssignedIdentityResourceId))
+| where isnotempty(linkedId)
+| join kind=leftouter (resources | project linkedId=tolower(id), linkedName=name, linkedType=type, linkedRegion=location) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

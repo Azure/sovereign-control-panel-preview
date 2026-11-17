@@ -1,0 +1,18 @@
+// Find Key Vaults referenced by Azure Kubernetes Service key management settings.
+// Match each configured Key Vault resource ID to an existing vault.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ 'microsoft.containerservice/managedclusters'
+| extend linkedId = tolower(tostring(properties.securityProfile.azureKeyVaultKms.keyVaultResourceId))
+| where isnotempty(linkedId)
+| join kind=inner (resources | where type =~ 'microsoft.keyvault/vaults' | project linkedId = tolower(id), linkedName = name, linkedType = type, linkedRegion = location) on linkedId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

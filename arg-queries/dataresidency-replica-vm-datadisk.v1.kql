@@ -1,0 +1,24 @@
+// Find managed data disks referenced by virtual machines.
+// Expand each virtual machine's data disk list and match the managed disk IDs to disk resources.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ 'microsoft.compute/virtualmachines'
+| mv-expand dataDisk = properties.storageProfile.dataDisks
+| extend linkedDiskId = tolower(tostring(dataDisk.managedDisk.id))
+| where isnotempty(linkedDiskId)
+| join kind=leftouter (
+    resources
+    | where type =~ 'microsoft.compute/disks'
+    | project linkedDiskId = tolower(id), linkedName = name, linkedLocation = location
+  ) on linkedDiskId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedDiskId,
+    linkedResourceName = linkedName,
+    linkedResourceType = 'microsoft.compute/disks',
+    linkedResourceRegion = linkedLocation
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

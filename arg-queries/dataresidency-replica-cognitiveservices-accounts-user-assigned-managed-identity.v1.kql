@@ -1,0 +1,24 @@
+// Find user-assigned managed identities attached to Azure AI services accounts.
+// Expand the assigned identity IDs and look up the matching managed identity resources.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.cognitiveservices/accounts"
+| where isnotempty(identity)
+| extend userAssignedIdentities = todynamic(identity).userAssignedIdentities
+| extend uamiId = bag_keys(userAssignedIdentities)
+| mv-expand uamiId
+| extend uamiId = tolower(tostring(uamiId))
+| join kind=leftouter (resources
+    | where type =~ "microsoft.managedidentity/userassignedidentities"
+    | project uamiId = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on uamiId
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion
+| distinct primaryResourceName, primaryResourceId, primaryResourceLocation, primaryResourceType, linkedResourceId, linkedResourceName, linkedResourceType, linkedResourceRegion

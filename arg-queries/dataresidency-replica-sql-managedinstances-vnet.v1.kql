@@ -1,0 +1,23 @@
+// Find virtual networks referenced by SQL managed instances.
+// Derive network IDs from the configured subnet references and return matching networks.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ "microsoft.sql/managedinstances"
+| extend subnetId = tolower(tostring(properties.subnetId))
+| extend linkedKey = substring(subnetId, 0, indexof(subnetId, "/subnets/"))
+| where isnotempty(linkedKey)
+| join kind=inner (
+    resources
+    | where type =~ "microsoft.network/virtualnetworks"
+    | project linkedKey = tolower(id), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location
+) on linkedKey
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion

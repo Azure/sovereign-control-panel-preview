@@ -1,0 +1,21 @@
+// Find Key Vaults referenced by Azure Database for PostgreSQL flexible server encryption settings.
+// Extract vault names from the primary key URLs and return matching vault resources.
+// Return details of both resources, including their locations.
+
+resources
+| where type =~ 'microsoft.dbforpostgresql/flexibleservers'
+| extend keyUri = tostring(properties.dataEncryption.primaryKeyURI)
+| extend vaultName = tolower(tostring(split(replace_string(keyUri, 'https://', ''), '.')[0]))
+| join kind=leftouter (resources
+    | where type =~ 'microsoft.keyvault/vaults'
+    | project vaultName = tolower(name), linkedId = id, linkedName = name, linkedType = type, linkedRegion = location) on vaultName
+| where isnotempty(linkedId)
+| project
+    primaryResourceName = name,
+    primaryResourceId = id,
+    primaryResourceLocation = location,
+    primaryResourceType = type,
+    linkedResourceId = linkedId,
+    linkedResourceName = linkedName,
+    linkedResourceType = linkedType,
+    linkedResourceRegion = linkedRegion
