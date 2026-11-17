@@ -1,11 +1,8 @@
-# Sovereign Control Panel Private Preview
+# Sovereign Control Panel
 
-Sovereign Control Panel (SCP) helps assess sovereignty posture across Azure resources.
+Sovereign Control Panel (SCP) provides a unified experience in the Azure portal to assess and manage sovereignty posture across Azure resources. It brings sovereignty insights together to help organizations understand their posture, apply controls, and prioritize action.
 
-This README covers the Bicep deployment templates and Azure Resource Graph (ARG) queries for the SCP Private Preview.
-
-> [!IMPORTANT]
-> Sovereign Control Panel is currently in an **invite-only private preview**.
+Sovereign Control Panel is in **public preview**. Learn more in the [Sovereign Control Panel overview on Microsoft Learn](https://learn.microsoft.com/azure/azure-sovereign-clouds/public/sovereign-control-panel).
 
 ## Create a Sovereign View using Bicep
 
@@ -29,7 +26,7 @@ When a compliance evaluation result in the Azure portal references an ARG query,
 This repository is maintained exclusively by the internal SCP team (`@Azure/scp-team`). External contributions, including pull requests, are not accepted. See [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution policy.
 
 ## Support and feedback
-We prefer support requests, feedback, and bugs for the Private Preview features to be emailed to **(Azscp@microsoft.com)** or raised directly with your Microsoft contacts.
+We prefer support requests, feedback, and bugs for the public preview features to be emailed to **(Azscp@microsoft.com)** or raised directly with your Microsoft contacts.
 
 > [!NOTE]
 > Do not report security vulnerabilities through public GitHub issues. See [SECURITY.md](SECURITY.md) for reporting guidance.
@@ -41,3 +38,4 @@ We prefer support requests, feedback, and bugs for the Private Preview features 
 ## Trademark Notice
 
 Trademarks This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow Microsoft's Trademark & Brand Guidelines. Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or logos are subject to those third-party's policies.
+
