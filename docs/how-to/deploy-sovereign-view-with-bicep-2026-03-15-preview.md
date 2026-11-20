@@ -4,7 +4,7 @@ Use the [legacy Bicep package](/bicep) to deploy
 `Microsoft.Sovereign/sovereignViews@2026-03-15-preview`. This version accepts
 `assignmentParameters`; the service creates the selected policy assignments.
 For existing-assignment references and configurable evaluation settings, use
-the [2026-10-31-preview guide](./03c-deploy-sovereign-view-with-bicep-2026-10-31-preview.md).
+the [2026-10-31-preview guide](./deploy-sovereign-view-with-bicep-2026-10-31-preview.md).
 Do not mix files or parameter shapes between versions.
 
 For product eligibility, onboarding and access requirements, see the

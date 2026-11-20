@@ -15,10 +15,10 @@ Choose an explicit API-version package from the [Bicep version catalog](/bicep/R
 for a repeatable, reviewable Infrastructure-as-Code workflow. Confirm that the
 service supports the selected contract before deploying.
 
-| Template package | Description |
-| ------ | ----------- |
-| [Bicep: 2026-10-31-preview](/bicep/2026-10-31-preview) | Select dimensions, create dedicated policy assignments with defaults or overrides, and deploy using their IDs. Requires service support for the published contract. |
-| [Legacy Bicep: 2026-03-15-preview](/bicep/main.bicep) | Use the legacy assignment-parameter workflow and role modules in Sweden Central. |
+| Template package | How-to guide | Description |
+| ------ | ----------- | ----------- |
+| [Bicep: 2026-10-31-preview](/bicep/2026-10-31-preview) | [Deploy with Bicep: 2026-10-31-preview](/docs/how-to/deploy-sovereign-view-with-bicep-2026-10-31-preview.md) | Select dimensions, create dedicated policy assignments with defaults or overrides, and deploy using their IDs. Requires service support for the published contract. |
+| [Legacy Bicep: 2026-03-15-preview](/bicep/main.bicep) | [Deploy with Bicep: 2026-03-15-preview](/docs/how-to/deploy-sovereign-view-with-bicep-2026-03-15-preview.md) | Use the legacy assignment-parameter workflow and role modules in Sweden Central. |
 
 ## Azure Resource Graph (ARG) queries
 

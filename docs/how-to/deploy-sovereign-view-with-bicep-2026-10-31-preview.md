@@ -4,7 +4,7 @@ Use the [versioned Bicep package](/bicep/2026-10-31-preview) to deploy
 `Microsoft.Sovereign/sovereignViews@2026-10-31-preview`. This API associates
 existing policy-assignment IDs with the view. For the older service-created
 assignment-parameter workflow, use the
-[2026-03-15-preview guide](./03b-deploy-sovereign-view-with-bicep.md).
+[2026-03-15-preview guide](./deploy-sovereign-view-with-bicep-2026-03-15-preview.md).
 Do not mix template, helper or parameter files between API-version packages.
 
 For product availability, onboarding and access requirements, see the
